@@ -13,6 +13,16 @@ import {
   Sparkles,
 } from "lucide-react";
 
+import {
+  ORGANIZATION_ID,
+  SITE_NAME,
+  SITE_URL,
+  WEBSITE_ID,
+  organizationJsonLd,
+  sharedRobots,
+  websiteJsonLd,
+} from "@/lib/seo";
+
 import { EventNavigation, ShareEvent } from "./event-actions";
 import { InteractiveAssembly } from "./interactive-assembly";
 import { EventMotion } from "./event-motion";
@@ -27,29 +37,29 @@ const description =
 export const metadata: Metadata = {
   title: searchTitle,
   description,
-  robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large" } },
+  robots: sharedRobots,
   alternates: { canonical: "/2027" },
   openGraph: {
     type: "website",
     locale: "zh_TW",
     url: "/2027",
-    siteName: "臺灣新文化青年協會",
+    siteName: SITE_NAME,
     title: searchTitle,
     description,
-    images: [
-      {
-        url: "/2027/event-poster.png",
-        width: 1122,
-        height: 1402,
-        alt: eventTitle,
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: searchTitle,
     description,
-    images: ["/2027/event-poster.png"],
+    images: [
+      {
+        url: "/2027/opengraph-image",
+        alt: eventTitle,
+        width: 1200,
+        height: 630,
+        type: "image/png",
+      },
+    ],
   },
 };
 
@@ -59,28 +69,33 @@ export const viewport: Viewport = { themeColor: "#f7f5e9" };
 const structuredData = {
   "@context": "https://schema.org",
   "@graph": [
+    organizationJsonLd,
+    websiteJsonLd,
     {
       "@type": "WebPage",
-      "@id": "https://neogen.org.tw/2027#webpage",
-      url: "https://neogen.org.tw/2027",
+      "@id": `${SITE_URL}/2027#webpage`,
+      url: `${SITE_URL}/2027`,
       name: searchTitle,
       description,
       inLanguage: "zh-Hant-TW",
+      isPartOf: { "@id": WEBSITE_ID },
+      about: { "@id": ORGANIZATION_ID },
+      publisher: { "@id": ORGANIZATION_ID },
       primaryImageOfPage: {
         "@type": "ImageObject",
-        url: "https://neogen.org.tw/2027/event-poster.png",
+        url: `${SITE_URL}/2027/event-poster.png`,
         width: 1122,
         height: 1402,
         caption: eventTitle,
       },
-      breadcrumb: { "@id": "https://neogen.org.tw/2027#breadcrumb" },
+      breadcrumb: { "@id": `${SITE_URL}/2027#breadcrumb` },
     },
     {
       "@type": "BreadcrumbList",
-      "@id": "https://neogen.org.tw/2027#breadcrumb",
+      "@id": `${SITE_URL}/2027#breadcrumb`,
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "臺灣新文化青年協會", item: "https://neogen.org.tw/" },
-        { "@type": "ListItem", position: 2, name: eventTitle, item: "https://neogen.org.tw/2027" },
+        { "@type": "ListItem", position: 1, name: SITE_NAME, item: `${SITE_URL}/` },
+        { "@type": "ListItem", position: 2, name: eventTitle, item: `${SITE_URL}/2027` },
       ],
     },
   ],

@@ -45,6 +45,26 @@ button {
   color: #fff;
 }
 
+.skip-link {
+  position: fixed;
+  z-index: 100;
+  top: 0.75rem;
+  left: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 800;
+  transform: translateY(-160%);
+  transition: transform 160ms ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+  outline: 3px solid var(--orange);
+  outline-offset: 2px;
+}
+
 .display-font {
   font-family: "Noto Serif TC", "Songti TC", "STSong", "PMingLiU", serif;
 }
@@ -60,6 +80,82 @@ button {
 
 .hero-section {
   min-height: calc(100svh - 92px);
+}
+
+.hero-media {
+  isolation: isolate;
+}
+
+.hero-media > div,
+.hero-media > figcaption,
+.hero-media > .hero-folio {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-media-plane {
+  position: absolute;
+  z-index: 0;
+  right: -1.5rem;
+  bottom: 2.65rem;
+  width: 38%;
+  height: 72%;
+  background: var(--orange);
+  clip-path: polygon(28% 0, 100% 0, 100% 100%, 0 100%, 0 27%);
+}
+
+.hero-folio {
+  position: absolute;
+  top: 50%;
+  right: -3.4rem;
+  display: none;
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  color: var(--muted);
+  writing-mode: vertical-rl;
+  transform: translateY(-50%);
+}
+
+.beliefs-halftone {
+  position: absolute;
+  top: 3.25rem;
+  right: max(1rem, calc((100vw - 1600px) / 2));
+  width: 10rem;
+  height: 7rem;
+  opacity: 0.32;
+  background-image: radial-gradient(circle, var(--ink) 1px, transparent 1.2px);
+  background-size: 10px 10px;
+  mask-image: linear-gradient(to left, #000, transparent);
+}
+
+.belief-card {
+  position: relative;
+}
+
+.belief-card::after {
+  position: absolute;
+  right: 1.25rem;
+  bottom: 1rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  content: "";
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+}
+
+.actions-section {
+  position: relative;
+}
+
+.actions-section::before {
+  position: absolute;
+  top: 6rem;
+  left: -3.25rem;
+  width: 2.5rem;
+  height: 1px;
+  content: "";
+  background: var(--ink);
 }
 
 .nav-link {
@@ -178,15 +274,77 @@ button {
   user-select: none;
 }
 
+.closing-orange-plane {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: clamp(8rem, 27vw, 31rem);
+  background: var(--orange);
+  clip-path: polygon(58% 0, 100% 0, 100% 100%, 0 100%, 0 50%, 22% 50%, 22% 24%, 58% 24%);
+  opacity: 0.98;
+}
+
+.social-link {
+  text-decoration: none;
+}
+
+.social-link > span:first-child {
+  transition: color 180ms ease, transform 180ms ease;
+}
+
+.social-link:hover > span:first-child {
+  color: var(--orange);
+  transform: translateX(0.25rem);
+}
+
 @media (min-width: 768px) {
   .site-container {
     width: min(100% - 4rem, 1600px);
   }
 }
 
+@media (min-width: 1280px) {
+  .hero-folio {
+    display: block;
+  }
+}
+
 @media (max-width: 1023px) {
   .hero-section {
     min-height: auto;
+  }
+
+  .closing-orange-plane {
+    right: -5rem;
+    opacity: 0.78;
+  }
+
+  .closing-glyph {
+    right: -0.2em;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-media-plane {
+    right: -1rem;
+    bottom: 2.8rem;
+    width: 44%;
+  }
+
+  .beliefs-halftone {
+    top: 2rem;
+    right: -2rem;
+    width: 8rem;
+  }
+
+  .closing-orange-plane {
+    top: auto;
+    right: -2rem;
+    bottom: 0;
+    width: 10rem;
+    height: 11rem;
+    clip-path: polygon(45% 0, 100% 0, 100% 100%, 0 100%, 0 38%, 45% 38%);
   }
 }
 

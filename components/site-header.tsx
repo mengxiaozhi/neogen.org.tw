@@ -16,7 +16,7 @@ import {
 const navItems = [
   ["關於我們", "#about"],
   ["行動議題", "#actions"],
-  ["活動紀錄", "#record"],
+  ["2027 青年參議院", "/2027"],
   ["青年投稿", "mailto:neogentaiwan2026@gmail.com?subject=青年投稿"],
 ] as const;
 

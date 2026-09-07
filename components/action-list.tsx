@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 import { ArrowRight, Plus } from "lucide-react";
 
+import type { ActionIndex } from "@/components/action-experience";
 import { cn } from "@/lib/utils";
 
-const actions = [
+export const actionItems = [
   {
     title: "青年公共論壇",
     description: "邀請不同立場走進同一張桌，練習傾聽、提問與論證。",
@@ -20,19 +21,42 @@ const actions = [
   },
 ] as const;
 
-export function ActionList() {
-  const [activeIndex, setActiveIndex] = useState(0);
+type ActionListProps = {
+  activeIndex?: ActionIndex;
+  className?: string;
+  onActiveIndexChange?(index: ActionIndex): void;
+};
+
+export function ActionList({
+  activeIndex: controlledActiveIndex,
+  className,
+  onActiveIndexChange,
+}: ActionListProps = {}) {
+  const [uncontrolledActiveIndex, setUncontrolledActiveIndex] =
+    useState<ActionIndex>(0);
+  const descriptionPrefix = useId();
+  const activeIndex = controlledActiveIndex ?? uncontrolledActiveIndex;
+
+  function selectAction(index: ActionIndex) {
+    if (controlledActiveIndex === undefined) {
+      setUncontrolledActiveIndex(index);
+    }
+    onActiveIndexChange?.(index);
+  }
 
   return (
-    <div className="border-t border-[var(--ink)]">
-      {actions.map((action, index) => {
+    <div className={cn("border-t border-[var(--ink)]", className)}>
+      {actionItems.map((action, index) => {
+        const actionIndex = index as ActionIndex;
         const isActive = activeIndex === index;
+        const descriptionId = `${descriptionPrefix}-action-${index}`;
 
         return (
           <button
             type="button"
             key={action.title}
-            onClick={() => setActiveIndex(index)}
+            onClick={() => selectAction(actionIndex)}
+            aria-controls={descriptionId}
             aria-expanded={isActive}
             className={cn(
               "group grid w-full grid-cols-[2.75rem_1fr_3rem] items-start gap-4 border-b border-[var(--ink)] px-0 py-5 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--orange)] sm:grid-cols-[3rem_1fr_5rem] sm:gap-6",
@@ -47,6 +71,7 @@ export function ActionList() {
                 {action.title}
               </span>
               <span
+                id={descriptionId}
                 className={cn(
                   "mt-2 block overflow-hidden text-[15px] leading-7 text-[var(--muted)] transition-all duration-300",
                   isActive ? "max-h-24 opacity-100" : "max-h-0 opacity-0 sm:max-h-24 sm:opacity-100",
