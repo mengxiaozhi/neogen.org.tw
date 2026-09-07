@@ -22,7 +22,7 @@ const navItems = [
 
 export function SiteHeader() {
   return (
-    <header className="relative z-40 bg-white">
+    <header data-gsap-header className="relative z-40 bg-white">
       <div className="site-container flex min-h-[78px] items-center justify-between border-b-2 border-[var(--ink)] py-4 lg:min-h-[92px]">
         <BrandMark />
 

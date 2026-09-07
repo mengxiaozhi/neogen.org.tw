@@ -5,6 +5,7 @@ import { ActionList } from "@/components/action-list";
 import { BrandMark } from "@/components/brand-mark";
 import { JoinDialog } from "@/components/join-dialog";
 import { SiteHeader } from "@/components/site-header";
+import { SiteMotion } from "@/components/site-motion";
 import { Button } from "@/components/ui/button";
 
 const beliefs = [
@@ -25,25 +26,26 @@ const beliefs = [
 export default function Home() {
   return (
     <main id="top">
+      <SiteMotion />
       <SiteHeader />
 
       <section className="hero-section site-container relative grid items-center gap-10 py-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-10 lg:py-10">
-        <span className="registration-mark left-1 top-5" aria-hidden="true" />
-        <span className="registration-target right-1 top-5" aria-hidden="true" />
+        <span className="registration-mark left-1 top-5" data-gsap-mark aria-hidden="true" />
+        <span className="registration-target right-1 top-5" data-gsap-mark aria-hidden="true" />
 
         <div className="relative z-10 pt-12 lg:pt-6">
-          <h1 className="display-font text-[clamp(3.15rem,6.1vw,7rem)] font-black leading-[1.04] tracking-[-0.065em]">
+          <h1 data-gsap-hero className="display-font text-[clamp(3.15rem,6.1vw,7rem)] font-black leading-[1.04] tracking-[-0.065em]">
             <span className="whitespace-nowrap">以青年之聲，</span>
             <br />
             <span className="whitespace-nowrap">寫臺灣新章。</span>
           </h1>
-          <div className="mt-8 h-px w-40 bg-[var(--ink)] sm:w-72" />
-          <p className="mt-7 max-w-xl text-lg font-medium leading-9 tracking-[0.04em] text-[var(--muted)] sm:text-xl">
+          <div data-gsap-hero-line className="mt-8 h-px w-40 bg-[var(--ink)] sm:w-72" />
+          <p data-gsap-hero className="mt-7 max-w-xl text-lg font-medium leading-9 tracking-[0.04em] text-[var(--muted)] sm:text-xl">
             拒絕盲從，直視權力。
             <br />
             讓多元觀點進入公共討論，共同建構屬於當代臺灣青年的公共文化。
           </p>
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+          <div data-gsap-hero className="mt-9 flex flex-col gap-3 sm:flex-row">
             <JoinDialog size="lg" />
             <Button variant="outline" size="lg" asChild>
               <a href="#about">
@@ -54,7 +56,7 @@ export default function Home() {
           </div>
         </div>
 
-        <figure className="editorial-frame relative mt-2" id="record">
+        <figure data-gsap-hero-media className="editorial-frame relative mt-2" id="record">
           <div className="relative aspect-[4/3] overflow-hidden bg-[var(--paper-soft)] lg:aspect-[1.52/1]">
             <Image
               src="/images/youth-forum.jpg"
@@ -77,12 +79,12 @@ export default function Home() {
       </section>
 
       <section id="about" className="section-anchor site-container py-24 sm:py-32">
-        <div className="mb-12 flex items-center gap-5 text-sm font-black tracking-[0.16em] text-[var(--orange)]">
+        <div data-gsap-reveal className="mb-12 flex items-center gap-5 text-sm font-black tracking-[0.16em] text-[var(--orange)]">
           <span>關於我們</span>
           <span aria-hidden="true">／</span>
           <span>核心信念</span>
         </div>
-        <div className="grid gap-10 border-b border-[var(--ink)] pb-16 lg:grid-cols-[1.4fr_0.8fr] lg:gap-20">
+        <div data-gsap-reveal className="grid gap-10 border-b border-[var(--ink)] pb-16 lg:grid-cols-[1.4fr_0.8fr] lg:gap-20">
           <h2 className="display-font text-[clamp(3rem,4.9vw,5.8rem)] font-black leading-[1.16] tracking-[-0.055em]">
             我們相信，
             <br />
@@ -93,9 +95,10 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="grid divide-y divide-[var(--line)] md:grid-cols-3 md:divide-x md:divide-y-0">
+        <div data-gsap-stagger className="grid divide-y divide-[var(--line)] md:grid-cols-3 md:divide-x md:divide-y-0">
           {beliefs.map((belief, index) => (
             <article
+              data-gsap-stagger-item
               className="grid grid-cols-[4rem_1fr] gap-4 py-10 first:pl-0 md:block md:px-8 md:py-12 md:first:pl-0 md:last:pr-0"
               key={belief.title}
             >
@@ -118,7 +121,7 @@ export default function Home() {
 
       <section id="actions" className="section-anchor site-container pb-24 sm:pb-32">
         <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.9fr] lg:gap-20">
-          <figure className="editorial-frame relative order-2 lg:order-1">
+          <figure data-gsap-reveal data-gsap-direction="left" className="editorial-frame relative order-2 lg:order-1">
             <div className="relative aspect-[4/3] overflow-hidden bg-[var(--paper-soft)]">
               <Image
                 src="/images/youth-forum.jpg"
@@ -130,7 +133,7 @@ export default function Home() {
             </div>
           </figure>
 
-          <div className="order-1 lg:order-2">
+          <div data-gsap-reveal data-gsap-direction="right" className="order-1 lg:order-2">
             <h2 className="display-font text-[clamp(3rem,4.7vw,5.5rem)] font-black leading-[1.12] tracking-[-0.055em] text-balance">
               讓思考成為行動，
               <br />
@@ -151,8 +154,8 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-[var(--ink)] text-white">
-        <div className="site-container relative z-10 py-20 sm:py-28">
+      <section data-gsap-closing className="relative overflow-hidden bg-[var(--ink)] text-white">
+        <div data-gsap-reveal className="site-container relative z-10 py-20 sm:py-28">
           <h2 className="display-font max-w-5xl text-[clamp(3.5rem,7vw,8.4rem)] font-black leading-[1.03] tracking-[-0.06em] text-balance">
             下一個公共提問，
             <br />
@@ -171,12 +174,12 @@ export default function Home() {
             </Button>
           </div>
         </div>
-        <span className="closing-glyph display-font" aria-hidden="true">
+        <span data-gsap-glyph className="closing-glyph display-font" aria-hidden="true">
           新
         </span>
       </section>
 
-      <footer className="site-container py-12 sm:py-16">
+      <footer data-gsap-reveal className="site-container py-12 sm:py-16">
         <div className="grid gap-10 border-b border-[var(--ink)] pb-10 lg:grid-cols-[0.85fr_0.65fr_1.5fr] lg:items-start">
           <div>
             <BrandMark />

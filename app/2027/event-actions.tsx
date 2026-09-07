@@ -8,6 +8,7 @@ import styles from "./event.module.css";
 const links = [
   { href: "#event-about", label: "活動理念" },
   { href: "#event-info", label: "活動資訊" },
+  { href: "#event-discussion", label: "議題實驗室" },
   { href: "#event-faq", label: "常見問題" },
 ] as const;
 

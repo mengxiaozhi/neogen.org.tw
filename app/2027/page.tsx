@@ -15,6 +15,8 @@ import {
 
 import { EventNavigation, ShareEvent } from "./event-actions";
 import { InteractiveAssembly } from "./interactive-assembly";
+import { EventMotion } from "./event-motion";
+import { YouthDiscussion } from "./youth-discussion";
 import styles from "./event.module.css";
 
 const eventTitle = "2027 青年參議院 — 立法院會議";
@@ -137,6 +139,7 @@ const questions = [
 export default function Event2027Page() {
   return (
     <div className={styles.eventPage} id="event-top">
+      <EventMotion />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
       <a href="#event-main" className={styles.skipLink}>跳至主要內容</a>
       <header className={styles.header}>
@@ -260,9 +263,11 @@ export default function Event2027Page() {
           </div>
         </section>
 
+        <YouthDiscussion />
+
         <section id="event-faq" tabIndex={-1} className={`${styles.section} ${styles.faqSection}`} aria-labelledby="faq-heading">
           <div>
-            <p className={styles.sectionLabel}><span>03 /</span> 常見問題 <span className={styles.englishLabel}>Q & A</span></p>
+            <p className={styles.sectionLabel}><span>04 /</span> 常見問題 <span className={styles.englishLabel}>Q & A</span></p>
             <h2 id="faq-heading">你可能<br />也想知道<span className={styles.orangeDot}>。</span></h2>
             <Sparkles className={styles.faqSparkle} size={80} strokeWidth={1} aria-hidden="true" />
           </div>
@@ -298,10 +303,18 @@ export default function Event2027Page() {
 
       <footer className={styles.footer}>
         <div className={styles.footerTop}>
-          <Link href="/" className={styles.associationLink}>臺灣新文化青年協會 <ArrowUpRight size={20} aria-hidden="true" /></Link>
+          <Link href="/" className={styles.associationLink}>社團法人臺灣新文化青年協會 <ArrowUpRight size={20} aria-hidden="true" /></Link>
           <p>以青年之聲，寫臺灣新章。</p>
           <a href="#event-top" className={styles.backToTop}>回到頂端 <ArrowRight size={17} aria-hidden="true" /></a>
         </div>
+        <address className={styles.associationDetails} aria-label="協會基本資料">
+          <dl>
+            <div><dt>立案字號</dt><dd>台內團字第1150024192號函</dd></div>
+            <div><dt>統一編號</dt><dd>61490573</dd></div>
+            <div><dt>通訊地址</dt><dd>(231) 新北市新店區安興路105號5樓之7</dd></div>
+            <div><dt>電子信箱</dt><dd><a href="mailto:neogentaiwan2026@gmail.com">neogentaiwan2026@gmail.com</a></dd></div>
+          </dl>
+        </address>
         <div className={styles.footerBottom}><span>TAIWAN NEW CULTURE YOUTH ASSOCIATION</span><span>2027 青年參議院 — 立法院會議</span></div>
       </footer>
     </div>

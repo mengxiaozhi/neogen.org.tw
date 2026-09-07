@@ -12,3 +12,6 @@
 *.tsbuildinfo
 .DS_Store
 npm-debug.log*
+
+# Private Pocket Polis administration credentials
+/.local/

@@ -140,6 +140,13 @@
 .closingSun { position: absolute; top: -32px; right: -46px; color: var(--event-yellow); font-family: Arial, sans-serif; font-size: 460px; line-height: 1; transform: rotate(-12deg); opacity: .94; pointer-events: none; }
 
 .footer { max-width: 1440px; margin: auto; padding: 33px 64px 23px; }
+.associationDetails { padding-block: 24px; border-bottom: 1px solid var(--event-line); font-style: normal; font-size: 13px; line-height: 1.8; }
+.associationDetails dl { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 32px; }
+.associationDetails dl > div { display: grid; grid-template-columns: 5em minmax(0, 1fr); gap: 12px; }
+.associationDetails dt { font-weight: 800; }
+.associationDetails dd { margin: 0; overflow-wrap: anywhere; }
+.associationDetails a { text-decoration: underline; text-underline-offset: 4px; }
+@media (max-width: 950px) { .associationDetails dl { grid-template-columns: 1fr; } }
 .footerTop { display: flex; align-items: center; gap: 25px; padding-bottom: 26px; border-bottom: 1px solid var(--event-line); }
 .associationLink { display: inline-flex; align-items: center; gap: 14px; font-size: 18px; font-weight: 900; }
 .associationLink:hover { color: #b34408; }
