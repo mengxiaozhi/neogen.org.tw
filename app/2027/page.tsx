@@ -11,7 +11,6 @@ import {
   Megaphone,
   Plus,
   Sparkles,
-  Sun,
 } from "lucide-react";
 
 import { EventNavigation, ShareEvent } from "./event-actions";
@@ -142,9 +141,12 @@ export default function Event2027Page() {
       <a href="#event-main" className={styles.skipLink}>跳至主要內容</a>
       <header className={styles.header}>
         <div className={styles.headerInner}>
-          <a className={styles.brand} href="#event-top" aria-label="青年參議院 2027，回到頁首">
-            <Sun aria-hidden="true" className={styles.brandSun} strokeWidth={1.8} />
-            <span>青年參議院 <b>2027</b></span>
+          <a className={styles.brand} href="#event-top" aria-label="青春發聲中，回到頁首">
+            <span className={styles.voiceSticker} aria-hidden="true">
+              <span className={styles.voiceCaption}>YOUTH ON AIR</span>
+              <span className={styles.voiceWords}>青春發聲<span className={styles.voiceLive}>中</span></span>
+              <span className={styles.voiceWaves}><i /><i /><i /></span>
+            </span>
           </a>
           <EventNavigation />
         </div>
