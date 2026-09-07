@@ -142,7 +142,7 @@ export default function Home() {
             </p>
             <ActionList />
             <Button asChild size="lg" className="mt-8 w-full sm:w-auto">
-              <a href="mailto:hello@neogen.org.tw?subject=我想探索行動議題">
+              <a href="mailto:neogentaiwan2026@gmail.com?subject=我想探索行動議題">
                 探索行動議題
                 <ArrowRight className="size-5" aria-hidden="true" />
               </a>
@@ -164,7 +164,7 @@ export default function Home() {
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <JoinDialog label="加入青年行動" size="lg" />
             <Button variant="inverse" size="lg" asChild>
-              <a href="mailto:hello@neogen.org.tw?subject=青年投稿">
+              <a href="mailto:neogentaiwan2026@gmail.com?subject=青年投稿">
                 青年投稿
                 <Mail className="size-5" aria-hidden="true" />
               </a>
@@ -177,7 +177,7 @@ export default function Home() {
       </section>
 
       <footer className="site-container py-12 sm:py-16">
-        <div className="grid gap-10 border-b border-[var(--ink)] pb-10 lg:grid-cols-[1.1fr_1.3fr_0.7fr] lg:items-start">
+        <div className="grid gap-10 border-b border-[var(--ink)] pb-10 lg:grid-cols-[0.85fr_0.65fr_1.5fr] lg:items-start">
           <div>
             <BrandMark />
             <p className="mt-5 text-base tracking-[0.08em] text-[var(--muted)]">
@@ -189,13 +189,43 @@ export default function Home() {
               <li><a className="nav-link" href="#about">關於我們</a></li>
               <li><a className="nav-link" href="#actions">行動議題</a></li>
               <li><a className="nav-link" href="#record">活動紀錄</a></li>
-              <li><a className="nav-link" href="mailto:hello@neogen.org.tw?subject=青年投稿">青年投稿</a></li>
+              <li><a className="nav-link" href="/2027">2027 青年參議院</a></li>
+              <li><a className="nav-link" href="mailto:neogentaiwan2026@gmail.com?subject=青年投稿">青年投稿</a></li>
             </ul>
           </nav>
-          <address className="not-italic text-sm leading-8 tracking-[0.08em]">
-            <a className="nav-link" href="mailto:hello@neogen.org.tw">hello@neogen.org.tw</a>
-            <br />
-            <a className="nav-link" href="https://neogen.org.tw">neogen.org.tw</a>
+          <address className="not-italic">
+            <p className="text-xs font-black tracking-[0.16em] text-[var(--orange)]">
+              協會基本資料
+            </p>
+            <dl className="mt-5 space-y-3 text-sm leading-6">
+              <div className="grid grid-cols-[5.25rem_minmax(0,1fr)] gap-3">
+                <dt className="font-bold text-[var(--muted)]">法人名稱</dt>
+                <dd>社團法人臺灣新文化青年協會</dd>
+              </div>
+              <div className="grid grid-cols-[5.25rem_minmax(0,1fr)] gap-3">
+                <dt className="font-bold text-[var(--muted)]">立案字號</dt>
+                <dd>台內團字第1150024192號函</dd>
+              </div>
+              <div className="grid grid-cols-[5.25rem_minmax(0,1fr)] gap-3">
+                <dt className="font-bold text-[var(--muted)]">統一編號</dt>
+                <dd>61490573</dd>
+              </div>
+              <div className="grid grid-cols-[5.25rem_minmax(0,1fr)] gap-3">
+                <dt className="font-bold text-[var(--muted)]">通訊地址</dt>
+                <dd>(231) 新北市新店區安興路105號5樓之7</dd>
+              </div>
+              <div className="grid grid-cols-[5.25rem_minmax(0,1fr)] gap-3">
+                <dt className="font-bold text-[var(--muted)]">電子信箱</dt>
+                <dd className="min-w-0">
+                  <a
+                    className="nav-link [overflow-wrap:anywhere]"
+                    href="mailto:neogentaiwan2026@gmail.com"
+                  >
+                    neogentaiwan2026@gmail.com
+                  </a>
+                </dd>
+              </div>
+            </dl>
           </address>
         </div>
         <div className="flex flex-col gap-2 pt-7 text-xs font-medium tracking-[0.08em] text-[var(--muted)] sm:flex-row sm:items-center sm:justify-between">

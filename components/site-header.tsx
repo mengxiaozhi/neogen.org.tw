@@ -17,7 +17,7 @@ const navItems = [
   ["關於我們", "#about"],
   ["行動議題", "#actions"],
   ["活動紀錄", "#record"],
-  ["青年投稿", "mailto:hello@neogen.org.tw?subject=青年投稿"],
+  ["青年投稿", "mailto:neogentaiwan2026@gmail.com?subject=青年投稿"],
 ] as const;
 
 export function SiteHeader() {

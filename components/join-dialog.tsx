@@ -66,7 +66,7 @@ export function JoinDialog({
           ))}
         </div>
         <Button asChild size="lg" className={cn("w-full sm:w-auto")}>
-          <a href="mailto:hello@neogen.org.tw?subject=我想加入青年行動">
+          <a href="mailto:neogentaiwan2026@gmail.com?subject=我想加入青年行動">
             <Mail className="size-5" aria-hidden="true" />
             寫信給我們
           </a>
