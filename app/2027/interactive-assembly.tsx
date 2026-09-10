@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { Armchair, Box, Gavel, ImageIcon, RotateCcw } from "lucide-react";
+import { Armchair, Box, Gavel, ImageIcon } from "lucide-react";
 
 import type { AssemblyController } from "./assembly-scene";
 import styles from "./assembly.module.css";
@@ -123,9 +123,6 @@ export function InteractiveAssembly({ children }: { children: ReactNode }) {
               </button>
               <button type="button" onClick={() => controllerRef.current?.nextSeat()}>
                 <Armchair size={18} aria-hidden="true" />換個座位
-              </button>
-              <button className={styles.resetButton} type="button" onClick={() => controllerRef.current?.reset()} aria-label="重新排好小劇場" title="重新排好">
-                <RotateCcw size={17} aria-hidden="true" />
               </button>
             </div>
           </div>

@@ -22,17 +22,24 @@ import {
   sharedRobots,
   websiteJsonLd,
 } from "@/lib/seo";
+import { AssociationLogo } from "@/components/association-logo";
 
+import { EventBrand } from "./event-brand";
+import { EventSymbol } from "./event-symbol";
 import { EventNavigation, ShareEvent } from "./event-actions";
 import { InteractiveAssembly } from "./interactive-assembly";
 import { EventMotion } from "./event-motion";
 import { YouthDiscussion } from "./youth-discussion";
+import { RegistrationForm } from "./registration-form";
+import { isEventRegistrationEnabled } from "@/lib/event-features";
 import styles from "./event.module.css";
 
+const registrationEnabled = isEventRegistrationEnabled();
 const eventTitle = "2027 青年參議院 — 立法院會議";
 const searchTitle = "2027 青年參議院｜1/25–1/27 立法院會議";
-const description =
-  "2027 青年參議院「立法院會議」於 1 月 25 日至 27 日舉辦。查看活動理念、日期、報名公告與常見問題，一起關心公共事務、參與多元對話。場地、每日時間與報名資訊待公布。";
+const description = registrationEnabled
+  ? "2027 青年參議院「立法院會議」於 1 月 25 日至 27 日舉辦。查看活動理念、日期、填寫報名資料與常見問題，一起關心公共事務、參與多元對話。場地、每日時間、資格及費用待公布。"
+  : "2027 青年參議院「立法院會議」於 1 月 25 日至 27 日舉辦。查看活動理念、日期、青年議題實驗室與常見問題，一起關心公共事務、參與多元對話。場地、每日時間、報名方式、資格及費用待公布。";
 
 export const metadata: Metadata = {
   title: searchTitle,
@@ -129,7 +136,7 @@ const eventDetails = [
   { label: "活動名稱", value: "2027 青年參議院", note: "立法院會議" },
   { label: "活動日期", value: "2027 年 1 月 25 日至 27 日", note: "每日活動時間待公布" },
   { label: "活動地點", value: "待公布", note: "場地與交通資訊將於確認後更新" },
-  { label: "報名資訊", value: "待公布", note: "報名方式、資格、名額與費用尚未公布" },
+  { label: "報名資訊", value: registrationEnabled ? "由下方入口前往 Google 表單" : "待公布", note: registrationEnabled ? "資格、名額與費用以表單說明及正式公告為準" : "報名方式、資格、名額與費用尚未公布" },
 ] as const;
 
 const questions = [
@@ -143,7 +150,9 @@ const questions = [
   },
   {
     question: "如何報名？參加需要費用嗎？",
-    answer: "報名尚未開放，報名連結、開放時間、參與名額及費用資訊均待公布。可以先收藏本頁或下載活動海報。",
+    answer: registrationEnabled
+      ? "請從本頁的報名入口前往 Google 表單填寫。參與資格、名額及費用以表單說明與正式公告為準；送出後請留意主辦單位的後續通知。"
+      : "報名尚未開放。報名方式、參與資格、名額及費用將以後續正式公告為準，請留意本頁活動資訊。",
   },
   {
     question: "哪裡可以看到議程與最新資訊？",
@@ -159,14 +168,8 @@ export default function Event2027Page() {
       <a href="#event-main" className={styles.skipLink}>跳至主要內容</a>
       <header className={styles.header}>
         <div className={styles.headerInner}>
-          <a className={styles.brand} href="#event-top" aria-label="青春發聲中，回到頁首">
-            <span className={styles.voiceSticker} aria-hidden="true">
-              <span className={styles.voiceCaption}>YOUTH ON AIR</span>
-              <span className={styles.voiceWords}>青春發聲<span className={styles.voiceLive}>中</span></span>
-              <span className={styles.voiceWaves}><i /><i /><i /></span>
-            </span>
-          </a>
-          <EventNavigation />
+          <EventBrand home />
+          <EventNavigation registrationEnabled={registrationEnabled} />
         </div>
       </header>
 
@@ -257,7 +260,11 @@ export default function Event2027Page() {
                   </div>
                 ))}
               </dl>
-              <p className={styles.announcement}><span aria-hidden="true" /> 報名尚未開放，請留意後續公告。</p>
+              {registrationEnabled ? (
+                <a href="#event-registration" className={styles.textLink}>填寫報名資料 <ArrowUpRight size={18} aria-hidden="true" /></a>
+              ) : (
+                <p className={styles.announcement}><span aria-hidden="true" /> 報名尚未開放，請留意後續公告。</p>
+              )}
             </div>
             <figure className={styles.posterFigure}>
               <a href="/2027/event-poster.png" target="_blank" rel="noopener noreferrer" className={styles.posterLink} aria-label="在新分頁開啟 2027 青年參議院完整海報">
@@ -276,6 +283,7 @@ export default function Event2027Page() {
               </figcaption>
             </figure>
           </div>
+          {registrationEnabled && <RegistrationForm />}
         </section>
 
         <YouthDiscussion />
@@ -302,23 +310,31 @@ export default function Event2027Page() {
 
         <section className={styles.closing} aria-labelledby="closing-heading">
           <div className={styles.closingInner}>
-            <p className={styles.closingEyebrow}>2027 · 青年參議院</p>
-            <h2 id="closing-heading">未來的對話，<br />留一個位置給你<span>。</span></h2>
-            <p>收藏這場期待，也把邀請分享給一起關心公共事務的朋友。</p>
-            <div className={styles.closingActions}>
-              <a className={styles.yellowButton} href="/2027/event-poster.png" download="2027-青年參議院-活動海報.png">
-                下載活動海報 <Download size={19} aria-hidden="true" />
-              </a>
-              <ShareEvent />
+            <div className={styles.closingCopy}>
+              <p className={styles.closingEyebrow}>2027 · 青年參議院</p>
+              <h2 id="closing-heading">未來的對話，<br />留一個位置給你<span>。</span></h2>
+              <p>收藏這場期待，也把邀請分享給一起關心公共事務的朋友。</p>
+              <div className={styles.closingActions}>
+                <a className={styles.yellowButton} href="/2027/event-poster.png" download="2027-青年參議院-活動海報.png">
+                  下載活動海報 <Download size={19} aria-hidden="true" />
+                </a>
+                <ShareEvent />
+              </div>
             </div>
-            <span className={styles.closingSun} aria-hidden="true">✳</span>
+            <EventSymbol variant="invitation" className={styles.closingSymbol} />
           </div>
         </section>
       </main>
 
       <footer className={styles.footer}>
         <div className={styles.footerTop}>
-          <Link href="/" className={styles.associationLink}>社團法人臺灣新文化青年協會 <ArrowUpRight size={20} aria-hidden="true" /></Link>
+          <Link href="/" className={styles.associationLink}>
+            <span className={styles.footerBrandLogo} aria-hidden="true">
+              <AssociationLogo variant="event" />
+            </span>
+            <span>社團法人臺灣新文化青年協會</span>
+            <ArrowUpRight size={20} aria-hidden="true" />
+          </Link>
           <p>以青年之聲，寫臺灣新章。</p>
           <a href="#event-top" className={styles.backToTop}>回到頂端 <ArrowRight size={17} aria-hidden="true" /></a>
         </div>

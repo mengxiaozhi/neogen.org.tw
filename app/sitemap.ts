@@ -15,5 +15,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
         `${SITE_URL}/2027/youth-assembly-illustration.png`,
       ],
     },
+    {
+      url: `${SITE_URL}/2027/report`,
+    },
   ];
 }

@@ -1,10 +1,17 @@
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
+
 import { ImageResponse } from "next/og";
 
 export const alt = "臺灣新文化青年協會｜以青年之聲，寫臺灣新章";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default function OpenGraphImage() {
+export default async function OpenGraphImage() {
+  const logo = await readFile(
+    join(process.cwd(), "public/brand/association-logo-main.png"),
+  );
+
   return new ImageResponse(
     (
       <div
@@ -30,6 +37,28 @@ export default function OpenGraphImage() {
             border: "3px solid #0a0a0a",
           }}
         />
+        <div
+          style={{
+            position: "absolute",
+            right: 60,
+            bottom: 48,
+            display: "flex",
+            width: 184,
+            height: 184,
+            alignItems: "center",
+            justifyContent: "center",
+            border: "3px solid #0a0a0a",
+            background: "#ffffff",
+            transform: "rotate(3deg)",
+          }}
+        >
+          <img
+            src={`data:image/png;base64,${logo.toString("base64")}`}
+            alt=""
+            width={172}
+            height={172}
+          />
+        </div>
         <div
           style={{
             position: "absolute",

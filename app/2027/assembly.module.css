@@ -19,7 +19,6 @@
 .buttons button:hover { background: #ffe02c; transform: translateY(-2px); }
 .buttons .gavelButton { border-color: #195b32; background: #195b32; color: #f7f5e9; }
 .buttons .gavelButton:hover { background: #cf4b04; border-color: #cf4b04; }
-.buttons .resetButton { width: 46px; padding-inline: 10px; }
 .status { position: absolute; z-index: 2; right: 24px; bottom: 11px; left: 24px; min-height: 17px; margin: 0; color: #195b32; font-size: 11px; font-weight: 600; line-height: 1.5; text-align: center; pointer-events: none; }
 .assembly[data-mode="illustration"] .status:not(:empty) { width: fit-content; margin-inline: auto; padding: 8px 12px; border-radius: 3px; background: #f7f5e9; }
 
@@ -42,7 +41,6 @@
   .controls { right: 3%; left: 3%; bottom: 31px; }
   .buttons { gap: 6px; }
   .buttons button { gap: 5px; padding-inline: 10px; font-size: 10px !important; }
-  .buttons .resetButton { width: 42px; }
   .gestureHint { font-size: 9px; }
   .status { right: 3%; left: 3%; font-size: 10px; bottom: 5px; }
 }
@@ -61,7 +59,6 @@
   .touchHint { display: inline; }
   .buttons { gap: 7px; }
   .buttons button { min-height: 44px; gap: 6px; padding: 10px 11px; font-size: 11px !important; }
-  .buttons .resetButton { width: 44px; }
   .status { bottom: 7px; right: 10px; left: 10px; font-size: 10px; }
 }
 

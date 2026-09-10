@@ -11,11 +11,9 @@
 .steps { list-style: none; padding: 0; margin: 30px 0; }
 .steps li { display: flex; gap: 16px; align-items: center; margin: 17px 0; font-size: 13px; }
 .steps b { font: 900 18px Arial,sans-serif; color: #c24706; }
-.counts { display: flex; padding: 22px 0; margin-top: 26px; border-block: 1px solid #195b3238; }
-.counts > div { flex: 1; display: flex; flex-direction: column; gap: 8px; }
-.counts strong { font: 900 35px Arial,sans-serif; }
-.counts span { font-size: 12px; }
 .intro > .note { margin-top: 16px; }
+.dialogueSymbol { display: block; width: 148px; height: auto; margin: 22px 0; }
+@media (max-width: 540px) { .dialogueSymbol { width: 120px; margin-block: 18px; } }
 .board { min-width: 0; border: 2px solid #195b32; background: #f7f5e9; box-shadow: 8px 8px #dedcc8; }
 .boardTop { display: flex; justify-content: space-between; gap: 12px; background: #195b32; color: #f7f5e9; padding: 13px 24px; font-size: 11px; letter-spacing: .04em; }
 .boardTop > span:last-child { color: #ffe02c; white-space: nowrap; }
@@ -60,7 +58,7 @@
 .boardFooter a { text-decoration: underline; text-underline-offset: 3px; }
 .disclosure { font-size: 11px; line-height: 1.9; margin-top: 35px; color: #506650; }
 @media (max-width: 1100px) { .inner { padding-inline: 42px; } .layout { gap: 35px; grid-template-columns: .8fr 1.2fr; } }
-@media (max-width: 850px) { .layout { grid-template-columns: 1fr; gap: 30px; } .intro h2 { font-size: 40px; } .intro > p { max-width: none; } .steps { margin-block: 20px; } .counts { max-width: 420px; } .headingRow { margin-bottom: 30px; } }
+@media (max-width: 850px) { .layout { grid-template-columns: 1fr; gap: 30px; } .intro h2 { font-size: 40px; } .intro > p { max-width: none; } .steps { margin-block: 20px; } .headingRow { margin-bottom: 30px; } }
 @media (max-width: 540px) { .inner { padding: 48px 24px 30px; } .eyebrow span { display: none; } .stamp { font-size: 10px; padding: 8px; } .headingRow { gap: 10px; } .intro h2 { font-size: 35px; } .boardTop { padding: 12px 17px; font-size: 10px; } .board h3 { padding: 22px 17px 15px; font-size: 22px; } .tabs { margin-inline: 17px; } .panel { padding: 22px 17px 5px; } .statement { padding-inline: 14px; font-size: 21px; } .voteButtons { gap: 6px; } .voteButtons button { font-size: 12px; gap: 4px; } .boardFooter, .notice { padding-inline: 17px; } }
 @media (prefers-reduced-motion: reduce) { .section button { transition: none; } }
 

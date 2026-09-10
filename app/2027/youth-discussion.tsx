@@ -1,14 +1,13 @@
 "use client";
 
-import dynamic from "next/dynamic";
+import Link from "next/link";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { ArrowUpRight, Check, Minus, Send, X, RefreshCw, MessageSquare, Sparkles } from "lucide-react";
 import { youthDiscussion } from "@/lib/pocket-polis";
+import { EventSymbol } from "./event-symbol";
 import styles from "./discussion.module.css";
 
-const DiscussionReport = dynamic(() => import("./discussion-report"), { loading: () => <p role="status">正在開啟完整報告…</p> });
-
-type Info = { status: "open" | "closed"; allowSubmissions: boolean; counts: { statements: number; participants: number; votes: number } };
+type Info = { status: "open" | "closed"; allowSubmissions: boolean };
 type Statement = { sid: number; text: string };
 type Round = { statement: Statement | null; progress: { voted: number; total: number } };
 type Results = { result: { nParticipantsClustered: number; inclusionThreshold: number; k: number; points: { x: number; y: number; group: number }[]; groups: { id: number; label: string; size: number }[]; consensus: { agree: { sid: number }[]; disagree: { sid: number }[] } } };
@@ -25,10 +24,6 @@ export function YouthDiscussion() {
   const section = useRef<HTMLElement>(null);
   const participant = useRef("");
   const lock = useRef(false);
-  const resultsTab = useRef<HTMLButtonElement>(null);
-  const reportTrigger = useRef<HTMLButtonElement>(null);
-  const [reportOpen, setReportOpen] = useState(false);
-  const [reportPid, setReportPid] = useState("");
   const [info, setInfo] = useState<Info | null>(null);
   const [round, setRound] = useState<Round | null>(null);
   const [view, setView] = useState<"vote" | "write" | "results">("vote");
@@ -128,11 +123,7 @@ export function YouthDiscussion() {
               <li><b>02</b><span>補上一句，你在意的事。</span></li>
               <li><b>03</b><span>看見不同立場，也找找共同點。</span></li>
             </ol>
-            <div className={styles.counts} aria-label="討論統計">
-              <div><strong>{info?.counts.statements ?? "—"}</strong><span>個觀點</span></div>
-              <div><strong>{info?.counts.participants ?? "—"}</strong><span>位參與者</span></div>
-              <div><strong>{info?.counts.votes ?? "—"}</strong><span>次選擇</span></div>
-            </div>
+            <EventSymbol variant="dialogue" className={styles.dialogueSymbol} />
             <p className={styles.note}>不必登入，以這個瀏覽器的隨機識別碼記錄參與。統計反映此場參與者的回應，並非具代表性的民意調查。</p>
           </div>
           <div className={styles.board}>
@@ -142,7 +133,7 @@ export function YouthDiscussion() {
             <div className={styles.tabs} aria-label="討論功能">
               <button aria-pressed={view === "vote"} disabled={busy} onClick={() => { setView("vote"); setError(""); setNotice(""); }}>回應觀點</button>
               <button aria-pressed={view === "write"} disabled={busy} onClick={() => { setView("write"); setError(""); setNotice(""); }}>提出觀點</button>
-              <button ref={resultsTab} aria-pressed={view === "results"} disabled={busy} onClick={showResults}>共識進度</button>
+              <button aria-pressed={view === "results"} disabled={busy} onClick={showResults}>共識進度</button>
             </div>
             <div className={styles.panel} aria-busy={busy}>
               {view === "vote" && <>
@@ -152,14 +143,13 @@ export function YouthDiscussion() {
                 </>}
               </>}
               {view === "write" && <form className={styles.form} onSubmit={submit}><label htmlFor="youth-statement">你希望大家一起想想的，是什麼？</label><p>一句話聚焦一件事，讓其他人能表達同意或不同意。請勿填寫姓名、電話或其他個人資料。</p><textarea id="youth-statement" value={text} onChange={(e) => setText(e.target.value)} maxLength={280} rows={4} required disabled={busy || closed || !info?.allowSubmissions} placeholder="我認為，青年參與公共決策可以…" /><div className={styles.formBottom}><span>{text.length} / 280 字</span><button className={styles.primary} disabled={busy || closed || !info?.allowSubmissions || !text.trim()} type="submit">{busy ? "送出中…" : "送出觀點"}<Send size={17} aria-hidden="true" /></button></div><p className={styles.note}>{closed ? "討論已結束。" : info && !info.allowSubmissions ? "目前暫停接受新觀點。" : "投稿經審核通過後公開。請就事論事，尊重不同觀點。"}</p></form>}
-              {view === "results" && <div className={styles.results}>{!results ? <p>{busy ? "正在整理回應…" : "點選重新整理，查看大家的回應。"}</p> : !ready ? <><Sparkles size={32} aria-hidden="true" /><h4>共識，需要更多聲音。</h4><p>目前有 {results.result.nParticipantsClustered} 位參與者達到分群回應門檻。至少 4 位參與者各回應 {results.result.inclusionThreshold} 則觀點後，系統才會嘗試分群；形成不同群組後，才能比較跨群共同點。</p><p className={styles.note}>現在還不足以判斷跨群共識，邀請更多不同想法的人加入吧。</p></> : <><h4>不同的聲音，正在靠近。</h4>{points.length > 0 && <figure className={styles.opinionMap}><svg viewBox="0 0 400 220" role="img" aria-label={`意見分布圖，共 ${points.length} 位已分群參與者，顯示前 ${Math.min(points.length, 1000)} 位。`}><path d="M200 20V200M20 110H380" stroke="#195b3220" strokeDasharray="4 5" />{points.slice(0, 1000).map((point, index) => <circle key={index} cx={200 + (point.x - (mapBounds.minX + mapBounds.maxX) / 2) * mapScale} cy={110 - (point.y - (mapBounds.minY + mapBounds.maxY) / 2) * mapScale} r="5" fill={colors[Math.abs(point.group) % colors.length]} opacity=".72" />)}</svg><figcaption>每點是一位已分群參與者；越靠近，回應越相似。座標不代表政治光譜或立場優劣。{points.length > 1000 && "此處顯示前 1,000 位，請至完整報告查看。"}</figcaption></figure>}<div className={styles.groups}>{results.result.groups.map((group) => <span key={group.id}>{group.label} · {group.size} 人</span>)}</div>{consensus.length ? <ul>{consensus.map((s) => <li key={s.sid}>{s.text}</li>)}</ul> : <p>目前尚未形成可呈現的共同同意觀點，請到完整報告查看不同意見。</p>}</>}<button className={styles.textButton} onClick={showResults} disabled={busy}><RefreshCw size={15} aria-hidden="true" />重新整理進度</button><button ref={reportTrigger} type="button" className={styles.reportLink} aria-expanded={reportOpen} aria-controls={reportOpen ? "event-report" : undefined} onClick={() => { let existing = participant.current; try { existing ||= localStorage.getItem(`neogen:polis:v1:${youthDiscussion.id}`) ?? ""; } catch {} setReportPid(/^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(existing) ? existing : ""); setReportOpen(true); if (reportOpen) document.getElementById("event-report")?.scrollIntoView({ behavior: "auto" }); }}>完整意見地圖與 AI 綜整<ArrowUpRight size={17} aria-hidden="true" /></button><p className={styles.note}>報告會隨回應累積更新；AI 綜整僅在資料與額度足夠時產生。</p></div>}
+              {view === "results" && <div className={styles.results}>{!results ? <p>{busy ? "正在整理回應…" : "點選重新整理，查看大家的回應。"}</p> : !ready ? <><Sparkles size={32} aria-hidden="true" /><h4>共識，需要更多聲音。</h4><p>目前有 {results.result.nParticipantsClustered} 位參與者達到分群回應門檻。至少 4 位參與者各回應 {results.result.inclusionThreshold} 則觀點後，系統才會嘗試分群；形成不同群組後，才能比較跨群共同點。</p><p className={styles.note}>現在還不足以判斷跨群共識，邀請更多不同想法的人加入吧。</p></> : <><h4>不同的聲音，正在靠近。</h4>{points.length > 0 && <figure className={styles.opinionMap}><svg viewBox="0 0 400 220" role="img" aria-label={`意見分布圖，共 ${points.length} 位已分群參與者，顯示前 ${Math.min(points.length, 1000)} 位。`}><path d="M200 20V200M20 110H380" stroke="#195b3220" strokeDasharray="4 5" />{points.slice(0, 1000).map((point, index) => <circle key={index} cx={200 + (point.x - (mapBounds.minX + mapBounds.maxX) / 2) * mapScale} cy={110 - (point.y - (mapBounds.minY + mapBounds.maxY) / 2) * mapScale} r="5" fill={colors[Math.abs(point.group) % colors.length]} opacity=".72" />)}</svg><figcaption>每點是一位已分群參與者；越靠近，回應越相似。座標不代表政治光譜或立場優劣。{points.length > 1000 && "此處顯示前 1,000 位，請至完整報告查看。"}</figcaption></figure>}<div className={styles.groups}>{results.result.groups.map((group) => <span key={group.id}>{group.label} · {group.size} 人</span>)}</div>{consensus.length ? <ul>{consensus.map((s) => <li key={s.sid}>{s.text}</li>)}</ul> : <p>目前尚未形成可呈現的共同同意觀點，請到完整報告查看不同意見。</p>}</>}<button className={styles.textButton} onClick={showResults} disabled={busy}><RefreshCw size={15} aria-hidden="true" />重新整理進度</button><Link href="/2027/report" className={styles.reportLink}>完整意見地圖與 AI 綜整<ArrowUpRight size={17} aria-hidden="true" /></Link><p className={styles.note}>報告會隨回應累積更新；AI 綜整僅在資料與額度足夠時產生。</p></div>}
             </div>
             {error && <div className={styles.error} role="alert"><p>{error}</p><button onClick={() => { if (view === "results") showResults(); else void run(async () => { setInfo(await request<Info>("")); if (round) setRound(await request<Round>(`/next?pid=${encodeURIComponent(pid())}`)); }); }} disabled={busy}>重新連線</button></div>}
             <p className={styles.notice} role="status" aria-live="polite">{notice}</p>
             <div className={styles.boardFooter}><span>把差異帶進討論，把理解帶回生活。</span><a href="https://github.com/mashbean/pocket-polis" target="_blank" rel="noopener noreferrer">Powered by Pocket Polis ↗</a></div>
           </div>
         </div>
-        {reportOpen && <DiscussionReport participantId={reportPid} onClose={() => { setReportOpen(false); (reportTrigger.current ?? resultsTab.current)?.focus(); }} />}
         <p className={styles.disclosure}>這是 2027 活動的會前意見交流，參與討論不等於完成活動報名。持有連結者可查看本場討論與彙整結果；本場不列入 Pocket Polis 公開目錄，也不開放公開下載逐筆投票資料。</p>
       </div>
     </section>

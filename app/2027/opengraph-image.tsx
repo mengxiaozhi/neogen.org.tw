@@ -1,10 +1,17 @@
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
+
 import { ImageResponse } from "next/og";
 
 export const alt = "2027 青年參議院｜1 月 25 日至 27 日立法院會議";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default function OpenGraphImage() {
+export default async function OpenGraphImage() {
+  const logo = await readFile(
+    join(process.cwd(), "public/brand/association-logo-event.png"),
+  );
+
   return new ImageResponse(
     (
       <div
@@ -38,10 +45,20 @@ export default function OpenGraphImage() {
             display: "flex",
             width: 168,
             height: 168,
-            border: "28px solid #ffe02c",
-            borderRadius: 999,
+            alignItems: "center",
+            justifyContent: "center",
+            border: "5px solid #ffe02c",
+            background: "#f7f5e9",
+            transform: "rotate(3deg)",
           }}
-        />
+        >
+          <img
+            src={`data:image/png;base64,${logo.toString("base64")}`}
+            alt=""
+            width={154}
+            height={154}
+          />
+        </div>
         <div
           style={{
             position: "absolute",

@@ -18,6 +18,10 @@ html {
   scroll-behavior: smooth;
 }
 
+html.has-scroll-smoother {
+  scroll-behavior: auto;
+}
+
 body {
   margin: 0;
   overflow-x: clip;
@@ -29,6 +33,18 @@ body {
 
 main {
   overflow-x: clip;
+}
+
+.smooth-wrapper,
+.smooth-content {
+  overflow-x: clip;
+}
+
+.editorial-symbol {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
 }
 
 a,
@@ -82,6 +98,32 @@ button {
   min-height: calc(100svh - 92px);
 }
 
+.hero-symbol-accent {
+  position: absolute;
+  z-index: -1;
+  top: -2.8rem;
+  right: -0.5rem;
+  width: clamp(5.8rem, 8vw, 8.5rem);
+  color: var(--ink);
+  opacity: 0.14;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.section-symbol-accent {
+  display: block;
+  width: 3.75rem;
+  flex: 0 0 auto;
+  color: var(--ink);
+  pointer-events: none;
+  will-change: transform;
+}
+
+.section-symbol-accent--action {
+  width: 3.5rem;
+  color: var(--orange);
+}
+
 .hero-media {
   isolation: isolate;
 }
@@ -131,6 +173,24 @@ button {
 
 .belief-card {
   position: relative;
+}
+
+.belief-icon {
+  position: absolute;
+  top: 2.6rem;
+  right: 1.5rem;
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  place-items: center;
+  color: var(--ink);
+  transition: color 220ms ease, transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.belief-card:hover .belief-icon {
+  color: var(--orange);
+  transform: translateY(-0.3rem) rotate(7deg);
 }
 
 .belief-card::after {
@@ -185,6 +245,242 @@ button {
 .nav-link:focus-visible {
   outline: 2px solid var(--orange);
   outline-offset: 6px;
+}
+
+.mobile-nav-panel {
+  --mobile-nav-gutter: clamp(1.25rem, 6vw, 2.5rem);
+  isolation: isolate;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+
+.mobile-nav-panel::-webkit-scrollbar {
+  display: none;
+}
+
+.mobile-nav-panel::before {
+  position: fixed;
+  z-index: -2;
+  top: -11rem;
+  right: -10rem;
+  width: 23rem;
+  height: 23rem;
+  content: "";
+  border: 4.5rem solid var(--orange);
+  border-radius: 999px;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.mobile-nav-panel::after {
+  position: fixed;
+  z-index: -1;
+  right: 0;
+  bottom: 0;
+  width: 34vw;
+  height: 28vh;
+  min-height: 10rem;
+  content: "";
+  background: var(--orange);
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+  pointer-events: none;
+}
+
+.mobile-nav-panel[data-state="open"] {
+  animation: mobile-nav-panel-in 560ms cubic-bezier(0.76, 0, 0.24, 1) both;
+}
+
+.mobile-nav-panel[data-state="closed"] {
+  animation: mobile-nav-panel-out 380ms cubic-bezier(0.76, 0, 0.24, 1) both;
+}
+
+.mobile-nav-shell {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  padding: max(1rem, env(safe-area-inset-top)) var(--mobile-nav-gutter)
+    max(1.25rem, env(safe-area-inset-bottom));
+}
+
+.mobile-nav-topbar {
+  display: flex;
+  min-height: 4rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid rgb(255 255 255 / 28%);
+  padding-bottom: 1rem;
+}
+
+.mobile-nav-close {
+  transition: border-color 180ms ease, background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.mobile-nav-close:hover {
+  transform: rotate(6deg);
+}
+
+.mobile-nav-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-block: clamp(1.25rem, 4vh, 2.5rem) 0.65rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: rgb(255 255 255 / 58%);
+}
+
+.mobile-nav-main {
+  margin-bottom: auto;
+}
+
+.mobile-nav-list {
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid rgb(255 255 255 / 32%);
+  list-style: none;
+}
+
+.mobile-nav-item {
+  border-bottom: 1px solid rgb(255 255 255 / 32%);
+}
+
+.mobile-nav-panel[data-state="open"] .mobile-nav-item {
+  animation: mobile-nav-item-in 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(150ms + (var(--nav-index) * 64ms));
+}
+
+.mobile-nav-link {
+  display: grid;
+  grid-template-columns: 2.1rem minmax(0, 1fr) 1.5rem;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: clamp(4.25rem, 10vh, 5.75rem);
+  color: white;
+  text-decoration: none;
+}
+
+.mobile-nav-index {
+  align-self: start;
+  padding-top: 1.15rem;
+  font-family: "Noto Serif TC", "Songti TC", "STSong", "PMingLiU", serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--orange);
+}
+
+.mobile-nav-label {
+  font-family: "Noto Serif TC", "Songti TC", "STSong", "PMingLiU", serif;
+  font-size: clamp(1.55rem, 7vw, 2.45rem);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+  transition: color 180ms ease, transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-nav-arrow {
+  color: rgb(255 255 255 / 58%);
+  transition: color 180ms ease, transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-nav-link:hover .mobile-nav-label,
+.mobile-nav-link:focus-visible .mobile-nav-label {
+  color: var(--orange);
+  transform: translateX(0.35rem);
+}
+
+.mobile-nav-link:hover .mobile-nav-arrow,
+.mobile-nav-link:focus-visible .mobile-nav-arrow {
+  color: var(--orange);
+  transform: translate(0.2rem, -0.2rem);
+}
+
+.mobile-nav-link:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: -2px;
+}
+
+.mobile-nav-footer {
+  display: grid;
+  gap: 1.25rem;
+  align-items: end;
+  padding-top: clamp(1.5rem, 5vh, 3rem);
+}
+
+.mobile-nav-panel[data-state="open"] .mobile-nav-topbar,
+.mobile-nav-panel[data-state="open"] .mobile-nav-heading,
+.mobile-nav-panel[data-state="open"] .mobile-nav-footer {
+  animation: mobile-nav-chrome-in 480ms ease both;
+}
+
+.mobile-nav-panel[data-state="open"] .mobile-nav-heading {
+  animation-delay: 120ms;
+}
+
+.mobile-nav-panel[data-state="open"] .mobile-nav-footer {
+  animation-delay: 360ms;
+}
+
+.mobile-nav-decoration {
+  position: fixed;
+  z-index: 0;
+  right: -0.1em;
+  bottom: 10vh;
+  display: flex;
+  flex-direction: column;
+  color: rgb(255 255 255 / 4%);
+  font-family: "Noto Serif TC", "Songti TC", "STSong", "PMingLiU", serif;
+  font-size: clamp(5rem, 28vw, 10rem);
+  font-weight: 900;
+  line-height: 0.75;
+  letter-spacing: -0.08em;
+  pointer-events: none;
+  user-select: none;
+}
+
+@keyframes mobile-nav-panel-in {
+  from {
+    clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+  }
+  to {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+@keyframes mobile-nav-panel-out {
+  from {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+  to {
+    clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+  }
+}
+
+@keyframes mobile-nav-item-in {
+  from {
+    opacity: 0;
+    transform: translateX(2rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes mobile-nav-chrome-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .editorial-frame::before,
@@ -285,6 +581,25 @@ button {
   opacity: 0.98;
 }
 
+.closing-symbol-orbit {
+  position: absolute;
+  z-index: 2;
+  top: 2.75rem;
+  right: clamp(2rem, 8vw, 9rem);
+  display: block;
+  width: clamp(6rem, 10vw, 10rem);
+  color: white;
+  opacity: 0.7;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.closing-symbol-accent {
+  --symbol-accent: var(--ink);
+  display: block;
+  will-change: transform;
+}
+
 .social-link {
   text-decoration: none;
 }
@@ -323,9 +638,32 @@ button {
   .closing-glyph {
     right: -0.2em;
   }
+
+  .closing-symbol-orbit {
+    top: 1.5rem;
+    right: 1.25rem;
+    width: 5rem;
+    opacity: 0.28;
+  }
 }
 
 @media (max-width: 640px) {
+  .hero-symbol-accent {
+    top: 0.35rem;
+    right: 0;
+    width: 4.75rem;
+    opacity: 0.1;
+  }
+
+  .section-symbol-accent {
+    width: 3rem;
+  }
+
+  .belief-icon {
+    top: 2.45rem;
+    right: 0.75rem;
+  }
+
   .hero-media-plane {
     right: -1rem;
     bottom: 2.8rem;
@@ -345,6 +683,26 @@ button {
     width: 10rem;
     height: 11rem;
     clip-path: polygon(45% 0, 100% 0, 100% 100%, 0 100%, 0 38%, 45% 38%);
+  }
+}
+
+@media (min-width: 430px) {
+  .mobile-nav-footer {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+}
+
+@media (max-height: 680px) {
+  .mobile-nav-heading {
+    padding-top: 1rem;
+  }
+
+  .mobile-nav-link {
+    min-height: 4rem;
+  }
+
+  .mobile-nav-footer {
+    padding-top: 1.25rem;
   }
 }
 

@@ -1,0 +1,14 @@
+.git
+.next
+node_modules
+.vercel
+.local
+.env*
+design
+docs
+scripts
+tests
+*.tsbuildinfo
+*.log
+.DS_Store
+AGENTS.md

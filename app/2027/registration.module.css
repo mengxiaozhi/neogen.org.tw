@@ -1,0 +1,22 @@
+.section { --registration-paper: #f7f5e9; display: grid; grid-template-columns: .8fr 1.2fr; align-items: start; gap: 54px; width: min(100% - 128px, 1240px); margin-inline: auto; padding-block: 72px 88px; border-top: 1px solid #195b3238; }
+.intro h3 { margin: 0 0 27px; font-size: clamp(30px, 3.25vw, 47px); font-weight: 900; letter-spacing: -.065em; line-height: 1.5; }
+.intro h3 span { color: #c24706; }
+.date, .description { font-size: 15px; line-height: 1.95; font-weight: 650; }
+.ticket { position: relative; display: flex; flex-direction: column; align-items: center; width: min(100%, 355px); margin: 35px 0 30px; padding: 15px 26px 12px; color: #195b32; background: #ffe02c; border-radius: 6px; overflow: hidden; }
+.ticket::before, .ticket::after { position: absolute; top: calc(50% - 13px); width: 26px; height: 26px; background: #eeeddd; border-radius: 50%; content: ""; }
+.ticket::before { left: -13px; }.ticket::after { right: -13px; }
+.ticket strong { width: 100%; padding-bottom: 8px; border-bottom: 1px solid #195b32; font: 900 clamp(25px, 2.6vw, 36px) Arial, sans-serif; text-align: center; white-space: nowrap; }
+.ticket span { padding-top: 9px; font-size: 13px; font-weight: 850; letter-spacing: .06em; }
+.panel { min-width: 0; border: 2px solid #195b32; background: var(--registration-paper); box-shadow: 8px 8px #dcd7bd; }
+.header { display: flex; justify-content: space-between; align-items: center; gap: 18px; padding: 22px 26px; background: #195b32; color: var(--registration-paper); }
+.header h4 { font-size: clamp(17px, 1.65vw, 22px); line-height: 1.5; font-weight: 900; }
+.header > span { flex-shrink: 0; font-size: 11px; white-space: nowrap; }
+.guide { padding: 28px 26px 30px; }
+.introduction { margin: 0 0 22px; font-size: 23px; font-weight: 850; line-height: 1.5; }
+.submit { display: inline-flex; justify-content: center; align-items: center; gap: 20px; min-height: 50px; padding: 12px 22px; border: 1px solid #bc4308; border-radius: 3px; background: #cf4b04; color: #fff; font-size: 16px; font-weight: 850; cursor: pointer; transition: background 160ms; }
+.submit:hover { background: #195b32; border-color: #195b32; }
+.externalHint { margin: 12px 0 0; color: #506650; font-size: 12px; line-height: 1.8; }
+@media (max-width: 1100px) { .section { gap: 34px; width: calc(100% - 84px); }.header, .guide { padding-inline: 22px; } }
+@media (max-width: 850px) { .section { grid-template-columns: 1fr; align-items: start; gap: 30px; padding-block: 48px 64px; }.intro h3 { font-size: 37px; }.ticket { margin-block: 24px; }.description { font-size: 14px; } }
+@media (max-width: 540px) { .section { width: calc(100% - 32px); }.intro { padding-inline: 8px; }.intro h3 { font-size: 31px; }.header { padding: 18px; flex-wrap: wrap; gap: 8px; }.guide { padding: 24px 18px; }.submit { width: 100%; font-size: 15px; }.date { font-size: 14px; } }
+@media (prefers-reduced-motion: reduce) { .submit { transition: none; } }

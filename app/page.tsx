@@ -1,8 +1,17 @@
 import Image from "next/image";
-import { ArrowDown, ArrowRight, ArrowUpRight, Mail } from "lucide-react";
+import {
+  ArrowDown,
+  ArrowRight,
+  ArrowUpRight,
+  Eye,
+  Lightbulb,
+  Mail,
+  PenLine,
+} from "lucide-react";
 
 import { ActionExperience } from "@/components/action-experience";
 import { BrandMark } from "@/components/brand-mark";
+import { EditorialSymbol } from "@/components/editorial-symbol";
 import { JoinDialog } from "@/components/join-dialog";
 import { SiteHeader } from "@/components/site-header";
 import { SiteMotion } from "@/components/site-motion";
@@ -11,14 +20,17 @@ import { SITE_URL, SOCIAL_LINKS, siteStructuredData } from "@/lib/seo";
 
 const beliefs = [
   {
+    icon: Lightbulb,
     title: "拒絕盲從",
     description: "保有判斷，不讓聲量取代理由。",
   },
   {
+    icon: Eye,
     title: "直視權力",
     description: "追問制度，讓權力回應公共利益。",
   },
   {
+    icon: PenLine,
     title: "共創新章",
     description: "以多元對話，寫下當代臺灣的青年觀點。",
   },
@@ -35,13 +47,23 @@ export default function Home() {
       />
       <SiteMotion />
       <a className="skip-link" href="#main-content">跳至主要內容</a>
-      <SiteHeader />
+
+      <div id="smooth-wrapper" className="smooth-wrapper">
+        <div id="smooth-content" className="smooth-content">
+          <SiteHeader />
 
       <section id="main-content" tabIndex={-1} className="hero-section site-container relative grid items-center gap-12 pb-16 pt-8 lg:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)] lg:gap-14 lg:pb-20 lg:pt-12">
         <span className="registration-mark left-1 top-5" data-gsap-mark aria-hidden="true" />
         <span className="registration-target right-1 top-5" data-gsap-mark aria-hidden="true" />
 
-        <div className="relative z-10 pt-16 lg:pt-4">
+        <div data-gsap-pointer-zone className="relative z-10 pt-16 lg:pt-4">
+          <div
+            className="hero-symbol-accent"
+            data-gsap-hero-symbol
+            data-gsap-pointer
+          >
+            <EditorialSymbol variant="voice" className="editorial-symbol" />
+          </div>
           <p data-gsap-hero className="mb-6 flex items-center gap-3 text-[11px] font-black tracking-[0.2em] text-[var(--orange)] sm:text-xs">
             <span className="h-2 w-2 bg-[var(--orange)]" aria-hidden="true" />
             TAIWAN NEW CULTURE YOUTH · 2026
@@ -92,13 +114,16 @@ export default function Home() {
         </p>
       </section>
 
-      <section id="about" className="beliefs-section section-anchor relative overflow-hidden border-y border-[var(--line)] bg-[var(--paper-soft)]">
+      <section id="about" tabIndex={-1} className="beliefs-section section-anchor relative overflow-hidden border-y border-[var(--line)] bg-[var(--paper-soft)]">
         <span className="beliefs-halftone" aria-hidden="true" />
         <div className="site-container relative z-10 py-24 sm:py-32">
           <div data-gsap-reveal className="mb-12 flex items-center gap-5 text-sm font-black tracking-[0.16em] text-[var(--orange)]">
             <span>關於我們</span>
             <span aria-hidden="true">／</span>
             <span>核心信念</span>
+            <span className="section-symbol-accent ml-auto" data-gsap-symbol>
+              <EditorialSymbol variant="dialogue" className="editorial-symbol" />
+            </span>
           </div>
           <div data-gsap-reveal className="grid gap-10 border-b border-[var(--ink)] pb-16 lg:grid-cols-[1.4fr_0.8fr] lg:gap-20">
             <h2 className="display-font text-[clamp(3rem,4.9vw,5.8rem)] font-black leading-[1.13] tracking-[-0.06em]">
@@ -112,14 +137,20 @@ export default function Home() {
           </div>
 
           <div data-gsap-stagger className="grid divide-y divide-[var(--line)] md:grid-cols-3 md:divide-x md:divide-y-0">
-            {beliefs.map((belief, index) => (
+            {beliefs.map((belief, index) => {
+              const Icon = belief.icon;
+
+              return (
               <article
                 data-gsap-stagger-item
-                className="belief-card grid grid-cols-[4.25rem_1fr] gap-4 py-10 first:pl-0 md:block md:px-9 md:py-14 md:first:pl-0 md:last:pr-0"
+                className="belief-card group grid grid-cols-[4.25rem_1fr] gap-4 py-10 first:pl-0 md:block md:px-9 md:py-14 md:first:pl-0 md:last:pr-0"
                 key={belief.title}
               >
                 <span className="display-font text-6xl font-black leading-none text-[var(--orange)] md:text-8xl">
                   0{index + 1}
+                </span>
+                <span className="belief-icon" data-gsap-card-icon aria-hidden="true">
+                  <Icon size={34} strokeWidth={1.5} />
                 </span>
                 <div className="md:mt-9">
                   <h3 className="display-font text-3xl font-black tracking-[-0.04em] sm:text-4xl">
@@ -131,21 +162,32 @@ export default function Home() {
                   </p>
                 </div>
               </article>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
-      <section id="actions" className="actions-section section-anchor site-container py-24 sm:py-32">
+      <section id="actions" tabIndex={-1} className="actions-section section-anchor site-container py-24 sm:py-32">
         <div data-gsap-reveal className="mb-12 flex items-center justify-between gap-6 border-b border-[var(--ink)] pb-5 text-sm font-black tracking-[0.16em]">
           <p><span className="text-[var(--orange)]">02 /</span> 我們的行動</p>
-          <p className="hidden text-xs text-[var(--muted)] sm:block">THINK · SPEAK · ACT</p>
+          <div className="ml-auto flex items-center gap-5">
+            <p className="hidden text-xs text-[var(--muted)] sm:block">THINK · SPEAK · ACT</p>
+            <span className="section-symbol-accent section-symbol-accent--action" data-gsap-symbol>
+              <EditorialSymbol variant="action" className="editorial-symbol" />
+            </span>
+          </div>
         </div>
         <ActionExperience />
       </section>
 
       <section data-gsap-closing className="relative overflow-hidden bg-[var(--ink)] text-white">
         <span className="closing-orange-plane" aria-hidden="true" />
+        <span className="closing-symbol-orbit" data-gsap-symbol-spin aria-hidden="true">
+          <span className="closing-symbol-accent" data-gsap-symbol>
+            <EditorialSymbol variant="invitation" className="editorial-symbol" />
+          </span>
+        </span>
         <div data-gsap-reveal className="site-container relative z-10 py-20 sm:py-28 lg:py-32">
           <p className="mb-7 text-xs font-black tracking-[0.2em] text-[var(--orange)]">03 / JOIN THE CONVERSATION</p>
           <h2 className="display-font max-w-5xl text-[clamp(3.35rem,6.4vw,7.7rem)] font-black leading-[1.04] tracking-[-0.065em] text-balance">
@@ -256,6 +298,8 @@ export default function Home() {
           <a className="nav-link w-fit font-bold text-[var(--ink)]" href={SITE_URL}>neogen.org.tw</a>
         </div>
       </footer>
+        </div>
+      </div>
     </main>
   );
 }
