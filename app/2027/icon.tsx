@@ -6,7 +6,7 @@ export const size = { width: 96, height: 96 };
 export const contentType = "image/png";
 
 export default async function Icon() {
-  const artwork = await readFile(join(process.cwd(), "public/brand/association-logo-event.png"));
+  const artwork = await readFile(join(process.cwd(), "public/2027/youth-voice-icon-v1.png"));
 
   return new ImageResponse(
     <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", background: "#f7f5e9" }}>

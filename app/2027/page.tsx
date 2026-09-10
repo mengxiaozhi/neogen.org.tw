@@ -31,15 +31,14 @@ import { InteractiveAssembly } from "./interactive-assembly";
 import { EventMotion } from "./event-motion";
 import { YouthDiscussion } from "./youth-discussion";
 import { RegistrationForm } from "./registration-form";
+import { EventProgram } from "./event-program";
 import { isEventRegistrationEnabled } from "@/lib/event-features";
 import styles from "./event.module.css";
 
 const registrationEnabled = isEventRegistrationEnabled();
 const eventTitle = "2027 青年參議院 — 立法院會議";
 const searchTitle = "2027 青年參議院｜1/25–1/27 立法院會議";
-const description = registrationEnabled
-  ? "2027 青年參議院「立法院會議」於 1 月 25 日至 27 日舉辦。查看活動理念、日期、填寫報名資料與常見問題，一起關心公共事務、參與多元對話。場地、每日時間、資格及費用待公布。"
-  : "2027 青年參議院「立法院會議」於 1 月 25 日至 27 日舉辦。查看活動理念、日期、青年議題實驗室與常見問題，一起關心公共事務、參與多元對話。場地、每日時間、報名方式、資格及費用待公布。";
+const description = "2027 青年參議院—立法院會議於 1/25–1/27 舉辦，邀請高中職、大專校院學生體驗立法委員與國會記者角色。報名期間 2026/10/15–12/15，不含住宿 NT$2,000、含住宿 NT$4,000。查看活動亮點、模擬議題與三日體驗。";
 
 export const metadata: Metadata = {
   title: searchTitle,
@@ -72,7 +71,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = { themeColor: "#f7f5e9" };
 
-// Add Event rich-result markup once a confirmed venue and address are available.
+// The brochure lists a primary venue with conditional alternatives; retain
+// WebPage markup until the final venue is confirmed.
 const structuredData = {
   "@context": "https://schema.org",
   "@graph": [
@@ -112,51 +112,55 @@ const beliefs = [
   {
     number: "01",
     icon: Lightbulb,
-    title: "從提問開始",
-    english: "THINK INDEPENDENTLY",
-    description: "面對習以為常的答案，多問一句為什麼。讓關心有依據，讓思考有自己的方向。",
+    title: "理解民主制度",
+    english: "UNDERSTAND DEMOCRACY",
+    description: "認識議事規則與法案撰寫，理解公共決策如何形成。",
   },
   {
     number: "02",
     icon: MessagesSquare,
-    title: "讓不同對話",
-    english: "LISTEN & DISCUSS",
-    description: "說出自己的觀點，也聽見不同的聲音。在多元立場之間，練習理解與交流。",
+    title: "練習協商與表達",
+    english: "DISCUSS & NEGOTIATE",
+    description: "在協商與討論中，練習分析、表達與合作。",
   },
   {
     number: "03",
     icon: Megaphone,
     title: "把關心化為參與",
     english: "MAKE YOUR VOICE HEARD",
-    description: "公共事務與每個人的生活相連。從身邊的議題出發，找到自己參與的起點。",
+    description: "把討論化為青年觀點與政策建議，延續公共參與。",
   },
 ] as const;
 
 const eventDetails = [
-  { label: "活動名稱", value: "2027 青年參議院", note: "立法院會議" },
-  { label: "活動日期", value: "2027 年 1 月 25 日至 27 日", note: "每日活動時間待公布" },
-  { label: "活動地點", value: "待公布", note: "場地與交通資訊將於確認後更新" },
-  { label: "報名資訊", value: registrationEnabled ? "由下方入口前往 Google 表單" : "待公布", note: registrationEnabled ? "資格、名額與費用以表單說明及正式公告為準" : "報名方式、資格、名額與費用尚未公布" },
+  { label: "活動日期", value: "2027 年 1 月 25 日至 27 日", note: "首日 09:00 報到" },
+  { label: "參加對象", value: "高中職、大專校院學生", note: "未滿 18 歲須附家長同意書" },
+  { label: "主要場地", value: "中華民國立法院", note: "實際地點以錄取信件為準" },
+  { label: "主辦單位", value: "社團法人臺灣新文化青年協會", note: "指導單位：教育部青年發展署（邀請中）" },
 ] as const;
 
 const questions = [
   {
-    question: "活動什麼時候舉辦？在哪裡舉行？",
-    answer: "2027 青年參議院「立法院會議」將於 2027 年 1 月 25 日至 27 日舉辦。每日活動時間與舉辦場地尚未公布，請留意本頁活動資訊。",
+    question: "日期與地點？",
+    answer: "活動於 2027 年 1 月 25 日至 27 日舉行，首日 09:00 報到。主要場地為中華民國立法院，實際地點以錄取信件為準。",
   },
   {
-    question: "誰可以參加？需要相關經驗嗎？",
-    answer: "參加資格、年齡限制與是否需要相關經驗，將以正式報名簡章為準。目前簡章尚未公布。",
+    question: "誰可以參加？",
+    answer: "開放高中職與大專校院學生報名；未滿 18 歲者須繳交家長同意書。",
   },
   {
-    question: "如何報名？參加需要費用嗎？",
+    question: "何時報名？",
     answer: registrationEnabled
-      ? "請從本頁的報名入口前往 Google 表單填寫。參與資格、名額及費用以表單說明與正式公告為準；送出後請留意主辦單位的後續通知。"
-      : "報名尚未開放。報名方式、參與資格、名額及費用將以後續正式公告為準，請留意本頁活動資訊。",
+      ? "報名期間為 2026 年 10 月 15 日至 12 月 15 日，錄取名單於 12 月 25 日公布。請由本頁入口填寫表單。"
+      : "報名期間為 2026 年 10 月 15 日至 12 月 15 日，錄取名單於 12 月 25 日公布；網站入口尚未開放。",
   },
   {
-    question: "哪裡可以看到議程與最新資訊？",
-    answer: "活動議程與相關安排將於確認後更新至本頁。目前尚無已公布的議程，請以後續正式公告為準。",
+    question: "費用包含什麼？",
+    answer: "不含住宿 NT$2,000；含住宿 NT$4,000。兩種方案皆含兩天午、晚餐與保險，住宿地點待公布。",
+  },
+  {
+    question: "活動異動或其他問題？",
+    answer: "如遇不可抗力，活動可能改期、停辦或更改形式，退款依公告辦理。其他問題請聯絡 neogentaiwan2026@gmail.com。",
   },
 ] as const;
 
@@ -176,7 +180,7 @@ export default function Event2027Page() {
       <main id="event-main" tabIndex={-1}>
         <section className={styles.hero} aria-labelledby="event-title">
           <div className={styles.heroCopy}>
-            <p className={styles.eyebrow}>讓青春，走進公共現場</p>
+            <p className={styles.eyebrow}>青年問政，議動臺灣</p>
             <h1 id="event-title" className={styles.heroTitle}>
               <span className={styles.year}>2027</span>
               <span className={styles.titleWords}>
@@ -185,7 +189,7 @@ export default function Event2027Page() {
               </span>
               <span className={styles.subtitle}>— 立法院會議 —</span>
             </h1>
-            <p className={styles.heroDescription}><time dateTime="2027-01-25">2027 年 1 月 25 日</time>至<time dateTime="2027-01-27">27 日</time><br />讓每一個提問，都成為改變的起點。</p>
+            <p className={styles.heroDescription}><time dateTime="2027-01-25">2027 年 1 月 25 日</time>至<time dateTime="2027-01-27">27 日</time><br />三天模擬立法院，讓青年觀點走進議場。</p>
             <div className={styles.heroActions}>
               <a href="#event-about" className={styles.primaryButton}>
                 探索活動 <ArrowUpRight aria-hidden="true" />
@@ -225,10 +229,10 @@ export default function Event2027Page() {
         <section id="event-about" tabIndex={-1} className={`${styles.section} ${styles.about}`} aria-labelledby="about-heading">
           <p className={styles.sectionLabel}><span>01 /</span> 活動理念 <span className={styles.englishLabel}>THE IDEA</span></p>
           <div className={styles.aboutIntro}>
-            <h2 id="about-heading">關心的事，<br />一起帶進討論<span className={styles.orangeDot}>。</span></h2>
+            <h2 id="about-heading">從請願到提案，<br />把民主實踐帶進今天<span className={styles.orangeDot}>。</span></h2>
             <div className={styles.aboutCopy}>
-              <p>每個世代，都有想改變的事。<br />從生活中的一個提問，到對公共事務的關心，青年觀點值得被聽見。</p>
-              <p>2027 青年參議院，邀你一起思考：我們如何理解議題、傾聽彼此，並以自己的聲音參與公共討論？</p>
+              <p>1921 年，蔣渭水、林獻堂等人發起臺灣議會設置請願運動。百年來，青年持續參與臺灣民主發展。</p>
+              <p>2027 青年參議院邀請學生扮演立法委員與國會記者，透過三天模擬理解議事、討論公共議題。</p>
             </div>
           </div>
           <div className={styles.beliefs}>
@@ -251,7 +255,7 @@ export default function Event2027Page() {
             <div className={styles.infoCopy}>
               <p className={styles.sectionLabel}><span>02 /</span> 活動資訊 <span className={styles.englishLabel}>THE DETAILS</span></p>
               <h2 id="info-heading">下一個現場，<br />期待有你<span className={styles.orangeDot}>。</span></h2>
-              <p className={styles.infoLead}>先把期待留給 2027。<br />更多活動細節，將在這裡與你分享。</p>
+              <p className={styles.infoLead}>三天模擬議事、協商與採訪報導。</p>
               <dl className={styles.eventDetails}>
                 {eventDetails.map((detail) => (
                   <div key={detail.label} className={styles.detailRow}>
@@ -263,7 +267,7 @@ export default function Event2027Page() {
               {registrationEnabled ? (
                 <a href="#event-registration" className={styles.textLink}>填寫報名資料 <ArrowUpRight size={18} aria-hidden="true" /></a>
               ) : (
-                <p className={styles.announcement}><span aria-hidden="true" /> 報名尚未開放，請留意後續公告。</p>
+                <p className={styles.announcement}><span aria-hidden="true" /> 報名期間為 2026/10/15–12/15，網站入口尚未開放。</p>
               )}
             </div>
             <figure className={styles.posterFigure}>
@@ -283,6 +287,7 @@ export default function Event2027Page() {
               </figcaption>
             </figure>
           </div>
+          <EventProgram />
           {registrationEnabled && <RegistrationForm />}
         </section>
 
@@ -313,7 +318,7 @@ export default function Event2027Page() {
             <div className={styles.closingCopy}>
               <p className={styles.closingEyebrow}>2027 · 青年參議院</p>
               <h2 id="closing-heading">未來的對話，<br />留一個位置給你<span>。</span></h2>
-              <p>收藏這場期待，也把邀請分享給一起關心公共事務的朋友。</p>
+              <p>收藏海報，也分享給朋友。</p>
               <div className={styles.closingActions}>
                 <a className={styles.yellowButton} href="/2027/event-poster.png" download="2027-青年參議院-活動海報.png">
                   下載活動海報 <Download size={19} aria-hidden="true" />
