@@ -36,35 +36,35 @@ export function EventProgram() {
   return (
     <div className={styles.program}>
       <section id="event-practical" tabIndex={-1} className={styles.block} aria-labelledby="practical-heading">
-        <header className={styles.heading}><span>PLAN YOUR VISIT</span><h3 id="practical-heading">報名時程與費用</h3></header>
+        <header className={styles.heading}><span>PLAN YOUR VISIT</span><h2 id="practical-heading">報名時程與費用</h2></header>
         <dl className={styles.timeline}>
           <div><dt>報名開始</dt><dd><time dateTime="2026-10-15">2026.10.15</time></dd></div>
           <div><dt>報名截止</dt><dd><time dateTime="2026-12-15">2026.12.15</time></dd></div>
           <div><dt>錄取名單公布</dt><dd><time dateTime="2026-12-25">2026.12.25</time></dd></div>
         </dl>
         <div className={styles.fees}>
-          <article className={styles.fee}><p>不含住宿</p><h4><span>NT$</span> 2,000</h4><p>含兩天午餐、晚餐及保險。</p></article>
-          <article className={`${styles.fee} ${styles.stay}`}><p>含住宿</p><h4><span>NT$</span> 4,000</h4><p>含兩天住宿、午餐、晚餐及保險。</p></article>
+          <article className={styles.fee}><p>不含住宿</p><h3><span>NT$</span> 2,000</h3><p>含兩天午餐、晚餐及保險。</p></article>
+          <article className={`${styles.fee} ${styles.stay}`}><p>含住宿</p><h3><span>NT$</span> 4,000</h3><p>含兩天住宿、午餐、晚餐及保險。</p></article>
         </div>
         <p className={styles.note}>住宿地點待公布；錄取及繳費方式以電子郵件通知。</p>
       </section>
 
       <section id="event-roles" tabIndex={-1} className={styles.block} aria-labelledby="roles-heading">
-        <header className={styles.heading}><span>TAKE YOUR ROLE</span><h3 id="roles-heading">換一個角色，看見公共決策。</h3></header>
+        <header className={styles.heading}><span>TAKE YOUR ROLE</span><h2 id="roles-heading">換一個角色，看見公共決策。</h2></header>
         <div className={styles.roles}>
-          {roles.map((role) => <article key={role.number} className={styles.role}><div className={styles.roleLabel}><span>{role.number}</span><span>{role.english}</span></div><h4>{role.title}</h4><p>{role.description}</p></article>)}
+          {roles.map((role) => <article key={role.number} className={styles.role}><div className={styles.roleLabel}><span>{role.number}</span><span>{role.english}</span></div><h3>{role.title}</h3><p>{role.description}</p></article>)}
         </div>
-        <div className={styles.topicHeading}><h4>三個委員會，三組討論議題。</h4></div>
+        <div className={styles.topicHeading}><h3>三個委員會，三組討論議題。</h3></div>
         <div className={styles.topics}>
-          {topics.map((topic) => <article key={topic.number} className={styles.topic}><span>{topic.number}</span><h5>{topic.title}</h5><p className={styles.bill}>模擬審議<br /><strong>{topic.bill}</strong></p></article>)}
+          {topics.map((topic) => <article key={topic.number} className={styles.topic}><span>{topic.number}</span><h4>{topic.title}</h4><p className={styles.bill}>模擬審議<br /><strong>{topic.bill}</strong></p></article>)}
         </div>
         <p className={styles.note}>議題資料與講師名單以錄取通知及後續公告為準。</p>
       </section>
 
       <section id="event-schedule" tabIndex={-1} className={styles.block} aria-labelledby="schedule-heading">
-        <header className={styles.heading}><span>THREE DAYS IN ACTION</span><h3 id="schedule-heading">三天，把想法帶進議場。</h3></header>
+        <header className={styles.heading}><span>THREE DAYS IN ACTION</span><h2 id="schedule-heading">三天，把想法帶進議場。</h2></header>
         <div className={styles.days}>
-          {days.map((day) => <article key={day.number} className={styles.day}><header><span>DAY {day.number}</span><time dateTime={day.date}>{day.label}</time></header><h4>{day.title}</h4><p>{day.summary}</p></article>)}
+          {days.map((day) => <article key={day.number} className={styles.day}><header><span>DAY {day.number}</span><time dateTime={day.date}>{day.label}</time></header><h3>{day.title}</h3><p>{day.summary}</p></article>)}
         </div>
         <p className={styles.note}>完整流程以錄取通知為準。</p>
       </section>

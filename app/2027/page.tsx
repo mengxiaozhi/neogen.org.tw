@@ -31,7 +31,6 @@ import { InteractiveAssembly } from "./interactive-assembly";
 import { EventMotion } from "./event-motion";
 import { YouthDiscussion } from "./youth-discussion";
 import { RegistrationForm } from "./registration-form";
-import { EventProgram } from "./event-program";
 import { isEventRegistrationEnabled } from "@/lib/event-features";
 import styles from "./event.module.css";
 
@@ -264,6 +263,7 @@ export default function Event2027Page() {
                   </div>
                 ))}
               </dl>
+              <Link href="/2027/program" className={`${styles.textLink} ${styles.programLink}`}>查看活動資訊 <ArrowUpRight size={18} aria-hidden="true" /></Link>
               {registrationEnabled ? (
                 <a href="#event-registration" className={styles.textLink}>填寫報名資料 <ArrowUpRight size={18} aria-hidden="true" /></a>
               ) : (
@@ -287,7 +287,6 @@ export default function Event2027Page() {
               </figcaption>
             </figure>
           </div>
-          <EventProgram />
           {registrationEnabled && <RegistrationForm />}
         </section>
 

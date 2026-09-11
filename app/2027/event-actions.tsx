@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ArrowUpRight, Check, Menu, Share2, X } from "lucide-react";
 
 import { EventBrand } from "./event-brand";
@@ -9,13 +11,20 @@ import { EventSymbol } from "./event-symbol";
 import styles from "./event.module.css";
 
 const links = [
-  { href: "#event-about", label: "活動理念" },
-  { href: "#event-info", label: "活動資訊" },
-  { href: "#event-discussion", label: "議題實驗室" },
-  { href: "#event-faq", label: "常見問題" },
+  { href: "/2027", label: "活動理念" },
+  { href: "/2027/program", label: "活動資訊" },
+  { href: "/2027#event-discussion", label: "議題實驗室" },
+  { href: "/2027#event-faq", label: "常見問題" },
 ] as const;
 
-export function EventNavigation({ registrationEnabled = false }: { registrationEnabled?: boolean }) {
+export function EventNavigation({ registrationEnabled = false, currentPage = "home" }: { registrationEnabled?: boolean; currentPage?: "home" | "program" }) {
+  const router = useRouter();
+  const currentPath = currentPage === "home" ? "/2027" : "/2027/program";
+  const navigationLinks = links.map((link) => ({
+    ...link,
+    href: currentPage === "home" ? link.href.replace("/2027#", "#") : link.href,
+    current: link.href === currentPath,
+  }));
   const [open, setOpen] = useState(false);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -41,7 +50,7 @@ export function EventNavigation({ registrationEnabled = false }: { registrationE
     closingRef.current = false;
     setOpen(false);
 
-    if (href) {
+    if (href?.startsWith("#")) {
       const target = document.getElementById(href.slice(1));
       if (target) {
         const tabIndex = target.getAttribute("tabindex");
@@ -50,7 +59,11 @@ export function EventNavigation({ registrationEnabled = false }: { registrationE
         if (tabIndex === null) target.removeAttribute("tabindex");
         else target.setAttribute("tabindex", tabIndex);
       }
-      window.location.hash = href;
+      window.location.assign(href);
+    } else if (href) {
+      toggleRef.current?.focus({ preventScroll: true });
+      router.push(href);
+      if (href === currentPath) window.scrollTo({ top: 0, behavior: "instant" });
     } else {
       toggleRef.current?.focus({ preventScroll: true });
     }
@@ -87,12 +100,12 @@ export function EventNavigation({ registrationEnabled = false }: { registrationE
 
     // A fixed body also prevents background scrolling in mobile Safari.
     Object.assign(body.style, { position: "fixed", top: `-${scrollY}px`, width: "100%", overflow: "hidden" });
-    root.style.overflow = "hidden";
+    root.style.setProperty("overflow", "hidden");
     desktop.addEventListener("change", onDesktop);
     reducedMotion.addEventListener("change", onReducedMotion);
     releaseRef.current = () => {
       Object.assign(body.style, previous);
-      root.style.overflow = rootOverflow;
+      root.style.setProperty("overflow", rootOverflow);
       window.scrollTo({ top: scrollY, behavior: "instant" });
       desktop.removeEventListener("change", onDesktop);
       reducedMotion.removeEventListener("change", onReducedMotion);
@@ -128,13 +141,13 @@ export function EventNavigation({ registrationEnabled = false }: { registrationE
         <Menu size={23} aria-hidden="true" />
       </button>
       <nav id="event-navigation" className={styles.navLinks} aria-label="活動導覽">
-        {links.map((link) => (
-          <a key={link.href} href={link.href}>{link.label}</a>
+        {navigationLinks.map((link) => (
+          <Link key={link.href} href={link.href} aria-current={link.current ? "page" : undefined}>{link.label}</Link>
         ))}
       </nav>
-      <a className={styles.headerAction} href={registrationEnabled ? "#event-registration" : "#event-info"}>
+      <Link className={styles.headerAction} href={registrationEnabled ? (currentPage === "home" ? "#event-registration" : "/2027#event-registration") : "/2027/program"}>
         {registrationEnabled ? "填寫報名資料" : "查看活動資訊"} <ArrowUpRight size={17} aria-hidden="true" />
-      </a>
+      </Link>
       <dialog
         ref={dialogRef}
         id="event-mobile-navigation"
@@ -156,14 +169,14 @@ export function EventNavigation({ registrationEnabled = false }: { registrationE
         }}
         onClickCapture={(event) => {
           const href = (event.target as Element).closest("a")?.getAttribute("href");
-          if (href?.startsWith("#") && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
+          if (href && (href.startsWith("#") || href === "/2027" || navigationLinks.some((link) => link.href === href)) && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
             event.preventDefault();
             closeMenu(href);
           }
         }}
       >
         <div className={styles.mobileMenuHeader}>
-          <EventBrand home />
+          <EventBrand home={currentPage === "home"} />
           <button ref={closeRef} type="button" className={styles.mobileMenuClose} aria-label="關閉導覽選單" onClick={() => closeMenu()}>
             <X size={24} aria-hidden="true" />
           </button>
@@ -171,8 +184,8 @@ export function EventNavigation({ registrationEnabled = false }: { registrationE
         <div className={styles.mobileMenuBody}>
           <p className={styles.mobileMenuEyebrow} data-menu-reveal><span aria-hidden="true" /> 青春發聲中 <span>YOUTH ON AIR</span></p>
           <nav className={styles.mobileMenuLinks} aria-label="手機活動導覽">
-            {links.map((link, index) => (
-              <a key={link.href} href={link.href} data-menu-reveal>
+            {navigationLinks.map((link, index) => (
+              <a key={link.href} href={link.href} aria-current={link.current ? "page" : undefined} data-menu-reveal>
                 <span className={styles.mobileMenuNumber} aria-hidden="true">0{index + 1}</span>
                 <span>{link.label}</span>
                 <ArrowUpRight aria-hidden="true" />

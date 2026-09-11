@@ -19,7 +19,7 @@
   letter-spacing: 0.14em;
 }
 
-.heading h3 {
+.block .heading h2 {
   margin-top: 10px;
   font-size: clamp(25px, 2.8vw, 36px);
   font-weight: 850;
@@ -84,13 +84,13 @@
   font-weight: 800;
 }
 
-.fee h4 {
+.fee h3 {
   margin-block: 16px;
   font: 900 clamp(38px, 4vw, 52px)/1.1 Arial, sans-serif;
   letter-spacing: -0.04em;
 }
 
-.fee h4 span {
+.fee h3 span {
   font-size: 18px;
   letter-spacing: 0;
 }
@@ -131,7 +131,7 @@
   font-size: 24px;
 }
 
-.role h4 {
+.role h3 {
   margin-block: 20px 14px;
   font-size: 28px;
   font-weight: 850;
@@ -146,7 +146,7 @@
   margin-block: 38px 22px;
 }
 
-.topicHeading h4 {
+.topicHeading h3 {
   font-size: 22px;
   font-weight: 800;
   line-height: 1.5;
@@ -169,7 +169,7 @@
   font: 800 13px Arial, sans-serif;
 }
 
-.topic h5 {
+.topic h4 {
   margin-block: 18px 12px;
   font-size: 23px;
   font-weight: 850;
@@ -217,7 +217,7 @@
   font: 800 14px Arial, sans-serif;
 }
 
-.day h4 {
+.day h3 {
   margin: 24px 22px 10px;
   font-size: 21px;
   font-weight: 850;
@@ -246,7 +246,7 @@
     padding-inline: 16px;
   }
 
-  .day h4 {
+  .day h3 {
     margin-inline: 16px;
   }
 
@@ -309,7 +309,7 @@
     padding: 18px 22px;
   }
 
-  .day h4 {
+  .day h3 {
     margin-inline: 22px;
   }
 

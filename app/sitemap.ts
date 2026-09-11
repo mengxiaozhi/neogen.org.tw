@@ -16,6 +16,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       ],
     },
     {
+      url: `${SITE_URL}/2027/program`,
+    },
+    {
       url: `${SITE_URL}/2027/report`,
     },
   ];

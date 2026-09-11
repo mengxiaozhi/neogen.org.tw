@@ -37,7 +37,8 @@
 .navigation { display: flex; align-items: center; gap: 40px; }
 .navLinks { display: flex; align-items: center; gap: 32px; font-size: 15px; font-weight: 800; letter-spacing: .04em; }
 .navLinks a { padding-block: 12px; text-underline-offset: 7px; }
-.navLinks a:hover { text-decoration: underline; }
+.navLinks a:hover, .navLinks a[aria-current="page"] { text-decoration: underline; }
+.navLinks a[aria-current="page"] { text-decoration-color: var(--event-orange); text-decoration-thickness: 3px; }
 .headerAction { display: inline-flex; align-items: center; justify-content: center; gap: 18px; min-height: 44px; padding: 10px 19px; background: var(--event-green); border: 1px solid var(--event-green); border-radius: 5px; color: var(--event-paper); font-size: 14px; font-weight: 800; transition: background 160ms, color 160ms; }
 .headerAction:hover { background: var(--event-yellow); color: var(--event-green); }
 .menuToggle { display: none; }
@@ -55,7 +56,7 @@
 .mobileMenuLinks { display: flex; flex-direction: column; }
 .mobileMenuLinks a { display: grid; grid-template-columns: 24px 1fr 26px; align-items: center; gap: 14px; min-height: 78px; padding-block: 18px; border-top: 1px solid #f7f5e94d; font-size: clamp(27px, 7.4vw, 42px); font-weight: 850; line-height: 1.3; letter-spacing: -.025em; }
 .mobileMenuLinks a:last-child { border-bottom: 1px solid #f7f5e94d; }
-.mobileMenuLinks a:is(:hover, :focus-visible) { color: var(--event-yellow); }
+.mobileMenuLinks a[aria-current="page"], .mobileMenuLinks a:is(:hover, :focus-visible) { color: var(--event-yellow); }
 .mobileMenuNumber { align-self: center; color: var(--event-yellow); font-family: Arial, sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .02em; }
 .mobileMenuLinks svg { width: 24px; height: 24px; color: var(--event-yellow); transition: transform 180ms; }
 .mobileMenuLinks a:is(:hover, :focus-visible) svg { transform: translate(3px, -3px); }
@@ -118,6 +119,7 @@
 .infoInner { display: grid; grid-template-columns: 1.12fr .88fr; gap: 110px; align-items: center; padding-block: 84px; }
 .infoLead { margin-top: 20px; color: #456148; font-size: 16px; line-height: 1.9; }
 .eventDetails { margin-top: 31px; border-top: 1px solid var(--event-green); }
+.programLink { margin-top: 24px; }
 .detailRow { display: grid; grid-template-columns: 100px 1fr; gap: 18px; padding: 21px 0; border-bottom: 1px solid var(--event-line); }
 .detailRow dt { padding-top: 2px; font-size: 14px; font-weight: 700; }
 .detailRow dd strong { display: block; font-size: 19px; font-weight: 800; }
