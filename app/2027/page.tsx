@@ -13,15 +13,7 @@ import {
   Sparkles,
 } from "lucide-react";
 
-import {
-  ORGANIZATION_ID,
-  SITE_NAME,
-  SITE_URL,
-  WEBSITE_ID,
-  organizationJsonLd,
-  sharedRobots,
-  websiteJsonLd,
-} from "@/lib/seo";
+import { eventMetadata, eventStructuredData } from "@/lib/event-seo";
 import { AssociationLogo } from "@/components/association-logo";
 
 import { EventBrand } from "./event-brand";
@@ -35,77 +27,9 @@ import { isEventRegistrationEnabled } from "@/lib/event-features";
 import styles from "./event.module.css";
 
 const registrationEnabled = isEventRegistrationEnabled();
-const eventTitle = "2027 青年參議院 — 立法院會議";
-const searchTitle = "2027 青年參議院｜1/25–1/27 立法院會議";
-const description = "2027 青年參議院—立法院會議於 1/25–1/27 舉辦，邀請高中職、大專校院學生體驗立法委員與國會記者角色。報名期間 2026/10/15–12/15，不含住宿 NT$2,000、含住宿 NT$4,000。查看活動亮點、模擬議題與三日體驗。";
-
-export const metadata: Metadata = {
-  title: searchTitle,
-  description,
-  robots: sharedRobots,
-  alternates: { canonical: "/2027" },
-  openGraph: {
-    type: "website",
-    locale: "zh_TW",
-    url: "/2027",
-    siteName: SITE_NAME,
-    title: searchTitle,
-    description,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: searchTitle,
-    description,
-    images: [
-      {
-        url: "/2027/opengraph-image",
-        alt: eventTitle,
-        width: 1200,
-        height: 630,
-        type: "image/png",
-      },
-    ],
-  },
-};
-
+export const metadata: Metadata = eventMetadata("home");
 export const viewport: Viewport = { themeColor: "#f7f5e9" };
-
-// The brochure lists a primary venue with conditional alternatives; retain
-// WebPage markup until the final venue is confirmed.
-const structuredData = {
-  "@context": "https://schema.org",
-  "@graph": [
-    organizationJsonLd,
-    websiteJsonLd,
-    {
-      "@type": "WebPage",
-      "@id": `${SITE_URL}/2027#webpage`,
-      url: `${SITE_URL}/2027`,
-      name: searchTitle,
-      description,
-      inLanguage: "zh-Hant-TW",
-      isPartOf: { "@id": WEBSITE_ID },
-      about: { "@id": ORGANIZATION_ID },
-      publisher: { "@id": ORGANIZATION_ID },
-      primaryImageOfPage: {
-        "@type": "ImageObject",
-        url: `${SITE_URL}/2027/event-poster.png`,
-        width: 1122,
-        height: 1402,
-        caption: eventTitle,
-      },
-      breadcrumb: { "@id": `${SITE_URL}/2027#breadcrumb` },
-    },
-    {
-      "@type": "BreadcrumbList",
-      "@id": `${SITE_URL}/2027#breadcrumb`,
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: SITE_NAME, item: `${SITE_URL}/` },
-        { "@type": "ListItem", position: 2, name: eventTitle, item: `${SITE_URL}/2027` },
-      ],
-    },
-  ],
-};
+const structuredData = eventStructuredData("home");
 
 const beliefs = [
   {
