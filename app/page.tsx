@@ -98,6 +98,7 @@ export default function Home() {
               alt="青年參與公共論壇，在議事空間中共同合影"
               fill
               loading="eager"
+              fetchPriority="high"
               sizes="(max-width: 1024px) 100vw, 60vw"
               className="object-cover object-[50%_62%]"
             />

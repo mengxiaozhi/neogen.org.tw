@@ -5,9 +5,9 @@ export const SITE_NAME = "臺灣新文化青年協會";
 export const ASSOCIATION_LEGAL_NAME = "社團法人臺灣新文化青年協會";
 export const SITE_TITLE = `${SITE_NAME}｜以青年之聲，寫臺灣新章`;
 export const SITE_DESCRIPTION =
-  "社團法人臺灣新文化青年協會鼓勵青年獨立思考、勇於發聲、積極參與公共事務，讓多元觀點進入公共討論。";
+  "社團法人臺灣新文化青年協會以學生及社會青年為主體，倡議獨立思考與公共參與。認識協會理念、青年行動與2027青年參議院，讓多元觀點進入公共討論。";
 export const SITE_OG_DESCRIPTION =
-  "拒絕盲從，直視權力。共同建構屬於當代臺灣青年的公共文化。";
+  "臺灣新文化青年協會｜拒絕盲從，直視權力。以獨立思考、多元對話與青年行動，共同建構當代臺灣的公共文化。";
 
 export const ORGANIZATION_ID = `${SITE_URL}/#organization`;
 export const WEBSITE_ID = `${SITE_URL}/#website`;
@@ -54,6 +54,16 @@ export const organizationJsonLd = {
   name: SITE_NAME,
   legalName: ASSOCIATION_LEGAL_NAME,
   url: `${SITE_URL}/`,
+  description: SITE_DESCRIPTION,
+  logo: {
+    "@type": "ImageObject",
+    "@id": `${SITE_URL}/#logo`,
+    url: `${SITE_URL}/brand/association-logo-main.png`,
+    contentUrl: `${SITE_URL}/brand/association-logo-main.png`,
+    width: 768,
+    height: 768,
+    caption: `${SITE_NAME}標誌`,
+  },
   email: "neogentaiwan2026@gmail.com",
   address: {
     "@type": "PostalAddress",
@@ -83,11 +93,38 @@ export const websiteJsonLd = {
   "@id": WEBSITE_ID,
   url: `${SITE_URL}/`,
   name: SITE_NAME,
+  alternateName: ASSOCIATION_LEGAL_NAME,
   inLanguage: "zh-Hant-TW",
   publisher: { "@id": ORGANIZATION_ID },
 } as const;
 
 export const siteStructuredData = {
   "@context": "https://schema.org",
-  "@graph": [organizationJsonLd, websiteJsonLd],
+  "@graph": [
+    organizationJsonLd,
+    websiteJsonLd,
+    {
+      "@type": "WebPage",
+      "@id": `${SITE_URL}/#webpage`,
+      url: `${SITE_URL}/`,
+      name: SITE_TITLE,
+      description: SITE_DESCRIPTION,
+      inLanguage: "zh-Hant-TW",
+      isPartOf: { "@id": WEBSITE_ID },
+      about: { "@id": ORGANIZATION_ID },
+      publisher: { "@id": ORGANIZATION_ID },
+      primaryImageOfPage: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}/images/youth-forum.jpg`,
+        width: 8173,
+        height: 5451,
+        caption: "青年參與公共論壇，在議事空間中共同合影",
+      },
+      hasPart: [
+        { "@type": "WebPageElement", url: `${SITE_URL}/#about`, name: "認識協會" },
+        { "@type": "WebPageElement", url: `${SITE_URL}/#actions`, name: "青年行動" },
+        { "@type": "WebPage", "@id": `${SITE_URL}/2027#webpage`, url: `${SITE_URL}/2027`, name: "2027 青年參議院—立法院會議" },
+      ],
+    },
+  ],
 } as const;
