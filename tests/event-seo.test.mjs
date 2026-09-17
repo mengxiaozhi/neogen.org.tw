@@ -23,7 +23,10 @@ for (const { path, html } of documents) {
       assert.equal(new URL(url).origin, origin);
       assert.equal(new URL(url).pathname, '/2027/opengraph-image');
     }
-    assert.doesNotMatch(meta.find(tag => tag.name === 'robots')?.content ?? '', /noindex/);
+    const robots = meta.find(tag => tag.name === 'robots')?.content;
+    assert.ok(robots, 'robots metadata must exist');
+    assert.match(robots, /(?:^|, )index(?:,|$)/);
+    assert.doesNotMatch(robots, /noindex/);
     assert.equal((html.match(/<h1\b/g) ?? []).length, 1);
   });
 
@@ -61,9 +64,29 @@ test('sitemap, robots and association homepage agree on the primary host', () =>
   const sitemap = output('sitemap.xml.body');
   const robots = output('robots.txt.body');
   for (const path of pages) assert.ok(sitemap.includes(`<loc>${origin}${path}</loc>`));
-  assert.ok(sitemap.includes('<lastmod>2026-09-11</lastmod>'));
+  const graph = JSON.parse(documents[0].html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
+  const modified = graph['@graph'].find(node => node['@type'] === 'WebPage').dateModified;
+  assert.match(modified, /^\d{4}-\d{2}-\d{2}$/);
+  assert.ok(sitemap.includes(`<lastmod>${modified}</lastmod>`));
   assert.ok(robots.includes(`Sitemap: ${origin}/sitemap.xml`));
   assert.ok(robots.includes('Disallow: /api/'));
   for (const text of [sitemap, robots, ...documents.map(page => page.html)]) assert.doesNotMatch(text, /https:\/\/neogen\.org\.tw/);
   assert.deepEqual(tags(output('index.html'), 'link').filter(tag => tag.rel === 'canonical').map(tag => new URL(tag.href).href), [`${origin}/`]);
+});
+
+
+test('report is discoverable in initial HTML without clicking a JavaScript tab', () => {
+  const html = documents.find(page => page.path === '/2027').html;
+  const anchors = tags(html, 'a');
+  assert.equal(anchors.filter(tag => tag.href === '/2027/report').length, 1);
+});
+
+test('program landing page includes date, audience and conditional venue in readable HTML', () => {
+  const html = documents.find(page => page.path === '/2027/program').html.split('<script')[0];
+  // JSON-LD appears before main; inspect the main element instead of script text.
+  const main = documents.find(page => page.path === '/2027/program').html.match(/<main\b[\s\S]*?<\/main>/)?.[0] ?? html;
+  assert.match(main, /datetime="2027-01-25"/i);
+  assert.match(main, /高中職、大專校院學生/);
+  assert.match(main, /實際地點以錄取信件為準/);
+  assert.match(main, /家長同意書/);
 });

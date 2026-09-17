@@ -30,12 +30,16 @@ export const SOCIAL_LINKS = [
   },
 ] as const;
 
+// Preview pages must remain crawlable so crawlers can read the noindex directive.
+// Local builds retain production metadata unless Vercel identifies a preview.
+export const isIndexableEnvironment = !["preview", "development"].includes(process.env.VERCEL_ENV ?? "");
+
 export const sharedRobots = {
-  index: true,
+  index: isIndexableEnvironment,
   follow: true,
   nocache: false,
   googleBot: {
-    index: true,
+    index: isIndexableEnvironment,
     follow: true,
     noimageindex: false,
     "max-video-preview": -1,

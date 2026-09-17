@@ -3,7 +3,7 @@ import { ORGANIZATION_ID, SITE_NAME, SITE_URL, WEBSITE_ID, organizationJsonLd, s
 
 export const EVENT_NAME = "2027 青年參議院—立法院會議";
 // Update only when the public activity content changes, not on every build.
-export const EVENT_CONTENT_UPDATED = "2026-09-11";
+export const EVENT_CONTENT_UPDATED = "2026-09-17";
 
 export const eventPages = {
   home: {
@@ -66,7 +66,9 @@ export function eventStructuredData(page: EventPage) {
         // Do not imply a confirmed venue or ticket availability with Event/Offer markup.
         about: { "@type": "Thing", "@id": `${homeUrl}#subject`, name: EVENT_NAME },
         ...(page === "report" ? {} : { dateModified: EVENT_CONTENT_UPDATED }),
-        primaryImageOfPage: { "@type": "ImageObject", url: image.url, width: image.width, height: image.height, caption: image.alt },
+        primaryImageOfPage: page === "home"
+          ? { "@type": "ImageObject", url: `${SITE_URL}/2027/youth-assembly-illustration.png`, width: 1254, height: 1254, caption: "2027 青年參議院活動插畫：青年發聲與公共參與" }
+          : { "@type": "ImageObject", url: image.url, width: image.width, height: image.height, caption: image.alt },
         breadcrumb: { "@id": `${url}#breadcrumb` },
         hasPart: page === "home"
           ? [eventPages.program, eventPages.report].map(({ path, label }) => ({ "@type": "WebPage", "@id": `${SITE_URL}${path}#webpage`, url: `${SITE_URL}${path}`, name: label }))

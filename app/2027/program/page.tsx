@@ -29,7 +29,8 @@ export default function EventProgramPage() {
           <nav className={styles.breadcrumbs} aria-label="麵包屑導覽"><Link href="/2027">活動理念</Link><span aria-hidden="true">/</span><span aria-current="page">活動資訊</span></nav>
           <p className={styles.eyebrow}>2027 · 青年參議院 — 立法院會議</p>
           <h1>活動資訊<span>。</span></h1>
-          <p className={styles.description}>從報名準備到會議安排，活動資訊都在這裡。</p>
+          <p className={styles.description}>2027 青年參議院—立法院會議於 <time dateTime="2027-01-25">2027 年 1 月 25 日</time>至 <time dateTime="2027-01-27">27 日</time>舉辦，邀請高中職、大專校院學生參與三天模擬立法院。</p>
+          <p className={styles.description}>主要場地為中華民國立法院，實際地點以錄取信件為準；未滿 18 歲者須繳交家長同意書。</p>
           <nav className={styles.sections} aria-label="活動資訊章節">
             {[["event-practical", "報名與費用"], ["event-roles", "角色與議題"], ["event-schedule", "三天流程"]].map(([id, label]) => <a href={`#${id}`} key={id}>{label}<ArrowDownRight size={16} aria-hidden="true" /></a>)}
           </nav>
