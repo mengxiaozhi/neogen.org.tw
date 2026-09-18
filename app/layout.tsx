@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import { CookieConsent } from "@/components/cookie-consent";
 
 import {
   ASSOCIATION_LEGAL_NAME,
@@ -60,8 +60,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="zh-Hant-TW">
-      <body>{children}</body>
-      <GoogleAnalytics gaId="G-WZXRHNVVYV" />
+      <body>{children}<CookieConsent /></body>
     </html>
   );
 }
