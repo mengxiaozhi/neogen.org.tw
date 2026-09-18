@@ -24,7 +24,7 @@ export const eventPages = {
 } as const;
 
 type EventPage = keyof typeof eventPages;
-const image = { url: `${SITE_URL}/2027/opengraph-image`, width: 1200, height: 630, alt: `${EVENT_NAME}｜2027 年 1 月 25–27 日`, type: "image/png" };
+const image = { url: `${SITE_URL}/2027/opengraph-image?v=20260918`, width: 1200, height: 630, alt: `${EVENT_NAME}｜2027 年 1 月 25–27 日，青年問政，議動臺灣`, type: "image/png" };
 
 export function eventMetadata(page: EventPage): Metadata {
   const { path, title, description } = eventPages[page];

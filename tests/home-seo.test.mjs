@@ -62,3 +62,19 @@ test('homepage WebPage links to the website, association and crawlable sections'
   const hero = tags('img').find(tag => tag.alt === page.primaryImageOfPage.caption);
   assert.equal(hero.fetchPriority ?? hero.fetchpriority, 'high');
 });
+
+test('generated main share artwork is packaged locally and served as a 1200x630 PNG', () => {
+  const source = readFileSync(new URL('../public/images/og-main-2026-09-18.png', import.meta.url));
+  const image = readFileSync(new URL('../.next/server/app/opengraph-image.body', import.meta.url));
+  const eventImage = readFileSync(new URL('../.next/server/app/2027/opengraph-image.body', import.meta.url));
+  const pngSignature = Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]);
+  assert.ok(source.subarray(0, 8).equals(pngSignature));
+  assert.ok(image.subarray(0, 8).equals(pngSignature));
+  assert.equal(image.readUInt32BE(16), 1200);
+  assert.equal(image.readUInt32BE(20), 630);
+  assert.ok(image.length < 5 * 1024 * 1024);
+  assert.ok(!image.equals(eventImage), 'activity image remains independent');
+  for (const [key, value] of [['og:image:width', '1200'], ['og:image:height', '630']]) {
+    assert.equal(meta.find(tag => tag.property === key)?.content, value);
+  }
+});
