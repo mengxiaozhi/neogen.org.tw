@@ -84,3 +84,12 @@ test('server HTML never embeds an executable GA tag before consent on any public
     assert.match(html, /Cookie 設定/);
   }
 });
+
+test('public routes select their own visual theme without separate consent stores', () => {
+  for (const route of ['index', 'privacy', '2027', '2027/program', '2027/report']) {
+    const html = readFileSync(new URL(`../.next/server/app/${route}.html`, import.meta.url), 'utf8');
+    const expected = route.startsWith('2027') ? 'event' : 'main';
+    assert.match(html, new RegExp(`data-cookie-theme="${expected}"`));
+    assert.equal((html.match(/data-cookie-theme=/g) ?? []).length, 1);
+  }
+});

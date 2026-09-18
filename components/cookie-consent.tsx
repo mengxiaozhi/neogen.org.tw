@@ -2,13 +2,18 @@
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
-import { SlidersHorizontal } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { Cookie, SlidersHorizontal, Sparkles } from "lucide-react";
 import { consentSnapshot, parseConsent, saveConsent, startAnalytics, subscribeConsent } from "@/lib/cookie-consent";
 import styles from "./cookie-consent.module.css";
 
 const serverSnapshot = () => null;
 
 export function CookieConsent() {
+  const pathname = usePathname();
+  // Theme is purely visual: both routes retain the same consent store and GA gate.
+  const isEvent = pathname === "/2027" || pathname.startsWith("/2027/");
+  const PrivacyIcon = isEvent ? Sparkles : Cookie;
   const raw = useSyncExternalStore(subscribeConsent, consentSnapshot, serverSnapshot);
   const consent = parseConsent(raw);
   const [open, setOpen] = useState(false);
@@ -28,7 +33,7 @@ export function CookieConsent() {
   }
 
   return (
-    <>
+    <div className={`${styles.root} ${isEvent ? styles.eventTheme : styles.mainTheme}`} data-cookie-theme={isEvent ? "event" : "main"}>
       <button ref={settings} className={styles.settings} type="button" onClick={() => setOpen(true)} aria-expanded={raw !== null && (!consent || open)} aria-controls="cookie-preferences">
         <SlidersHorizontal size={15} aria-hidden="true" />Cookie 設定
       </button>
@@ -36,8 +41,8 @@ export function CookieConsent() {
       {raw !== null && (!consent || open) && (
         <section id="cookie-preferences" className={styles.banner} aria-labelledby="cookie-heading">
           <div className={styles.copy}>
-            <p className={styles.eyebrow}>YOUR PRIVACY, YOUR CHOICE</p>
-            <h2 id="cookie-heading" ref={heading} tabIndex={-1}>讓我們知道，你的 Cookie 偏好。</h2>
+            <p className={styles.eyebrow}><PrivacyIcon size={16} aria-hidden="true" />{isEvent ? "YOUR VOICE, YOUR CHOICE" : "YOUR PRIVACY, YOUR CHOICE"}</p>
+            <h2 id="cookie-heading" ref={heading} tabIndex={-1}>{isEvent ? "青春發聲，隱私由你決定。" : "你的瀏覽，你的選擇。"}</h2>
             <p>經你同意後，我們才會使用 Google Analytics 分析瀏覽情形，改善網站內容。拒絕不影響瀏覽；你可以隨時從「Cookie 設定」撤回同意。</p>
             <details className={styles.details}>
               <summary>查看使用項目與保存期限</summary>
@@ -54,6 +59,6 @@ export function CookieConsent() {
           </div>
         </section>
       )}
-    </>
+    </div>
   );
 }
