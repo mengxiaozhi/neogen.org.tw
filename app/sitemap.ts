@@ -11,6 +11,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       images: [`${SITE_URL}/images/youth-forum.jpg`],
     },
     {
+      url: `${SITE_URL}/team`,
+      lastModified: "2026-09-21",
+    },
+    {
       url: `${SITE_URL}/privacy`,
       lastModified: "2026-09-18",
     },

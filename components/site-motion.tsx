@@ -191,16 +191,28 @@ export function SiteMotion() {
             (!window.location.hash || window.location.hash === "#top");
 
           if (nearPageTop) {
-            gsap
-              .timeline({ defaults: { ease: "power3.out" } })
-              .from("[data-gsap-header]", {
+            const timeline = gsap.timeline({
+              defaults: { ease: "power3.out" },
+            });
+            const header = root.querySelector("[data-gsap-header]");
+            const marks = root.querySelectorAll("[data-gsap-mark]");
+            const heroSymbol = root.querySelector("[data-gsap-hero-symbol]");
+            const heroItems = root.querySelectorAll("[data-gsap-hero]");
+            const heroLine = root.querySelector("[data-gsap-hero-line]");
+            const heroMedia = root.querySelector("[data-gsap-hero-media]");
+
+            if (header) {
+              timeline.from(header, {
                 y: -18,
                 opacity: 0,
                 duration: 0.45,
                 clearProps: "transform,opacity",
-              })
-              .from(
-                "[data-gsap-mark]",
+              });
+            }
+
+            if (marks.length > 0) {
+              timeline.from(
+                marks,
                 {
                   scale: 0,
                   rotation: -45,
@@ -211,9 +223,12 @@ export function SiteMotion() {
                   clearProps: "transform,opacity",
                 },
                 0.08,
-              )
-              .from(
-                "[data-gsap-hero-symbol]",
+              );
+            }
+
+            if (heroSymbol) {
+              timeline.from(
+                heroSymbol,
                 {
                   scale: 0.55,
                   rotation: -18,
@@ -223,9 +238,12 @@ export function SiteMotion() {
                   clearProps: "transform,opacity",
                 },
                 0.1,
-              )
-              .from(
-                "[data-gsap-hero]",
+              );
+            }
+
+            if (heroItems.length > 0) {
+              timeline.from(
+                heroItems,
                 {
                   y: 32,
                   opacity: 0,
@@ -234,9 +252,12 @@ export function SiteMotion() {
                   clearProps: "transform,opacity",
                 },
                 0.12,
-              )
-              .from(
-                "[data-gsap-hero-line]",
+              );
+            }
+
+            if (heroLine) {
+              timeline.from(
+                heroLine,
                 {
                   scaleX: 0,
                   transformOrigin: "left center",
@@ -244,9 +265,12 @@ export function SiteMotion() {
                   clearProps: "transform",
                 },
                 0.28,
-              )
-              .from(
-                "[data-gsap-hero-media]",
+              );
+            }
+
+            if (heroMedia) {
+              timeline.from(
+                heroMedia,
                 {
                   x: desktop ? 42 : 0,
                   y: desktop ? 0 : 22,
@@ -257,6 +281,7 @@ export function SiteMotion() {
                 },
                 0.22,
               );
+            }
           }
 
           root
@@ -306,40 +331,44 @@ export function SiteMotion() {
             .forEach((group) => {
               const items = group.querySelectorAll("[data-gsap-stagger-item]");
 
-              gsap.from(items, {
-                y: 28,
-                opacity: 0,
-                stagger: 0.11,
-                duration: 0.65,
-                ease: "power2.out",
-                immediateRender: false,
-                clearProps: "transform,opacity",
-                scrollTrigger: {
-                  trigger: group,
-                  start: "top 86%",
-                  once: true,
-                  invalidateOnRefresh: true,
-                },
-              });
+              if (items.length > 0) {
+                gsap.from(items, {
+                  y: 28,
+                  opacity: 0,
+                  stagger: 0.11,
+                  duration: 0.65,
+                  ease: "power2.out",
+                  immediateRender: false,
+                  clearProps: "transform,opacity",
+                  scrollTrigger: {
+                    trigger: group,
+                    start: "top 86%",
+                    once: true,
+                    invalidateOnRefresh: true,
+                  },
+                });
+              }
 
               const icons = group.querySelectorAll("[data-gsap-card-icon]");
 
-              gsap.from(icons, {
-                scale: 0.55,
-                rotation: -12,
-                opacity: 0,
-                stagger: 0.11,
-                duration: 0.62,
-                ease: "back.out(1.8)",
-                immediateRender: false,
-                clearProps: "transform,opacity",
-                scrollTrigger: {
-                  trigger: group,
-                  start: "top 86%",
-                  once: true,
-                  invalidateOnRefresh: true,
-                },
-              });
+              if (icons.length > 0) {
+                gsap.from(icons, {
+                  scale: 0.55,
+                  rotation: -12,
+                  opacity: 0,
+                  stagger: 0.11,
+                  duration: 0.62,
+                  ease: "back.out(1.8)",
+                  immediateRender: false,
+                  clearProps: "transform,opacity",
+                  scrollTrigger: {
+                    trigger: group,
+                    start: "top 86%",
+                    once: true,
+                    invalidateOnRefresh: true,
+                  },
+                });
+              }
             });
 
           const glyph = root.querySelector("[data-gsap-glyph]");

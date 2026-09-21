@@ -63,6 +63,12 @@ test('homepage WebPage links to the website, association and crawlable sections'
   assert.equal(hero.fetchPriority ?? hero.fetchpriority, 'high');
 });
 
+test('homepage links to the standalone team page without duplicating the roster', () => {
+  assert.doesNotMatch(html, /id="team"/);
+  assert.ok(tags('a').some(tag => tag.href === '/team'));
+  assert.ok(!html.replace(/<script\b[\s\S]*?<\/script>/g, '').includes('陳庭楚'));
+});
+
 test('generated main share artwork is packaged locally and served as a 1200x630 PNG', () => {
   const source = readFileSync(new URL('../public/images/og-main-2026-09-18.png', import.meta.url));
   const image = readFileSync(new URL('../.next/server/app/opengraph-image.body', import.meta.url));

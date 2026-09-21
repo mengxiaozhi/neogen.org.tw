@@ -142,17 +142,31 @@
   line-height: 1.9;
 }
 
-.topicHeading {
-  margin-block: 38px 22px;
+.committeeIntro {
+  max-width: 900px;
+  margin-bottom: 32px;
 }
 
-.topicHeading h3 {
-  font-size: 22px;
+.committeeIntro h3 {
+  margin-bottom: 14px;
+  font-size: clamp(18px, 2vw, 23px);
   font-weight: 800;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
-.topics,
+.committeeIntro p,
+.topicBackground p {
+  margin-top: 12px;
+  color: #456148;
+  font-size: 15px;
+  line-height: 1.95;
+}
+
+.topics {
+  display: grid;
+  gap: 24px;
+}
+
 .days {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -160,38 +174,46 @@
 }
 
 .topic {
-  padding: 24px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 36px;
+  padding: 32px;
   border: 1px solid #195b3250;
+  border-top: 4px solid #195b32;
+  background: #f7f5e9;
 }
 
-.topic > span {
+.topicIdentity > span {
   color: #b44208;
-  font: 800 13px Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 800;
 }
 
-.topic h4 {
-  margin-block: 18px 12px;
-  font-size: 23px;
+.topicIdentity h3 {
+  margin-block: 16px;
+  font-size: clamp(21px, 2vw, 27px);
   font-weight: 850;
-}
-
-.topic p {
-  font-size: 14px;
-  line-height: 1.8;
+  line-height: 1.55;
 }
 
 .topic .bill {
-  margin-top: 22px;
   color: #456148;
   font-size: 12px;
+  line-height: 1.8;
 }
 
 .bill strong {
-  display: inline-block;
+  display: block;
   margin-top: 6px;
   color: #195b32;
   font-size: 15px;
   font-weight: 750;
+}
+
+.topicBackground h4 {
+  font-size: clamp(18px, 1.8vw, 22px);
+  font-weight: 800;
+  line-height: 1.65;
 }
 
 .day {
@@ -297,6 +319,17 @@
     gap: 18px;
   }
 
+  .topic {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 24px;
+  }
+
+  .topicIdentity {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #195b3238;
+  }
+
   .fee {
     padding: 24px;
   }
@@ -323,3 +356,8 @@
     width: calc(100% - 40px);
   }
 }
+
+.applicationNote { margin-top: 18px; color: #8f3608; font-size: 15px; font-weight: 750; line-height: 1.85; }
+.accommodation { margin-top: 26px; padding: 24px; border-left: 4px solid #195b32; background: #f7f5e9; }
+.accommodation h3 { font-size: 20px; font-weight: 850; }
+.accommodation p { margin-top: 12px; font-size: 14px; line-height: 1.9; }

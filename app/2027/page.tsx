@@ -59,7 +59,7 @@ const eventDetails = [
   { label: "活動日期", value: "2027 年 1 月 25 日至 27 日", note: "首日 09:00 報到" },
   { label: "參加對象", value: "高中職、大專校院學生", note: "未滿 18 歲須附家長同意書" },
   { label: "主要場地", value: "中華民國立法院", note: "實際地點以錄取信件為準" },
-  { label: "主辦單位", value: "社團法人臺灣新文化青年協會", note: "指導單位：教育部青年發展署（邀請中）" },
+  { label: "主辦單位", value: "社團法人臺灣新文化青年協會", note: "合辦單位：AutBridge 自治橋｜指導單位：教育部青年發展署（邀請中）" },
 ] as const;
 
 const questions = [
@@ -74,12 +74,16 @@ const questions = [
   {
     question: "何時報名？",
     answer: registrationEnabled
-      ? "報名期間為 2026 年 10 月 15 日至 12 月 15 日，錄取名單於 12 月 25 日公布。請由本頁入口填寫表單。"
-      : "報名期間為 2026 年 10 月 15 日至 12 月 15 日，錄取名單於 12 月 25 日公布；網站入口尚未開放。",
+      ? "報名期間為 2026 年 9 月 23 日至 12 月 15 日，採先報名先書審，額滿將提前截止；錄取名單於 12 月 25 日公布。請由本頁入口填寫表單。"
+      : "報名期間為 2026 年 9 月 23 日至 12 月 15 日，採先報名先書審，額滿將提前截止；錄取名單於 12 月 25 日公布，網站入口尚未開放。",
   },
   {
     question: "費用包含什麼？",
-    answer: "不含住宿 NT$2,000；含住宿 NT$4,000。兩種方案皆含兩天午、晚餐與保險，住宿地點待公布。",
+    answer: "不含住宿 NT$2,000；含住宿 NT$4,000。兩種方案皆含兩天早餐、午餐與保險；含住宿方案另含兩天住宿。",
+  },
+  {
+    question: "住宿如何安排？",
+    answer: "住宿地點為美亞商旅－台北車站（臺北市中正區忠孝西路一段50號）。住宿僅提供代訂，不負管理責任；房型原則上為四人一間，優先安排同委員會學員入住。",
   },
   {
     question: "活動異動或其他問題？",
@@ -191,7 +195,7 @@ export default function Event2027Page() {
               {registrationEnabled ? (
                 <a href="#event-registration" className={styles.textLink}>填寫報名資料 <ArrowUpRight size={18} aria-hidden="true" /></a>
               ) : (
-                <p className={styles.announcement}><span aria-hidden="true" /> 報名期間為 2026/10/15–12/15，網站入口尚未開放。</p>
+                <p className={styles.announcement}><span aria-hidden="true" /> 報名期間為 2026/09/23–12/15，採先報名先書審，額滿提前截止；網站入口尚未開放。</p>
               )}
             </div>
             <figure className={styles.posterFigure}>

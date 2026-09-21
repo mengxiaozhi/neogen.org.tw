@@ -1,8 +1,13 @@
 # 2027 活動報名
 
-最後更新：2026-09-10。網站報名元件已改接使用者提供的完整 Google 表單，並依最新回饋簡化為一句說明、單一外連按鈕與登入提示；三步指引和頁內嵌入選項已移除。保留米白、深綠、橘色與黃色票券設計，填答在 Google 表單完成。**正式網站的報名功能仍關閉；此次簡化尚未部署，下方 Preview 是先前的串接版本。**
+最後更新：2026-09-21。依使用者「開放報名」指示，正式網站已啟用報名區塊、桌面導覽按鈕與手機全螢幕選單入口。元件維持一句說明、單一外連按鈕與 Google 登入提示，填答由使用者提供的 Google 表單處理。
 
-## Google 表單與預覽
+- [正式報名入口](https://www.neogen.org.tw/2027#event-registration)
+- 正式部署：`dpl_5dfoLDDkgUbcVipBV39mFyDm9SPZ`，`https://neogen-org-jhmjlk9vv-mengxiaozhi.vercel.app`，已 promote 至正式網域。
+- 本次使用獨立發布目錄，包含活動資訊、住宿／場地地圖與報名入口更新，未帶入工作區其他首頁／團隊頁的未完成修改。
+- 原公告報名時程仍為 2026/09/23–2026/12/15（額滿提早截止）；依本次指示提前開放網站入口。
+
+## Google 表單與歷史預覽
 
 - [新版公開報名表](https://docs.google.com/forms/d/e/1FAIpQLSe-Rg7S0rSBlEUfXWQH12bRS86au6uT-kU2L6lhFkhfUKZ0ng/viewform)
 - [新版表單管理入口](https://docs.google.com/forms/d/1uKxNEODkWz43vZk-I1D_Ezq2Slpy92UPhYRjtSe5O2Y/edit)
@@ -11,7 +16,7 @@
 
 新版表單有八個區段：活動說明與住宿需求、隱私條款、基本資料、代表志願、立法委員調查、國會記者調查、會議期許，以及結尾建議。角色分流與必填欄位由 Google 表單維護。表單開啟了驗證電子郵件收集，作答者必須登入 Google；本次未變更表單內容、設定、所有權或既有回覆。
 
-Google 的登入、同意程序、欄位檢查、分流和送出確認由原表單處理。網站不使用舊六欄 schema，也不自行顯示報名成功。費用、資格和報名時程等內容以表單及主辦單位公告為準，本次未將其新增至網站其他公告區。
+Google 的登入、同意程序、欄位檢查、分流和送出確認由原表單處理。網站不使用舊六欄 schema，也不自行顯示報名成功。費用、資格和報名時程等內容以表單及主辦單位公告為準，網站活動資訊頁同步提供最新資訊。
 
 ## 網站實作
 
@@ -19,9 +24,9 @@ Google 的登入、同意程序、欄位檢查、分流和送出確認由原表�
 - `app/2027/registration-form.tsx`：品牌外框、單一報名入口與新分頁／Google 登入提示，使用伺服器元件，沒有 iframe 或前端狀態。
 - `app/2027/registration.module.css`：響應式排版與既有活動視覺。
 - `lib/event-features.ts`：server-only `EVENT_REGISTRATION_ENABLED`，只有明確為 `true` 才顯示報名區塊及入口。
-- `app/api/2027/registration/route.ts`：已退役的網站收件 API。功能關閉時回傳 404；Preview 開啟時回傳 410 與新版表單網址，不讀取送入資料、不聯絡 Google、不回傳報名成功。
+- `app/api/2027/registration/route.ts`：已退役的網站收件 API。功能關閉時回傳 404；功能開啟時回傳 410 與新版表單網址，不讀取送入資料、不聯絡 Google、不回傳報名成功。
 
-Production 與一般本機設定維持 `EVENT_REGISTRATION_ENABLED=false`，Preview 維持 `true`。更改開關後需重新建置／部署，保持靜態頁面、導覽、FAQ、SEO 與 API 一致。未取得開放正式報名指示前，不啟用 Production。
+Production 與本機設定已設為 `EVENT_REGISTRATION_ENABLED=true`，`.env.example` 同步更新；Preview 設定未更動。只有明確為 `true` 才開放，缺少設定時仍關閉。更改開關後需重新建置／部署，保持靜態頁面、導覽、FAQ、SEO 與 API 一致。
 
 新版不再使用 `GOOGLE_REGISTRATION_WEBHOOK_URL`。既有本機或 Preview 環境變數即使保留，也不會被新版程式讀取。`.env*`、`.local`、`.vercel`、維護文件與測試均透過 `.vercelignore` 排除，不上傳至部署。
 
@@ -36,9 +41,18 @@ Production 與一般本機設定維持 `EVENT_REGISTRATION_ENABLED=false`，Prev
 
 改版前的 Script、測試與維護文件存於被忽略的 `.local/registration-legacy/` 供追溯；這些屬歷史實作，不能直接恢復為新版收件流程。舊表保留 2026-09-08 的一筆網站驗證回覆，本次未讀取或刪除任何回覆。
 
-## 驗證紀錄
+## 2026-09-21 正式開放驗證
 
-此次簡化的 ESLint 與既有四項報名測試通過。以下遠端部署與瀏覽器紀錄屬於簡化前的串接版本，不代表簡化版已部署或完成視覺驗證。
+- 獨立發布版本的 31 項測試與本機正式建置通過，Vercel 遠端建置成功。
+- 正式 `/2027` 與 `/2027/program` 均回應 200，顯示報名 CTA，無「網站入口尚未開放」訊息。
+- 正式首頁包含報名區塊與指定 Google 表單網址；活動資訊頁連回首頁報名區塊，場地地圖仍存在。
+- 正式退役 API 以空請求驗證回應 410，沒有新增報名資料。
+- 本機手機全螢幕選單的「填寫報名資料」可關閉選單並前往報名區塊。
+- 瀏覽器開啟 Google 表單，確認有可填寫的電子郵件、住宿欄位與繼續按鈕；未填答、未送出或新增測試回覆。
+
+## 歷史驗證紀錄（2026-09-10，非目前部署狀態）
+
+以下為早期簡化／串接版本的紀錄；正式環境的目前狀態以上方 2026-09-21 驗證為準。
 
 ```sh
 node --test tests/event-registration.test.mjs

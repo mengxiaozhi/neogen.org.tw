@@ -3,7 +3,7 @@ import { ORGANIZATION_ID, SITE_NAME, SITE_URL, WEBSITE_ID, organizationJsonLd, s
 
 export const EVENT_NAME = "2027 青年參議院—立法院會議";
 // Update only when the public activity content changes, not on every build.
-export const EVENT_CONTENT_UPDATED = "2026-09-17";
+export const EVENT_CONTENT_UPDATED = "2026-09-21";
 
 export const eventPages = {
   home: {
@@ -14,7 +14,7 @@ export const eventPages = {
   program: {
     path: "/2027/program", label: "活動資訊",
     title: "活動資訊：報名費用與三天流程｜2027 青年參議院",
-    description: "2027 青年參議院活動資訊：1月25–27日舉辦，開放高中職、大專校院學生。查看報名時程、NT$2,000起的費用、住宿方案、參與角色與三天流程；實際地點以錄取信件為準。",
+    description: "2027 青年參議院活動資訊：1月25–27日舉辦，開放高中職、大專校院學生。查看NT$2,000起的報名費用、三天流程，以及陸籍配偶身分證年限、長照保險與鞭刑三項模擬審議議題；實際地點以錄取信件為準。",
   },
   report: {
     path: "/2027/report", label: "對話觀測站",
@@ -41,7 +41,7 @@ export function eventMetadata(page: EventPage): Metadata {
 
 const sections = {
   home: [],
-  program: [["event-practical", "報名時程與費用"], ["event-roles", "角色與議題"], ["event-schedule", "三天流程"]],
+  program: [["event-practical", "報名時程與費用"], ["event-roles", "參與角色"], ["event-committees", "委員會議題"], ["event-schedule", "三天流程"]],
   report: [["report-map", "完整意見地圖"], ["report-consensus", "跨群共同點與橋接觀點"], ["report-ai", "AI 審議綜整"], ["report-statements", "全部觀點與回應"]],
 } as const;
 

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 import { BrandMark } from "@/components/brand-mark";
 import { AssociationLogo } from "@/components/association-logo";
@@ -17,14 +18,21 @@ import {
 
 const navItems = [
   ["關於我們", "#about"],
+  ["協會團隊", "/team"],
   ["行動議題", "#actions"],
   ["2027 青年參議院", "/2027"],
   ["青年投稿", "mailto:neogentaiwan2026@gmail.com?subject=青年投稿"],
 ] as const;
 
 export function SiteHeader() {
+  const pathname = usePathname();
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const pendingNavTargetRef = useRef<string | null>(null);
+
+  const resolveHref = (href: string) =>
+    href.startsWith("#") && pathname !== "/" ? `/${href}` : href;
+  const isCurrentPage = (href: string) =>
+    href === "/2027" ? pathname.startsWith("/2027") : pathname === href;
 
   useEffect(() => {
     const desktopQuery = window.matchMedia("(min-width: 1024px)");
@@ -41,19 +49,24 @@ export function SiteHeader() {
       <div className="site-container flex min-h-[78px] items-center justify-between border-b-2 border-[var(--ink)] py-4 lg:min-h-[92px]">
         <BrandMark eager />
 
-        <div className="hidden items-center gap-8 lg:flex">
+        <div className="hidden items-center gap-5 xl:gap-8 lg:flex">
           <nav aria-label="主要導覽">
-            <ul className="flex items-center gap-8">
-              {navItems.map(([label, href]) => (
-                <li key={label}>
-                  <a
-                    href={href}
-                    className="nav-link text-[15px] font-bold tracking-[0.08em]"
-                  >
-                    {label}
-                  </a>
-                </li>
-              ))}
+            <ul className="flex items-center gap-5 xl:gap-8">
+              {navItems.map(([label, href]) => {
+                const resolvedHref = resolveHref(href);
+
+                return (
+                  <li key={label}>
+                    <a
+                      href={resolvedHref}
+                      aria-current={isCurrentPage(href) ? "page" : undefined}
+                      className="nav-link text-[14px] font-bold tracking-[0.06em] aria-[current=page]:text-[var(--orange)] xl:text-[15px] xl:tracking-[0.08em]"
+                    >
+                      {label}
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </nav>
           <JoinDialog />
@@ -122,39 +135,44 @@ export function SiteHeader() {
 
               <div className="mobile-nav-heading" aria-hidden="true">
                 <span>MENU</span>
-                <span>01—04</span>
+                <span>01—05</span>
               </div>
 
               <nav aria-label="行動版導覽" className="mobile-nav-main">
                 <ul className="mobile-nav-list">
-                  {navItems.map(([label, href], index) => (
-                    <li
-                      className="mobile-nav-item"
-                      key={label}
-                      style={{ "--nav-index": index } as CSSProperties}
-                    >
-                      <DialogClose asChild>
-                        <a
-                          href={href}
-                          className="mobile-nav-link group"
-                          onClick={() => {
-                            pendingNavTargetRef.current = href.startsWith("#")
-                              ? href
-                              : null;
-                          }}
-                        >
-                          <span className="mobile-nav-index">
-                            0{index + 1}
-                          </span>
-                          <span className="mobile-nav-label">{label}</span>
-                          <ArrowUpRight
-                            className="mobile-nav-arrow size-5"
-                            aria-hidden="true"
-                          />
-                        </a>
-                      </DialogClose>
-                    </li>
-                  ))}
+                  {navItems.map(([label, href], index) => {
+                    const resolvedHref = resolveHref(href);
+
+                    return (
+                      <li
+                        className="mobile-nav-item"
+                        key={label}
+                        style={{ "--nav-index": index } as CSSProperties}
+                      >
+                        <DialogClose asChild>
+                          <a
+                            href={resolvedHref}
+                            aria-current={isCurrentPage(href) ? "page" : undefined}
+                            className="mobile-nav-link group aria-[current=page]:text-[var(--orange)]"
+                            onClick={() => {
+                              pendingNavTargetRef.current = resolvedHref.startsWith("#")
+                                ? resolvedHref
+                                : null;
+                            }}
+                          >
+                            <span className="mobile-nav-index">
+                              0{index + 1}
+                            </span>
+                            <span className="mobile-nav-label">{label}</span>
+                            <ArrowUpRight
+                              className="mobile-nav-arrow size-5"
+                              aria-hidden="true"
+                            />
+                          </a>
+                        </DialogClose>
+                      </li>
+                    );
+                  })}
                 </ul>
               </nav>
 
