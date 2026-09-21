@@ -214,11 +214,11 @@ export default function TeamPage() {
                     id={id}
                     tabIndex={-1}
                     aria-labelledby={`${id}-heading`}
-                    className="section-anchor grid overflow-hidden border border-[var(--ink)] bg-white lg:grid-cols-[0.58fr_1.42fr]"
+                    className="section-anchor grid overflow-hidden border border-[var(--ink)] bg-white lg:grid-cols-[0.42fr_1.58fr]"
                     data-gsap-reveal
                     key={id}
                   >
-                    <header className={`${groupIndex === 1 ? "bg-[var(--ink)] text-white" : "bg-[var(--paper-soft)]"} flex min-h-52 flex-col justify-between gap-10 border-b border-[var(--ink)] p-7 lg:border-b-0 lg:border-r lg:p-10`}>
+                    <header className={`${groupIndex === 1 ? "bg-[var(--ink)] text-white" : "bg-[var(--paper-soft)]"} flex min-h-44 flex-col justify-between gap-8 border-b border-[var(--ink)] p-7 lg:min-h-full lg:border-b-0 lg:border-r lg:p-9`}>
                       <div className="flex items-start justify-between gap-4">
                         <span className={`text-[11px] font-black tracking-[0.18em] ${groupIndex === 1 ? "text-[var(--orange)]" : "text-[var(--muted)]"}`}>
                           {label}
@@ -226,7 +226,7 @@ export default function TeamPage() {
                         <Icon className="size-7 text-[var(--orange)]" strokeWidth={1.5} aria-hidden="true" />
                       </div>
                       <div>
-                        <h3 id={`${id}-heading`} className="display-font text-4xl font-black tracking-[-0.05em] sm:text-5xl">
+                        <h3 id={`${id}-heading`} className="display-font text-[clamp(2.25rem,3.4vw,2.75rem)] font-black leading-tight tracking-[-0.05em]">
                           {title}
                         </h3>
                         <p className={`mt-3 text-sm font-bold tracking-[0.08em] ${groupIndex === 1 ? "text-white/60" : "text-[var(--muted)]"}`}>
@@ -235,14 +235,20 @@ export default function TeamPage() {
                       </div>
                     </header>
 
-                    <ul data-gsap-stagger className="grid grid-cols-2">
+                    <ul
+                      data-gsap-stagger
+                      className={`grid grid-cols-2 gap-px bg-[var(--line)] ${members.length === 4 ? "xl:grid-cols-2" : "xl:grid-cols-3"}`}
+                    >
                       {members.map(({ role, name }, index) => {
                         const portrait = memberPortraits[name];
+                        const isOddLastMember =
+                          members.length % 2 === 1 &&
+                          index === members.length - 1;
 
                         return (
                           <li
                             data-gsap-stagger-item
-                            className={`group relative min-h-36 overflow-hidden border-b border-r border-[var(--line)] p-5 even:border-r-0 [&:nth-last-child(-n+2)]:border-b-0 sm:min-h-44 sm:p-7 ${portrait ? "min-h-64 bg-[var(--ink)] text-white sm:min-h-72" : ""}`}
+                            className={`group relative flex min-h-44 flex-col justify-between overflow-hidden bg-white p-5 transition-colors duration-300 sm:min-h-52 sm:p-6 ${portrait ? "bg-[var(--ink)] text-white" : "hover:bg-[var(--paper-soft)]"} ${isOddLastMember ? "col-span-2 xl:col-span-1" : ""}`}
                             key={`${role}-${name}`}
                           >
                             {portrait ? (
@@ -257,27 +263,29 @@ export default function TeamPage() {
                                   data-member-portrait={name}
                                 />
                                 <span
-                                  className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/20 to-black/90"
+                                  className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/25 to-black/90"
                                   aria-hidden="true"
                                 />
                               </>
                             ) : null}
-                            <span
-                              className={`relative z-10 text-[11px] font-black tracking-[0.12em] ${portrait ? "text-[var(--orange)]" : "text-[var(--muted)]"}`}
-                            >
-                              {role}
-                            </span>
-                            <p
-                              className={`display-font z-10 mt-5 text-[clamp(1.7rem,3vw,2.5rem)] font-black tracking-[-0.05em] transition-colors ${portrait ? "absolute bottom-6 left-5 sm:left-7" : "relative group-hover:text-[var(--orange)]"}`}
-                            >
+                            <div className="relative z-10 flex items-start justify-between gap-3">
+                              <span
+                                className={`text-[11px] font-black tracking-[0.12em] ${portrait ? "text-[var(--orange)]" : "text-[var(--muted)]"}`}
+                              >
+                                {role}
+                              </span>
+                              <span
+                                className={portrait ? "text-white/65" : "text-[var(--orange)]"}
+                                aria-hidden="true"
+                              >
+                                <span className="text-[9px] font-black tracking-[0.12em]">
+                                  {String(index + 1).padStart(2, "0")}
+                                </span>
+                              </span>
+                            </div>
+                            <p className="display-font relative z-10 mt-10 text-[clamp(1.75rem,2.7vw,2.6rem)] font-black tracking-[-0.05em] transition-colors group-hover:text-[var(--orange)]">
                               {name}
                             </p>
-                            <span
-                              className={`absolute bottom-4 right-4 z-10 text-[10px] font-black ${portrait ? "text-white/65" : "text-[var(--orange)]"}`}
-                              aria-hidden="true"
-                            >
-                              {String(index + 1).padStart(2, "0")}
-                            </span>
                           </li>
                         );
                       })}
