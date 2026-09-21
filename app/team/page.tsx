@@ -74,7 +74,7 @@ const memberPortraits: Partial<Record<
   吳憶祖: {
     src: wuYizuPortrait,
     imageClassName:
-      "object-contain object-bottom transition-transform duration-700 group-hover:scale-[1.035] motion-reduce:transition-none",
+      "object-cover object-[center_12%] transition-transform duration-700 group-hover:scale-[1.025] motion-reduce:transition-none",
   },
   劉訊志: {
     src: liuXunzhiPortrait,
@@ -147,7 +147,7 @@ export default function TeamPage() {
 
             <ul
               data-gsap-stagger
-              className="grid grid-cols-2 gap-3 lg:grid-cols-[1.45fr_0.55fr_0.55fr] lg:gap-5"
+              className="grid grid-cols-1 items-stretch gap-3 md:grid-cols-3 lg:gap-5"
             >
               {leadershipMembers.map(({ role, name }, index) => {
                 const portrait = memberPortraits[name];
@@ -157,7 +157,7 @@ export default function TeamPage() {
                     <li
                       data-gsap-stagger-item
                       data-leadership-card="primary"
-                      className="group relative col-span-2 min-h-[23rem] overflow-hidden bg-[var(--orange)] text-white lg:col-span-1 lg:min-h-[25rem]"
+                      className="group relative min-h-[23rem] overflow-hidden bg-[var(--orange)] text-white lg:min-h-[25rem]"
                       key={`${role}-${name}`}
                     >
                       <span className="absolute left-6 top-6 z-30 bg-white px-2.5 py-1.5 text-[10px] font-black tracking-[0.14em] text-[var(--orange)] sm:left-8 sm:top-8">

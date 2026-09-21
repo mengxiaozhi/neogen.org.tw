@@ -55,6 +55,9 @@ test('team page uses the approved editorial leadership and three-column roster s
   assert.equal((html.match(/data-featured-member="劉訊志"/g) ?? []).length, 1);
   assert.equal((html.match(/data-member-backdrop=/g) ?? []).length, 4);
   assert.doesNotMatch(source, /(?:linear|radial|conic)-gradient|bg-gradient/);
+  assert.match(source, /grid-cols-1 items-stretch gap-3 md:grid-cols-3/);
+  assert.doesNotMatch(source, /grid-cols-\[1\.45fr_0\.55fr_0\.55fr\]|col-span-2/);
+  assert.match(source, /object-cover object-\[center_12%\]/);
 });
 
 test('team JSON-LD exposes the page relationship and a 16-person roster', () => {
