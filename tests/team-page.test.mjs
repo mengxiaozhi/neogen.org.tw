@@ -17,6 +17,9 @@ test('team page has distinct metadata, canonical URL and one primary heading', (
   assert.deepEqual(tags('link').filter(tag => tag.rel === 'canonical').map(tag => tag.href), [`${origin}/team`]);
   const meta = tags('meta');
   assert.equal(meta.find(tag => tag.property === 'og:url')?.content, `${origin}/team`);
+  assert.equal(meta.find(tag => tag.property === 'og:image')?.content, `${origin}/team/opengraph-image`);
+  assert.equal(meta.find(tag => tag.name === 'twitter:image')?.content, `${origin}/team/opengraph-image`);
+  assert.equal(meta.find(tag => tag.name === 'twitter:card')?.content, 'summary_large_image');
   assert.match(meta.find(tag => tag.name === 'description')?.content ?? '', /理事長.*秘書處/);
   assert.equal((html.match(/<h1\b/g) ?? []).length, 1);
 });
@@ -40,8 +43,8 @@ test('supplied portraits are rendered by Next Image for the matching members', (
     .map(tag => tag['data-member-portrait'])
     .filter(Boolean);
 
-  assert.deepEqual(portraits.toSorted(), ['劉訊志', '陳庭楚'].toSorted());
-  assert.equal(portraits.length, 2);
+  assert.deepEqual(portraits.toSorted(), ['劉訊志', '吳憶祖', '陳庭楚'].toSorted());
+  assert.equal(portraits.length, 3);
 });
 
 test('team page uses the approved editorial leadership and three-column roster structure', () => {
@@ -55,13 +58,19 @@ test('team page uses the approved editorial leadership and three-column roster s
 });
 
 test('team JSON-LD exposes the page relationship and a 16-person roster', () => {
-  const page = graph.find(node => node['@type'] === 'WebPage');
+  const page = graph.find(node => node['@type'] === 'CollectionPage');
   const roster = graph.find(node => node['@type'] === 'ItemList');
   assert.equal(page.url, `${origin}/team`);
+  assert.equal(page.dateModified, '2026-09-21');
+  assert.equal(page.primaryImageOfPage.url, `${origin}/team/opengraph-image`);
   assert.equal(page.mainEntity['@id'], roster['@id']);
   assert.equal(roster.numberOfItems, 16);
   assert.equal(roster.itemListElement.length, 16);
-  assert.ok(roster.itemListElement.every(entry => entry.item['@type'] === 'Person' && entry.item.jobTitle));
+  assert.ok(roster.itemListElement.every(entry =>
+    entry.item['@type'] === 'Person' &&
+    entry.item.jobTitle &&
+    entry.item.memberOf['@id'] === `${origin}/#organization`
+  ));
 });
 
 test('team page is linked from the homepage and included in the sitemap', () => {
@@ -69,4 +78,17 @@ test('team page is linked from the homepage and included in the sitemap', () => 
   const sitemap = readFileSync(new URL('../.next/server/app/sitemap.xml.body', import.meta.url), 'utf8');
   assert.match(home, /href="\/team"/);
   assert.match(sitemap, new RegExp(`<loc>${origin}/team</loc>`));
+  assert.equal((sitemap.match(new RegExp(`<loc>${origin}/privacy</loc>`, 'g')) ?? []).length, 1);
+  assert.match(sitemap, new RegExp(`<image:loc>${origin}/team/opengraph-image</image:loc>`));
+});
+
+test('team share artwork is a dedicated 1200x630 PNG', () => {
+  const teamImage = readFileSync(new URL('../.next/server/app/team/opengraph-image.body', import.meta.url));
+  const homeImage = readFileSync(new URL('../.next/server/app/opengraph-image.body', import.meta.url));
+  const pngSignature = Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]);
+  assert.ok(teamImage.subarray(0, 8).equals(pngSignature));
+  assert.equal(teamImage.readUInt32BE(16), 1200);
+  assert.equal(teamImage.readUInt32BE(20), 630);
+  assert.ok(teamImage.length < 5 * 1024 * 1024);
+  assert.ok(!teamImage.equals(homeImage));
 });

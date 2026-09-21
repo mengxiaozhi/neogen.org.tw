@@ -10,18 +10,24 @@ import { Button } from "@/components/ui/button";
 import {
   SITE_NAME,
   TEAM_DESCRIPTION,
+  TEAM_OG_IMAGE,
   TEAM_TITLE,
   TEAM_URL,
-  teamStructuredData,
+  createTeamStructuredData,
+  sharedRobots,
 } from "@/lib/seo";
-import { leadershipMembers, teamGroups } from "@/lib/team";
+import { allTeamMembers, leadershipMembers, teamGroups } from "@/lib/team";
 
 import chenTingchuPortrait from "./images/chen-tingchu-cutout.png";
 import liuXunzhiPortrait from "./images/liu-xunzhi-cutout.png";
+import wuYizuPortrait from "./images/wu-yizu-cutout.png";
+
+const structuredData = createTeamStructuredData(allTeamMembers);
 
 export const metadata: Metadata = {
   title: { absolute: TEAM_TITLE },
   description: TEAM_DESCRIPTION,
+  robots: sharedRobots,
   alternates: { canonical: "/team" },
   openGraph: {
     type: "website",
@@ -32,7 +38,7 @@ export const metadata: Metadata = {
     description: TEAM_DESCRIPTION,
     images: [
       {
-        url: "/opengraph-image",
+        url: TEAM_OG_IMAGE,
         width: 1200,
         height: 630,
         alt: TEAM_TITLE,
@@ -44,7 +50,15 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: TEAM_TITLE,
     description: TEAM_DESCRIPTION,
-    images: ["/opengraph-image"],
+    images: [
+      {
+        url: TEAM_OG_IMAGE,
+        alt: TEAM_TITLE,
+        width: 1200,
+        height: 630,
+        type: "image/png",
+      },
+    ],
   },
 };
 
@@ -56,6 +70,11 @@ const memberPortraits: Partial<Record<
     src: chenTingchuPortrait,
     imageClassName:
       "object-contain object-bottom transition-transform duration-700 group-hover:scale-[1.025] motion-reduce:transition-none",
+  },
+  吳憶祖: {
+    src: wuYizuPortrait,
+    imageClassName:
+      "object-contain object-bottom transition-transform duration-700 group-hover:scale-[1.035] motion-reduce:transition-none",
   },
   劉訊志: {
     src: liuXunzhiPortrait,
@@ -70,7 +89,7 @@ export default function TeamPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(teamStructuredData).replace(/</g, "\\u003c"),
+          __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
         }}
       />
       <SiteMotion />
@@ -188,10 +207,23 @@ export default function TeamPage() {
                     <div className="relative z-10 mt-8 sm:mt-12">
                       <p className="text-sm font-black tracking-[0.08em] sm:text-lg">{role}</p>
                       <span className="mt-4 block h-px w-7 bg-[var(--ink)]" aria-hidden="true" />
-                      <p className="display-font mt-5 text-[clamp(2.4rem,4.2vw,4.4rem)] font-black leading-none tracking-[-0.07em]">
+                      <p className={`display-font mt-5 w-fit text-[clamp(2.4rem,4.2vw,4.4rem)] font-black leading-none tracking-[-0.07em] ${portrait ? "bg-[var(--paper-soft)] pr-2" : ""}`}>
                         {name}
                       </p>
                     </div>
+                    {portrait ? (
+                      <div className="absolute inset-x-0 bottom-0 z-[5] h-[76%]">
+                        <Image
+                          src={portrait.src}
+                          alt=""
+                          fill
+                          placeholder="blur"
+                          sizes="(max-width: 1023px) 50vw, 22vw"
+                          className={portrait.imageClassName}
+                          data-member-portrait={name}
+                        />
+                      </div>
+                    ) : null}
                     <p className="absolute bottom-6 left-5 z-10 text-[9px] font-black tracking-[0.3em] text-[var(--muted)] sm:bottom-8 sm:left-7">
                       VICE CHAIRPERSON
                     </p>

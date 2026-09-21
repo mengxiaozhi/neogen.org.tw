@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { allTeamMembers } from "@/lib/team";
+import type { TeamMember } from "@/lib/team";
 
 export const SITE_URL = "https://www.neogen.org.tw";
 export const SITE_NAME = "臺灣新文化青年協會";
@@ -13,7 +13,9 @@ export const SITE_OG_DESCRIPTION =
 export const TEAM_URL = `${SITE_URL}/team`;
 export const TEAM_TITLE = `協會團隊｜${SITE_NAME}`;
 export const TEAM_DESCRIPTION =
-  "認識臺灣新文化青年協會理事長、副理事長、理事、監事與秘書處成員，以及協會的組織分工。";
+  "認識臺灣新文化青年協會理事長、副理事長、理事、監事與秘書處成員，了解推動青年公共參與的協會團隊與組織分工。";
+export const TEAM_CONTENT_UPDATED = "2026-09-21";
+export const TEAM_OG_IMAGE = `${TEAM_URL}/opengraph-image`;
 
 export const ORGANIZATION_ID = `${SITE_URL}/#organization`;
 export const WEBSITE_ID = `${SITE_URL}/#website`;
@@ -139,58 +141,69 @@ export const siteStructuredData = {
 const TEAM_BREADCRUMB_ID = `${TEAM_URL}#breadcrumb`;
 const TEAM_LIST_ID = `${TEAM_URL}#roster`;
 
-export const teamStructuredData = {
-  "@context": "https://schema.org",
-  "@graph": [
-    organizationJsonLd,
-    websiteJsonLd,
-    {
-      "@type": "WebPage",
-      "@id": `${TEAM_URL}#webpage`,
-      url: TEAM_URL,
-      name: TEAM_TITLE,
-      description: TEAM_DESCRIPTION,
-      inLanguage: "zh-Hant-TW",
-      isPartOf: { "@id": WEBSITE_ID },
-      about: { "@id": ORGANIZATION_ID },
-      publisher: { "@id": ORGANIZATION_ID },
-      breadcrumb: { "@id": TEAM_BREADCRUMB_ID },
-      mainEntity: { "@id": TEAM_LIST_ID },
-    },
-    {
-      "@type": "BreadcrumbList",
-      "@id": TEAM_BREADCRUMB_ID,
-      itemListElement: [
-        {
+export function createTeamStructuredData(allTeamMembers: readonly TeamMember[]) {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      organizationJsonLd,
+      websiteJsonLd,
+      {
+        "@type": "CollectionPage",
+        "@id": `${TEAM_URL}#webpage`,
+        url: TEAM_URL,
+        name: TEAM_TITLE,
+        description: TEAM_DESCRIPTION,
+        dateModified: TEAM_CONTENT_UPDATED,
+        inLanguage: "zh-Hant-TW",
+        isPartOf: { "@id": WEBSITE_ID },
+        about: { "@id": ORGANIZATION_ID },
+        publisher: { "@id": ORGANIZATION_ID },
+        breadcrumb: { "@id": TEAM_BREADCRUMB_ID },
+        mainEntity: { "@id": TEAM_LIST_ID },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: TEAM_OG_IMAGE,
+          width: 1200,
+          height: 630,
+          caption: "臺灣新文化青年協會團隊",
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": TEAM_BREADCRUMB_ID,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "首頁",
+            item: `${SITE_URL}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "協會團隊",
+            item: TEAM_URL,
+          },
+        ],
+      },
+      {
+        "@type": "ItemList",
+        "@id": TEAM_LIST_ID,
+        name: "臺灣新文化青年協會團隊名單",
+        numberOfItems: allTeamMembers.length,
+        itemListOrder: "https://schema.org/ItemListOrderAscending",
+        itemListElement: allTeamMembers.map(({ role, name }, index) => ({
           "@type": "ListItem",
-          position: 1,
-          name: "首頁",
-          item: `${SITE_URL}/`,
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "協會團隊",
-          item: TEAM_URL,
-        },
-      ],
-    },
-    {
-      "@type": "ItemList",
-      "@id": TEAM_LIST_ID,
-      name: "臺灣新文化青年協會團隊名單",
-      numberOfItems: allTeamMembers.length,
-      itemListElement: allTeamMembers.map(({ role, name }, index) => ({
-        "@type": "ListItem",
-        position: index + 1,
-        item: {
-          "@type": "Person",
-          "@id": `${TEAM_URL}#member-${index + 1}`,
-          name,
-          jobTitle: role,
-          worksFor: { "@id": ORGANIZATION_ID },
-        },
-      })),
-    },
-  ],
-} as const;
+          position: index + 1,
+          item: {
+            "@type": "Person",
+            "@id": `${TEAM_URL}#member-${index + 1}`,
+            name,
+            jobTitle: role,
+            memberOf: { "@id": ORGANIZATION_ID },
+          },
+        })),
+      },
+    ],
+  } as const;
+}
