@@ -6,6 +6,7 @@ import { readFileSync } from 'node:fs';
 
 const origin = 'https://www.neogen.org.tw';
 const html = readFileSync(new URL('../.next/server/app/team.html', import.meta.url), 'utf8');
+const source = readFileSync(new URL('../app/team/page.tsx', import.meta.url), 'utf8');
 const visibleHtml = html.replace(/<script\b[\s\S]*?<\/script>/g, '');
 const tags = name => [...html.matchAll(new RegExp(`<${name}\\b[^>]*>`, 'g'))].map(([tag]) =>
   Object.fromEntries([...tag.matchAll(/([\w:-]+)="([^"]*)"/g)].map(([, key, value]) => [key, value])));
@@ -41,6 +42,16 @@ test('supplied portraits are rendered by Next Image for the matching members', (
 
   assert.deepEqual(portraits.toSorted(), ['劉訊志', '陳庭楚'].toSorted());
   assert.equal(portraits.length, 2);
+});
+
+test('team page uses the approved editorial leadership and three-column roster structure', () => {
+  assert.equal((html.match(/data-leadership-card="primary"/g) ?? []).length, 1);
+  assert.equal((html.match(/data-leadership-card="vice"/g) ?? []).length, 2);
+  assert.equal((html.match(/data-team-roster-group=/g) ?? []).length, 3);
+  assert.equal((html.match(/data-roster-member=/g) ?? []).length, 12);
+  assert.equal((html.match(/data-featured-member="劉訊志"/g) ?? []).length, 1);
+  assert.equal((html.match(/data-member-backdrop=/g) ?? []).length, 4);
+  assert.doesNotMatch(source, /(?:linear|radial|conic)-gradient|bg-gradient/);
 });
 
 test('team JSON-LD exposes the page relationship and a 16-person roster', () => {

@@ -1,15 +1,7 @@
 import type { Metadata } from "next";
 import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
-import {
-  ArrowLeft,
-  ArrowRight,
-  Landmark,
-  Mail,
-  Scale,
-  UserRound,
-  UsersRound,
-} from "lucide-react";
+import { ArrowLeft, ArrowRight, Mail } from "lucide-react";
 
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -24,8 +16,8 @@ import {
 } from "@/lib/seo";
 import { leadershipMembers, teamGroups } from "@/lib/team";
 
-import chenTingchuPortrait from "./images/chen-tingchu.png";
-import liuXunzhiPortrait from "./images/liu-xunzhi.jpeg";
+import chenTingchuPortrait from "./images/chen-tingchu-cutout.png";
+import liuXunzhiPortrait from "./images/liu-xunzhi-cutout.png";
 
 export const metadata: Metadata = {
   title: { absolute: TEAM_TITLE },
@@ -56,12 +48,6 @@ export const metadata: Metadata = {
   },
 };
 
-const groupIcons = {
-  directors: Landmark,
-  supervisors: Scale,
-  secretariat: UsersRound,
-} as const;
-
 const memberPortraits: Partial<Record<
   string,
   { src: StaticImageData; imageClassName: string }
@@ -69,12 +55,12 @@ const memberPortraits: Partial<Record<
   陳庭楚: {
     src: chenTingchuPortrait,
     imageClassName:
-      "scale-[1.5] object-cover object-[45%_45%] transition-transform duration-700 group-hover:scale-[1.56]",
+      "object-contain object-bottom transition-transform duration-700 group-hover:scale-[1.025] motion-reduce:transition-none",
   },
   劉訊志: {
     src: liuXunzhiPortrait,
     imageClassName:
-      "object-cover object-[50%_32%] transition-transform duration-700 group-hover:scale-[1.035]",
+      "object-contain object-bottom transition-transform duration-700 group-hover:scale-[1.025] motion-reduce:transition-none",
   },
 };
 
@@ -97,198 +83,219 @@ export default function TeamPage() {
           <section
             id="team-main"
             tabIndex={-1}
-            className="site-container relative border-b border-[var(--ink)] pb-16 pt-16 sm:pb-24 sm:pt-24"
+            className="site-container relative border-b border-[var(--ink)] pb-10 pt-8 sm:pb-14 sm:pt-10 lg:pb-12"
           >
-            <span className="registration-mark left-1 top-8" data-gsap-mark aria-hidden="true" />
-            <span className="registration-target right-1 top-8" data-gsap-mark aria-hidden="true" />
-
-            <div className="max-w-4xl">
+            <div className="grid gap-10 lg:grid-cols-[minmax(0,1.55fr)_minmax(15rem,0.45fr)] lg:items-end lg:gap-16">
               <div>
-                <p data-gsap-hero className="mb-6 flex items-center gap-3 text-xs font-black tracking-[0.2em] text-[var(--orange)]">
-                  <span className="h-2 w-2 bg-[var(--orange)]" aria-hidden="true" />
-                  ASSOCIATION TEAM · 2026
-                </p>
-                <h1 data-gsap-hero className="display-font text-[clamp(3.7rem,7vw,8.5rem)] font-black leading-[1.02] tracking-[-0.07em]">
-                  協會團隊
+                <h1
+                  data-gsap-hero
+                  className="display-font flex items-end gap-[0.04em] text-[clamp(4.4rem,11vw,11.5rem)] font-black leading-[0.82] tracking-[-0.095em]"
+                >
+                  <span>協會團隊</span>
+                  <span
+                    className="mb-[0.06em] inline-block h-[0.74em] w-[0.28em] shrink-0 bg-[var(--orange)]"
+                    style={{ transform: "skewX(-20deg)" }}
+                    aria-hidden="true"
+                  />
                 </h1>
-                <p data-gsap-hero className="mt-7 max-w-3xl text-xl font-medium leading-9 tracking-[0.03em] text-[var(--muted)] sm:text-2xl">
-                  一群願意發問、持續行動的人，
-                  <br className="hidden sm:block" />共同把青年觀點帶進公共現場。
+                <p
+                  data-gsap-hero
+                  className="mt-6 text-[11px] font-black tracking-[0.48em] text-[var(--ink)] sm:text-xs"
+                >
+                  THE PEOPLE / 2026
+                </p>
+              </div>
+
+              <div data-gsap-hero className="border-t border-[var(--ink)] pt-5 lg:mb-1">
+                <p className="display-font text-2xl font-black leading-[1.55] tracking-[-0.03em] sm:text-3xl">
+                  一群願意發問、
+                  <br />持續行動的人。
+                </p>
+                <p className="mt-4 max-w-sm text-sm font-bold leading-7 tracking-[0.06em] text-[var(--muted)]">
+                  共同把青年觀點帶進公共現場。
                 </p>
               </div>
             </div>
-
-            <nav data-gsap-reveal aria-label="團隊名單分類" className="mt-12 flex flex-wrap gap-2 border-t border-[var(--line)] pt-6">
-              <a className="border border-[var(--ink)] px-4 py-2 text-xs font-black tracking-[0.1em] transition-colors hover:bg-[var(--ink)] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--orange)]" href="#leadership">
-                理事長與副理事長
-              </a>
-              {teamGroups.map(({ id, title }) => (
-                <a
-                  className="border border-[var(--line)] px-4 py-2 text-xs font-black tracking-[0.1em] transition-colors hover:border-[var(--ink)] hover:bg-[var(--ink)] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--orange)]"
-                  href={`#${id}`}
-                  key={id}
-                >
-                  {title}
-                </a>
-              ))}
-            </nav>
           </section>
 
-          <section id="leadership" tabIndex={-1} aria-labelledby="leadership-heading" className="section-anchor border-b border-[var(--line)] bg-[var(--paper-soft)]">
-            <div className="site-container py-20 sm:py-28">
-              <div data-gsap-reveal className="mb-10 flex items-end justify-between gap-6 border-b border-[var(--ink)] pb-5">
-                <div>
-                  <p className="mb-3 text-xs font-black tracking-[0.18em] text-[var(--orange)]">01 / LEADERSHIP</p>
-                  <h2 id="leadership-heading" className="display-font text-4xl font-black tracking-[-0.05em] sm:text-6xl">
-                    理事長與副理事長
-                  </h2>
-                </div>
-                <UserRound className="hidden size-10 text-[var(--orange)] sm:block" strokeWidth={1.5} aria-hidden="true" />
-              </div>
+          <section
+            id="leadership"
+            tabIndex={-1}
+            aria-labelledby="leadership-heading"
+            className="section-anchor site-container py-5 sm:py-7"
+          >
+            <h2 id="leadership-heading" className="sr-only">理事長與副理事長</h2>
 
-              <ul data-gsap-stagger className="grid gap-4 md:grid-cols-3">
-                {leadershipMembers.map(({ role, name }, index) => {
-                  const portrait = memberPortraits[name];
+            <ul
+              data-gsap-stagger
+              className="grid grid-cols-2 gap-3 lg:grid-cols-[1.45fr_0.55fr_0.55fr] lg:gap-5"
+            >
+              {leadershipMembers.map(({ role, name }, index) => {
+                const portrait = memberPortraits[name];
 
+                if (index === 0 && portrait) {
                   return (
                     <li
                       data-gsap-stagger-item
-                      className={`group relative flex min-h-72 flex-col justify-between overflow-hidden border border-[var(--ink)] p-7 transition-transform duration-300 hover:-translate-y-1 sm:min-h-80 sm:p-9 ${portrait || index === 0 ? "bg-[var(--ink)] text-white" : "bg-white"}`}
+                      data-leadership-card="primary"
+                      className="group relative col-span-2 min-h-[23rem] overflow-hidden bg-[var(--orange)] text-white lg:col-span-1 lg:min-h-[25rem]"
                       key={`${role}-${name}`}
                     >
-                      {portrait ? (
-                        <>
-                          <Image
-                            src={portrait.src}
-                            alt=""
-                            fill
-                            placeholder="blur"
-                            sizes="(max-width: 767px) calc(100vw - 2rem), 33vw"
-                            className={portrait.imageClassName}
-                            data-member-portrait={name}
-                          />
-                          <span
-                            className="absolute inset-0 bg-gradient-to-b from-black/15 via-black/25 to-black/90"
-                            aria-hidden="true"
-                          />
-                        </>
-                      ) : null}
-                      <span
-                        className={`relative z-10 text-xs font-black tracking-[0.16em] ${portrait || index === 0 ? "text-[var(--orange)]" : "text-[var(--muted)]"}`}
-                      >
-                        {role}
+                      <span className="absolute left-6 top-6 z-30 bg-white px-2.5 py-1.5 text-[10px] font-black tracking-[0.14em] text-[var(--orange)] sm:left-8 sm:top-8">
+                        01
                       </span>
-                      <p className="display-font relative z-10 mt-10 text-5xl font-black tracking-[-0.06em] sm:text-6xl">
-                        {name}
-                      </p>
                       <span
-                        className={`absolute bottom-6 right-7 z-10 text-7xl font-black leading-none transition-transform duration-300 group-hover:-translate-y-1 group-hover:rotate-3 ${portrait || index === 0 ? "text-white/15" : "text-[var(--orange)]/12"}`}
+                        data-member-backdrop="leadership"
+                        className="absolute bottom-0 right-[11%] h-[86%] w-[45%] bg-[var(--paper-soft)]"
+                        style={{ clipPath: "polygon(34% 0, 100% 0, 66% 100%, 0 100%)" }}
                         aria-hidden="true"
-                      >
-                        0{index + 1}
-                      </span>
+                      />
+                      <div className="absolute inset-y-0 right-0 z-10 w-[72%] sm:w-[65%]">
+                        <Image
+                          src={portrait.src}
+                          alt=""
+                          fill
+                          priority
+                          placeholder="blur"
+                          sizes="(max-width: 1023px) calc(100vw - 2rem), 48vw"
+                          className={portrait.imageClassName}
+                          data-member-portrait={name}
+                        />
+                      </div>
+                      <div className="absolute inset-x-6 bottom-7 z-20 sm:inset-x-8 sm:bottom-9">
+                        <p className="text-lg font-black tracking-[0.08em] sm:text-xl">{role}</p>
+                        <p className="display-font mt-3 text-[clamp(3.6rem,7vw,6.5rem)] font-black leading-none tracking-[-0.08em]">
+                          {name}
+                        </p>
+                        <p className="mt-5 text-[10px] font-black tracking-[0.42em] text-white/80">
+                          CHAIRPERSON
+                        </p>
+                      </div>
                     </li>
                   );
-                })}
-              </ul>
-            </div>
+                }
+
+                return (
+                  <li
+                    data-gsap-stagger-item
+                    data-leadership-card="vice"
+                    className="group relative min-h-64 overflow-hidden border border-[var(--line)] bg-[var(--paper-soft)] p-5 sm:min-h-72 sm:p-7 lg:min-h-[25rem] lg:p-8"
+                    key={`${role}-${name}`}
+                  >
+                    <span className="relative z-10 inline-flex bg-[var(--ink)] px-2.5 py-1.5 text-[10px] font-black tracking-[0.14em] text-white">
+                      0{index + 1}
+                    </span>
+                    <div className="relative z-10 mt-8 sm:mt-12">
+                      <p className="text-sm font-black tracking-[0.08em] sm:text-lg">{role}</p>
+                      <span className="mt-4 block h-px w-7 bg-[var(--ink)]" aria-hidden="true" />
+                      <p className="display-font mt-5 text-[clamp(2.4rem,4.2vw,4.4rem)] font-black leading-none tracking-[-0.07em]">
+                        {name}
+                      </p>
+                    </div>
+                    <p className="absolute bottom-6 left-5 z-10 text-[9px] font-black tracking-[0.3em] text-[var(--muted)] sm:bottom-8 sm:left-7">
+                      VICE CHAIRPERSON
+                    </p>
+                    <span
+                      data-member-backdrop="leadership"
+                      className="absolute -bottom-8 -right-2 h-36 w-12 bg-[var(--orange)] transition-transform duration-500 group-hover:-translate-x-2 motion-reduce:transition-none"
+                      style={{ transform: "skewX(-24deg)" }}
+                      aria-hidden="true"
+                    />
+                  </li>
+                );
+              })}
+            </ul>
           </section>
 
-          <section aria-labelledby="organization-heading" className="site-container py-20 sm:py-28">
-            <div data-gsap-reveal className="mb-10 grid gap-5 border-b border-[var(--ink)] pb-6 sm:grid-cols-[1fr_auto] sm:items-end">
-              <div>
-                <p className="mb-3 text-xs font-black tracking-[0.18em] text-[var(--orange)]">02 / ORGANIZATION</p>
-                <h2 id="organization-heading" className="display-font text-4xl font-black tracking-[-0.05em] sm:text-6xl">
-                  各職務成員
-                </h2>
-              </div>
-              <p className="text-sm font-bold tracking-[0.08em] text-[var(--muted)]">依協會組織分工排列</p>
-            </div>
+          <section
+            aria-labelledby="organization-heading"
+            className="site-container pb-20 pt-8 sm:pb-28 sm:pt-12"
+          >
+            <h2 id="organization-heading" className="sr-only">各職務成員</h2>
 
-            <div className="space-y-6 sm:space-y-8">
+            <div className="grid border-t border-[var(--ink)] lg:grid-cols-3">
               {teamGroups.map(({ id, title, label, members }, groupIndex) => {
-                const Icon = groupIcons[id];
+                const featuredMember = members.find(({ name }) => name === "劉訊志");
+                const featuredPortrait = featuredMember
+                  ? memberPortraits[featuredMember.name]
+                  : undefined;
+                const rosterMembers = featuredMember
+                  ? members.filter(({ name }) => name !== featuredMember.name)
+                  : members;
 
                 return (
                   <article
                     id={id}
                     tabIndex={-1}
                     aria-labelledby={`${id}-heading`}
-                    className="section-anchor grid overflow-hidden border border-[var(--ink)] bg-white lg:grid-cols-[0.42fr_1.58fr]"
+                    className="section-anchor border-b border-[var(--ink)] py-7 lg:border-r lg:px-8 lg:py-8 lg:first:pl-0 lg:last:border-r-0 lg:last:pr-0"
                     data-gsap-reveal
+                    data-team-roster-group={id}
                     key={id}
                   >
-                    <header className={`${groupIndex === 1 ? "bg-[var(--ink)] text-white" : "bg-[var(--paper-soft)]"} flex min-h-44 flex-col justify-between gap-8 border-b border-[var(--ink)] p-7 lg:min-h-full lg:border-b-0 lg:border-r lg:p-9`}>
-                      <div className="flex items-start justify-between gap-4">
-                        <span className={`text-[11px] font-black tracking-[0.18em] ${groupIndex === 1 ? "text-[var(--orange)]" : "text-[var(--muted)]"}`}>
-                          {label}
-                        </span>
-                        <Icon className="size-7 text-[var(--orange)]" strokeWidth={1.5} aria-hidden="true" />
-                      </div>
-                      <div>
-                        <h3 id={`${id}-heading`} className="display-font text-[clamp(2.25rem,3.4vw,2.75rem)] font-black leading-tight tracking-[-0.05em]">
-                          {title}
-                        </h3>
-                        <p className={`mt-3 text-sm font-bold tracking-[0.08em] ${groupIndex === 1 ? "text-white/60" : "text-[var(--muted)]"}`}>
-                          {String(members.length).padStart(2, "0")} MEMBERS
-                        </p>
-                      </div>
+                    <header className="flex items-center gap-4 border-b border-[var(--ink)] pb-5">
+                      <span className="bg-[var(--orange)] px-2.5 py-1.5 text-[10px] font-black tracking-[0.1em] text-white">
+                        {String(groupIndex + 4).padStart(2, "0")}
+                      </span>
+                      <h3
+                        id={`${id}-heading`}
+                        className="display-font text-[clamp(2rem,3vw,3rem)] font-black tracking-[-0.05em]"
+                      >
+                        {title}
+                      </h3>
+                      <span className="ml-auto text-[9px] font-black tracking-[0.2em] text-[var(--muted)]">
+                        {String(members.length).padStart(2, "0")} {label}
+                      </span>
                     </header>
 
-                    <ul
-                      data-gsap-stagger
-                      className={`grid grid-cols-2 gap-px bg-[var(--line)] ${members.length === 4 ? "xl:grid-cols-2" : "xl:grid-cols-3"}`}
-                    >
-                      {members.map(({ role, name }, index) => {
-                        const portrait = memberPortraits[name];
-                        const isOddLastMember =
-                          members.length % 2 === 1 &&
-                          index === members.length - 1;
+                    {featuredMember && featuredPortrait ? (
+                      <div className="group relative mt-5 min-h-52 overflow-hidden bg-[var(--paper-soft)]" data-featured-member={featuredMember.name}>
+                        <span
+                          data-member-backdrop="secretariat"
+                          className="absolute bottom-0 left-4 h-20 w-[72%] bg-[var(--orange)]"
+                          style={{ clipPath: "polygon(0 38%, 82% 0, 100% 100%, 0 100%)" }}
+                          aria-hidden="true"
+                        />
+                        <div className="absolute inset-y-0 left-0 z-10 w-[58%]">
+                          <Image
+                            src={featuredPortrait.src}
+                            alt=""
+                            fill
+                            placeholder="blur"
+                            sizes="(max-width: 1023px) calc(100vw - 2rem), 22vw"
+                            className={featuredPortrait.imageClassName}
+                            data-member-portrait={featuredMember.name}
+                          />
+                        </div>
+                        <div className="absolute bottom-6 right-5 z-20 max-w-[52%] text-right">
+                          <p className="text-xs font-black tracking-[0.08em]">{featuredMember.role}</p>
+                          <p className="display-font mt-2 text-4xl font-black leading-none tracking-[-0.06em] sm:text-5xl">
+                            {featuredMember.name}
+                          </p>
+                          <p className="mt-3 text-[8px] font-black tracking-[0.28em] text-[var(--muted)]">
+                            DEPUTY SECRETARY GENERAL
+                          </p>
+                        </div>
+                      </div>
+                    ) : null}
 
-                        return (
-                          <li
-                            data-gsap-stagger-item
-                            className={`group relative flex min-h-44 flex-col justify-between overflow-hidden bg-white p-5 transition-colors duration-300 sm:min-h-52 sm:p-6 ${portrait ? "bg-[var(--ink)] text-white" : "hover:bg-[var(--paper-soft)]"} ${isOddLastMember ? "col-span-2 xl:col-span-1" : ""}`}
-                            key={`${role}-${name}`}
-                          >
-                            {portrait ? (
-                              <>
-                                <Image
-                                  src={portrait.src}
-                                  alt=""
-                                  fill
-                                  placeholder="blur"
-                                  sizes="(max-width: 1023px) 50vw, 30vw"
-                                  className={portrait.imageClassName}
-                                  data-member-portrait={name}
-                                />
-                                <span
-                                  className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/25 to-black/90"
-                                  aria-hidden="true"
-                                />
-                              </>
-                            ) : null}
-                            <div className="relative z-10 flex items-start justify-between gap-3">
-                              <span
-                                className={`text-[11px] font-black tracking-[0.12em] ${portrait ? "text-[var(--orange)]" : "text-[var(--muted)]"}`}
-                              >
-                                {role}
-                              </span>
-                              <span
-                                className={portrait ? "text-white/65" : "text-[var(--orange)]"}
-                                aria-hidden="true"
-                              >
-                                <span className="text-[9px] font-black tracking-[0.12em]">
-                                  {String(index + 1).padStart(2, "0")}
-                                </span>
-                              </span>
-                            </div>
-                            <p className="display-font relative z-10 mt-10 text-[clamp(1.75rem,2.7vw,2.6rem)] font-black tracking-[-0.05em] transition-colors group-hover:text-[var(--orange)]">
-                              {name}
-                            </p>
-                          </li>
-                        );
-                      })}
+                    <ul data-gsap-stagger className={featuredMember ? "mt-3" : "mt-2"}>
+                      {rosterMembers.map(({ role, name }, index) => (
+                        <li
+                          data-gsap-stagger-item
+                          data-roster-member={name}
+                          className="group flex items-center justify-between gap-5 border-b border-[var(--line)] py-4"
+                          key={`${role}-${name}`}
+                        >
+                          <span className="display-font text-2xl font-black tracking-[-0.04em] transition-transform duration-300 group-hover:translate-x-2 group-hover:text-[var(--orange)] motion-reduce:transition-none sm:text-3xl">
+                            {name}
+                          </span>
+                          <span className="text-[10px] font-black tracking-[0.12em] text-[var(--muted)]">
+                            {role}
+                          </span>
+                          <span className="sr-only">第 {index + 1} 位</span>
+                        </li>
+                      ))}
                     </ul>
                   </article>
                 );
@@ -296,10 +303,10 @@ export default function TeamPage() {
             </div>
           </section>
 
-          <section className="border-y border-[var(--ink)] bg-[var(--orange)] text-white">
-            <div data-gsap-reveal className="site-container grid gap-8 py-16 sm:py-20 lg:grid-cols-[1fr_auto] lg:items-end">
+          <section className="border-y border-[var(--ink)] bg-[var(--ink)] text-white">
+            <div data-gsap-reveal className="site-container grid gap-8 py-14 sm:py-16 lg:grid-cols-[1fr_auto] lg:items-end">
               <div>
-                <p className="mb-5 text-xs font-black tracking-[0.2em] text-white/70">WORK WITH US</p>
+                <p className="mb-5 text-xs font-black tracking-[0.2em] text-[var(--orange)]">WORK WITH US</p>
                 <h2 className="display-font max-w-4xl text-[clamp(2.8rem,5vw,6rem)] font-black leading-[1.08] tracking-[-0.06em]">
                   下一個公共提問，
                   <br />也可以從你開始。
@@ -325,7 +332,7 @@ export default function TeamPage() {
           <div className="site-container py-8">
             <a className="group inline-flex items-center gap-2 text-sm font-black tracking-[0.1em] text-[var(--muted)] hover:text-[var(--orange)]" href="#top">
               回到頁首
-              <ArrowRight className="size-4 -rotate-90 transition-transform group-hover:-translate-y-1" aria-hidden="true" />
+              <ArrowRight className="size-4 -rotate-90 transition-transform group-hover:-translate-y-1 motion-reduce:transition-none" aria-hidden="true" />
             </a>
           </div>
 
