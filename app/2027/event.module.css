@@ -60,6 +60,10 @@
 .mobileMenuNumber { align-self: center; color: var(--event-yellow); font-family: Arial, sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .02em; }
 .mobileMenuLinks svg { width: 24px; height: 24px; color: var(--event-yellow); transition: transform 180ms; }
 .mobileMenuLinks a:is(:hover, :focus-visible) svg { transform: translate(3px, -3px); }
+.mobileMenuRegistration { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 60px; margin-top: 28px; padding: 16px 22px; border: 1px solid var(--event-yellow); border-radius: 4px; background: var(--event-yellow); color: var(--event-green); font-size: 20px; font-weight: 850; line-height: 1.4; letter-spacing: .04em; transition: background 180ms; }
+.mobileMenuRegistration:is(:hover, :focus-visible) { background: var(--event-paper); }
+.mobileMenuRegistration:focus-visible { outline-color: var(--event-paper); }
+.mobileMenuRegistration svg { flex-shrink: 0; width: 24px; height: 24px; }
 .mobileMenuFooter { display: flex; flex-shrink: 0; align-items: flex-end; justify-content: space-between; gap: 16px; width: 100%; max-width: 580px; margin-inline: auto; padding: 0 28px calc(30px + env(safe-area-inset-bottom)); }
 .mobileMenuFooter p { margin: 0 0 9px; font-size: 13px; font-weight: 700; letter-spacing: .06em; }
 .mobileMenuFooter span { color: var(--event-yellow); font-family: Arial, sans-serif; font-size: 12px; letter-spacing: .1em; }

@@ -192,14 +192,13 @@ export function EventNavigation({ registrationEnabled = false, currentPage = "ho
                 <ArrowUpRight aria-hidden="true" />
               </a>
             ))}
-            {registrationEnabled && (
-              <a href={registrationHref} data-menu-reveal>
-                <span className={styles.mobileMenuNumber} aria-hidden="true">05</span>
-                <span>填寫報名資料</span>
-                <ArrowUpRight aria-hidden="true" />
-              </a>
-            )}
           </nav>
+          {registrationEnabled && (
+            <a className={styles.mobileMenuRegistration} href={registrationHref} data-menu-reveal>
+              <span>填寫報名資料</span>
+              <ArrowUpRight aria-hidden="true" />
+            </a>
+          )}
         </div>
         <div className={styles.mobileMenuFooter} data-menu-reveal>
           <div><p>讓青春，走進公共現場。</p><span>2027.01.25 — 01.27</span></div>
