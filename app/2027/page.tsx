@@ -118,11 +118,11 @@ export default function Event2027Page() {
             </h1>
             <p className={styles.heroDescription}><time dateTime="2027-01-25">2027 年 1 月 25 日</time>至<time dateTime="2027-01-27">27 日</time><br />三天模擬立法院，讓青年觀點走進議場。</p>
             <div className={styles.heroActions}>
-              <a href="#event-about" className={styles.primaryButton}>
-                探索活動 <ArrowUpRight aria-hidden="true" />
+              <a href={registrationEnabled ? "#event-registration" : "/2027/program"} className={styles.primaryButton}>
+                {registrationEnabled ? "立即報名" : "查看活動資訊"} <ArrowUpRight aria-hidden="true" />
               </a>
-              <a className={styles.textLink} href="/2027/event-poster.png" download="2027-青年參議院-活動海報.png">
-                收藏活動海報 <Download size={17} aria-hidden="true" />
+              <a className={styles.textLink} href="#event-about">
+                探索活動 <ArrowDown size={17} aria-hidden="true" />
               </a>
             </div>
           </div>
