@@ -10,12 +10,18 @@ export const SITE_DESCRIPTION =
   "社團法人臺灣新文化青年協會以學生及社會青年為主體，倡議獨立思考與公共參與。認識協會理念、青年行動與2027青年參議院，讓多元觀點進入公共討論。";
 export const SITE_OG_DESCRIPTION =
   "臺灣新文化青年協會｜拒絕盲從，直視權力。以獨立思考、多元對話與青年行動，共同建構當代臺灣的公共文化。";
+export const SITE_CONTENT_UPDATED = "2026-09-21";
 export const TEAM_URL = `${SITE_URL}/team`;
 export const TEAM_TITLE = `協會團隊｜${SITE_NAME}`;
 export const TEAM_DESCRIPTION =
   "認識臺灣新文化青年協會理事長、副理事長、理事、監事與秘書處成員，了解推動青年公共參與的協會團隊與組織分工。";
-export const TEAM_CONTENT_UPDATED = "2026-09-21";
+export const TEAM_CONTENT_UPDATED = "2026-09-23";
 export const TEAM_OG_IMAGE = `${TEAM_URL}/opengraph-image`;
+export const PRIVACY_URL = `${SITE_URL}/privacy`;
+export const PRIVACY_TITLE = `Cookie 與隱私說明｜${SITE_NAME}`;
+export const PRIVACY_DESCRIPTION =
+  "了解臺灣新文化青年協會網站的 Google Analytics、Cookie 用途、保存期限、隱私保障與同意撤回方式。";
+export const PRIVACY_CONTENT_UPDATED = "2026-09-21";
 
 export const ORGANIZATION_ID = `${SITE_URL}/#organization`;
 export const WEBSITE_ID = `${SITE_URL}/#website`;
@@ -117,6 +123,7 @@ export const siteStructuredData = {
       url: `${SITE_URL}/`,
       name: SITE_TITLE,
       description: SITE_DESCRIPTION,
+      dateModified: SITE_CONTENT_UPDATED,
       inLanguage: "zh-Hant-TW",
       isPartOf: { "@id": WEBSITE_ID },
       about: { "@id": ORGANIZATION_ID },
@@ -133,6 +140,47 @@ export const siteStructuredData = {
         { "@type": "WebPage", "@id": `${TEAM_URL}#webpage`, url: TEAM_URL, name: TEAM_TITLE },
         { "@type": "WebPageElement", url: `${SITE_URL}/#actions`, name: "青年行動" },
         { "@type": "WebPage", "@id": `${SITE_URL}/2027#webpage`, url: `${SITE_URL}/2027`, name: "2027 青年參議院—立法院會議" },
+      ],
+    },
+  ],
+} as const;
+
+const PRIVACY_BREADCRUMB_ID = `${PRIVACY_URL}#breadcrumb`;
+
+export const privacyStructuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    organizationJsonLd,
+    websiteJsonLd,
+    {
+      "@type": "WebPage",
+      "@id": `${PRIVACY_URL}#webpage`,
+      url: PRIVACY_URL,
+      name: PRIVACY_TITLE,
+      description: PRIVACY_DESCRIPTION,
+      dateModified: PRIVACY_CONTENT_UPDATED,
+      inLanguage: "zh-Hant-TW",
+      isPartOf: { "@id": WEBSITE_ID },
+      about: { "@id": ORGANIZATION_ID },
+      publisher: { "@id": ORGANIZATION_ID },
+      breadcrumb: { "@id": PRIVACY_BREADCRUMB_ID },
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": PRIVACY_BREADCRUMB_ID,
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "首頁",
+          item: `${SITE_URL}/`,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Cookie 與隱私說明",
+          item: PRIVACY_URL,
+        },
       ],
     },
   ],

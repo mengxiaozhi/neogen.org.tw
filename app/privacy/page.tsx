@@ -1,17 +1,55 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ASSOCIATION_LEGAL_NAME, sharedRobots } from "@/lib/seo";
+import {
+  ASSOCIATION_LEGAL_NAME,
+  PRIVACY_DESCRIPTION,
+  PRIVACY_TITLE,
+  PRIVACY_URL,
+  SITE_NAME,
+  SITE_URL,
+  privacyStructuredData,
+  sharedRobots,
+} from "@/lib/seo";
 import styles from "./page.module.css";
 
+const shareImage = {
+  url: `${SITE_URL}/opengraph-image`,
+  width: 1200,
+  height: 630,
+  alt: `${SITE_NAME}｜以青年之聲，寫臺灣新章`,
+  type: "image/png",
+};
+
 export const metadata: Metadata = {
-  title: "Cookie 與隱私說明",
-  description: "了解臺灣新文化青年協會網站的 Google Analytics、Cookie 用途、保存期限與同意撤回方式。",
+  title: { absolute: PRIVACY_TITLE },
+  description: PRIVACY_DESCRIPTION,
   alternates: { canonical: "/privacy" },
   robots: sharedRobots,
+  openGraph: {
+    type: "website",
+    locale: "zh_TW",
+    url: PRIVACY_URL,
+    siteName: SITE_NAME,
+    title: PRIVACY_TITLE,
+    description: PRIVACY_DESCRIPTION,
+    images: [shareImage],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: PRIVACY_TITLE,
+    description: PRIVACY_DESCRIPTION,
+    images: [shareImage],
+  },
 };
 
 export default function PrivacyPage() {
   return <main className={styles.page}>
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(privacyStructuredData).replace(/</g, "\\u003c"),
+      }}
+    />
     <nav aria-label="返回網站"><Link href="/">協會首頁</Link><Link href="/2027">2027 青年參議院</Link></nav>
     <p className={styles.eyebrow}>YOUR PRIVACY, YOUR CHOICE</p>
     <h1>Cookie 與隱私說明</h1>

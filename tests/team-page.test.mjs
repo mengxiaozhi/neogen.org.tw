@@ -64,7 +64,7 @@ test('team JSON-LD exposes the page relationship and a 16-person roster', () => 
   const page = graph.find(node => node['@type'] === 'CollectionPage');
   const roster = graph.find(node => node['@type'] === 'ItemList');
   assert.equal(page.url, `${origin}/team`);
-  assert.equal(page.dateModified, '2026-09-21');
+  assert.equal(page.dateModified, '2026-09-23');
   assert.equal(page.primaryImageOfPage.url, `${origin}/team/opengraph-image`);
   assert.equal(page.mainEntity['@id'], roster['@id']);
   assert.equal(roster.numberOfItems, 16);
