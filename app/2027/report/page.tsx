@@ -1,9 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, GitFork } from "lucide-react";
 import { eventMetadata, eventStructuredData } from "@/lib/event-seo";
 import DiscussionReport from "../discussion-report";
 import { EventBrand } from "../event-brand";
+import { SOURCE_REPOSITORY_URL } from "@/lib/seo";
 import eventStyles from "../event.module.css";
 import styles from "../report.module.css";
 
@@ -30,6 +31,9 @@ export default function EventReportPage() {
         </nav>
         <DiscussionReport />
       </main>
+      <footer className={styles.sourceFooter}>
+        <a href={SOURCE_REPOSITORY_URL} target="_blank" rel="noopener noreferrer" aria-label="在 GitHub 查看網站開放原始碼（另開新視窗）"><GitFork size={17} aria-hidden="true" />GitHub 開放原始碼 <ArrowUpRight size={15} aria-hidden="true" /></a>
+      </footer>
     </div>
   );
 }

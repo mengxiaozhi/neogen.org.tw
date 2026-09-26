@@ -1,8 +1,11 @@
 .pageContent { max-width: 1344px; min-height: calc(100svh - 82px); padding: 28px 48px 72px; margin-inline: auto; }
+.sourceFooter { display: flex; justify-content: flex-end; max-width: 1344px; margin-inline: auto; padding: 0 48px 36px; }
+.sourceFooter a { display: inline-flex; align-items: center; gap: 9px; min-height: 44px; padding: 10px 14px; border: 1px solid #195b3255; font-size: 13px; font-weight: 800; }
+.sourceFooter a:hover { background: #ffe02c; }
 .breadcrumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 24px; font-size: 12px; line-height: 1.8; }
 .breadcrumbs a { text-decoration: underline; text-underline-offset: 4px; }
 .breadcrumbs [aria-current] { font-weight: 800; }
-@media (max-width: 760px) { .pageContent { padding: 24px 20px 48px; } }
+@media (max-width: 760px) { .pageContent { padding: 24px 20px 48px; }.sourceFooter { justify-content: flex-start; padding: 0 20px 82px; } }
 .report { border: 2px solid #195b32; background: #f7f5e9; box-shadow: 8px 8px #dedcc8; scroll-margin-top: 100px; }
 .report :where(section[id]) { scroll-margin-top: 110px; }
 .header { display: flex; justify-content: space-between; align-items: start; gap: 24px; padding: 32px; color: #f7f5e9; background: #195b32; }

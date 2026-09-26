@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import type { TeamMember } from "@/lib/team";
 
 export const SITE_URL = "https://www.neogen.org.tw";
+export const SOURCE_REPOSITORY_URL = "https://github.com/mengxiaozhi/neogen.org.tw";
 export const SITE_NAME = "臺灣新文化青年協會";
 export const ASSOCIATION_LEGAL_NAME = "社團法人臺灣新文化青年協會";
 export const SITE_TITLE = `${SITE_NAME}｜以青年之聲，寫臺灣新章`;

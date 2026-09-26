@@ -1,8 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
-import { ArrowLeft, ArrowDownRight } from "lucide-react";
+import { ArrowLeft, ArrowDownRight, ArrowUpRight, GitFork } from "lucide-react";
 import { eventMetadata, eventStructuredData } from "@/lib/event-seo";
 import { isEventRegistrationEnabled } from "@/lib/event-features";
+import { SOURCE_REPOSITORY_URL } from "@/lib/seo";
 import { EventNavigation } from "../event-actions";
 import { EventBrand } from "../event-brand";
 import { EventProgram } from "../event-program";
@@ -47,7 +48,10 @@ export default function EventProgramPage() {
           </nav>
         </div>
         <EventProgram />
-        <footer className={styles.footer}><Link href="/2027"><ArrowLeft size={17} aria-hidden="true" />返回活動理念</Link></footer>
+        <footer className={styles.footer}>
+          <Link href="/2027"><ArrowLeft size={17} aria-hidden="true" />返回活動理念</Link>
+          <a href={SOURCE_REPOSITORY_URL} target="_blank" rel="noopener noreferrer" aria-label="在 GitHub 查看網站開放原始碼（另開新視窗）"><GitFork size={17} aria-hidden="true" />GitHub 開放原始碼 <ArrowUpRight size={15} aria-hidden="true" /></a>
+        </footer>
       </main>
     </div>
   );

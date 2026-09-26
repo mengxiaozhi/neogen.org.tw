@@ -6,6 +6,7 @@ import {
   ArrowRight,
   ArrowUpRight,
   Download,
+  GitFork,
   Lightbulb,
   MessagesSquare,
   Megaphone,
@@ -24,6 +25,7 @@ import { EventMotion } from "./event-motion";
 import { YouthDiscussion } from "./youth-discussion";
 import { RegistrationForm } from "./registration-form";
 import { isEventRegistrationEnabled } from "@/lib/event-features";
+import { SOURCE_REPOSITORY_URL } from "@/lib/seo";
 import styles from "./event.module.css";
 
 const registrationEnabled = isEventRegistrationEnabled();
@@ -278,7 +280,11 @@ export default function Event2027Page() {
             <div><dt>電子信箱</dt><dd><a href="mailto:neogentaiwan2026@gmail.com">neogentaiwan2026@gmail.com</a></dd></div>
           </dl>
         </address>
-        <div className={styles.footerBottom}><span>TAIWAN NEW CULTURE YOUTH ASSOCIATION</span><span>2027 青年參議院 — 立法院會議</span></div>
+        <div className={styles.footerBottom}>
+          <span>TAIWAN NEW CULTURE YOUTH ASSOCIATION</span>
+          <a className={styles.sourceLink} href={SOURCE_REPOSITORY_URL} target="_blank" rel="noopener noreferrer" aria-label="在 GitHub 查看網站開放原始碼（另開新視窗）"><GitFork size={15} aria-hidden="true" />GitHub 開放原始碼 <ArrowUpRight size={14} aria-hidden="true" /></a>
+          <span>2027 青年參議院 — 立法院會議</span>
+        </div>
       </footer>
     </div>
   );

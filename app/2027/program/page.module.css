@@ -8,9 +8,9 @@
 .description { margin-top: 18px; font-size: 16px; line-height: 1.8; }
 .sections { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 34px; border-block: 1px solid #195b32; }
 .sections a { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 18px 22px; min-height: 56px; border-right: 1px solid #195b3238; font-size: 15px; font-weight: 800; }.sections a:last-child { border-right: 0; }.sections a:hover { background: #ffe02c; }
-.footer { padding-top: 26px; border-top: 1px solid #195b3238; }.footer a { display: inline-flex; align-items: center; min-height: 44px; gap: 10px; font-size: 14px; font-weight: 750; }
+.footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 28px; padding-top: 26px; border-top: 1px solid #195b3238; }.footer a { display: inline-flex; align-items: center; min-height: 44px; gap: 10px; font-size: 14px; font-weight: 750; }.footer a:last-child { padding-inline: 13px; border: 1px solid #195b3238; }.footer a:last-child:hover { background: #ffe02c; }
 @media (max-width: 1100px) { .intro, .footer { width: calc(100% - 84px); } }
-@media (max-width: 760px) { .intro, .footer { width: calc(100% - 48px); }.intro { padding-top: 24px; }.eyebrow { margin-top: 30px; font-size: 11px; }.description { font-size: 14px; }.sections { grid-template-columns: 1fr; margin-top: 26px; }.sections a { padding: 14px 12px; min-height: 48px; border-right: 0; border-bottom: 1px solid #195b3238; font-size: 14px; }.sections a:last-child { border-bottom: 0; }}
+@media (max-width: 760px) { .main { padding-bottom: 84px; }.intro, .footer { width: calc(100% - 48px); }.intro { padding-top: 24px; }.eyebrow { margin-top: 30px; font-size: 11px; }.description { font-size: 14px; }.sections { grid-template-columns: 1fr; margin-top: 26px; }.sections a { padding: 14px 12px; min-height: 48px; border-right: 0; border-bottom: 1px solid #195b3238; font-size: 14px; }.sections a:last-child { border-bottom: 0; }}
 @media (max-width: 380px) { .intro, .footer { width: calc(100% - 40px); } }
 
 .venueDetails { margin-top: 14px; font-size: 14px; line-height: 1.9; }

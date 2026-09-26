@@ -185,7 +185,9 @@
 .footerTop > p { font-size: 12px; }
 .backToTop { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; margin-left: auto; font-size: 12px; font-weight: 700; }
 .backToTop svg { transform: rotate(-90deg); }
-.footerBottom { display: flex; justify-content: space-between; gap: 18px; padding-top: 20px; color: #48674a; font-size: 10px; letter-spacing: .065em; }
+.footerBottom { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding-top: 20px; color: #48674a; font-size: 10px; letter-spacing: .065em; }
+.sourceLink { display: inline-flex; align-items: center; gap: 7px; min-height: 36px; padding: 7px 10px; border: 1px solid var(--event-line); color: var(--event-green); font-weight: 850; letter-spacing: .04em; transition: background 160ms, color 160ms; }
+.sourceLink:hover { background: var(--event-green); color: var(--event-paper); }
 
 @media (min-width: 1441px) {
   .hero { min-height: 833px; padding-top: 50px; }
@@ -311,7 +313,7 @@
   .shareButton { gap: 12px; min-height: 52px; padding: 12px 15px; font-size: 14px; }
   .shareStatus { max-width: 150px; font-size: 11px; }
   .shareUrl { max-width: 150px; font-size: 12px; }
-  .footer { padding: 29px 24px 23px; }
+  .footer { padding: 29px 24px 76px; }
   .footerTop { flex-wrap: wrap; gap: 6px 12px; padding-bottom: 19px; }
   .associationLink { width: 100%; gap: 10px; font-size: 15px; }
   .footerBrandLogo { width: 40px; height: 40px; }

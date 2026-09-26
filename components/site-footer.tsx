@@ -1,8 +1,8 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, GitFork } from "lucide-react";
 import Link from "next/link";
 
 import { BrandMark } from "@/components/brand-mark";
-import { SITE_URL, SOCIAL_LINKS } from "@/lib/seo";
+import { SITE_URL, SOCIAL_LINKS, SOURCE_REPOSITORY_URL } from "@/lib/seo";
 
 export function SiteFooter() {
   return (
@@ -83,10 +83,20 @@ export function SiteFooter() {
           </dl>
         </address>
       </div>
-      <div className="flex flex-col gap-2 pt-7 text-xs font-medium tracking-[0.08em] text-[var(--muted)] sm:flex-row sm:items-center sm:justify-between">
-        <p>© 2026 Taiwan New Culture Youth Association</p>
+      <nav aria-label="開源與網站連結" className="flex flex-col items-start gap-3 pt-7 pb-16 text-xs font-medium tracking-[0.08em] text-[var(--muted)] sm:flex-row sm:flex-wrap sm:items-center sm:justify-end sm:gap-x-6 sm:pb-0">
+        <a
+          className="nav-link inline-flex w-fit items-center gap-2 font-bold text-[var(--ink)]"
+          href={SOURCE_REPOSITORY_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="在 GitHub 查看網站開放原始碼（另開新視窗）"
+        >
+          <GitFork className="size-4" aria-hidden="true" />
+          GitHub 開放原始碼
+          <ArrowUpRight className="size-3.5" aria-hidden="true" />
+        </a>
         <a className="nav-link w-fit font-bold text-[var(--ink)]" href={SITE_URL}>neogen.org.tw</a>
-      </div>
+      </nav>
     </footer>
   );
 }

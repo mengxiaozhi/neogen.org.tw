@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { GitFork } from "lucide-react";
 import {
   ASSOCIATION_LEGAL_NAME,
   PRIVACY_DESCRIPTION,
@@ -7,6 +8,7 @@ import {
   PRIVACY_URL,
   SITE_NAME,
   SITE_URL,
+  SOURCE_REPOSITORY_URL,
   privacyStructuredData,
   sharedRobots,
 } from "@/lib/seo";
@@ -50,7 +52,11 @@ export default function PrivacyPage() {
         __html: JSON.stringify(privacyStructuredData).replace(/</g, "\\u003c"),
       }}
     />
-    <nav aria-label="返回網站"><Link href="/">協會首頁</Link><Link href="/2027">2027 青年參議院</Link></nav>
+    <nav aria-label="網站導覽">
+      <Link href="/">協會首頁</Link>
+      <Link href="/2027">2027 青年參議院</Link>
+      <a className={styles.sourceLink} href={SOURCE_REPOSITORY_URL} target="_blank" rel="noopener noreferrer" aria-label="在 GitHub 查看網站開放原始碼（另開新視窗）"><GitFork size={16} aria-hidden="true" />GitHub 開放原始碼</a>
+    </nav>
     <p className={styles.eyebrow}>YOUR PRIVACY, YOUR CHOICE</p>
     <h1>Cookie 與隱私說明</h1>
     <p className={styles.updated}>最後更新：<time dateTime="2026-09-21">2026 年 9 月 21 日</time></p>
