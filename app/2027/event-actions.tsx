@@ -8,6 +8,7 @@ import { ArrowUpRight, Check, Menu, Share2, X } from "lucide-react";
 
 import { EventBrand } from "./event-brand";
 import { EventSymbol } from "./event-symbol";
+import { REGISTRATION_FORM_URL } from "@/lib/event-registration";
 import styles from "./event.module.css";
 
 const links = [
@@ -26,7 +27,6 @@ export function EventNavigation({ registrationEnabled = false, currentPage = "ho
     current: link.href === currentPath,
   }));
   const [open, setOpen] = useState(false);
-  const registrationHref = currentPage === "home" ? "#event-registration" : "/2027#event-registration";
   const toggleRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -146,9 +146,9 @@ export function EventNavigation({ registrationEnabled = false, currentPage = "ho
           <Link key={link.href} href={link.href} aria-current={link.current ? "page" : undefined}>{link.label}</Link>
         ))}
       </nav>
-      <Link className={styles.headerAction} href={registrationEnabled ? registrationHref : "/2027/program"}>
+      <a className={styles.headerAction} href={registrationEnabled ? REGISTRATION_FORM_URL : "/2027/program"} target={registrationEnabled ? "_blank" : undefined} rel={registrationEnabled ? "noopener noreferrer" : undefined}>
         {registrationEnabled ? "填寫報名資料" : "查看活動資訊"} <ArrowUpRight size={17} aria-hidden="true" />
-      </Link>
+      </a>
       <dialog
         ref={dialogRef}
         id="event-mobile-navigation"
@@ -170,7 +170,7 @@ export function EventNavigation({ registrationEnabled = false, currentPage = "ho
         }}
         onClickCapture={(event) => {
           const href = (event.target as Element).closest("a")?.getAttribute("href");
-          if (href && (href.startsWith("#") || href === "/2027" || (registrationEnabled && href === registrationHref) || navigationLinks.some((link) => link.href === href)) && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
+          if (href && (href.startsWith("#") || href === "/2027" || navigationLinks.some((link) => link.href === href)) && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
             event.preventDefault();
             closeMenu(href);
           }
@@ -194,7 +194,7 @@ export function EventNavigation({ registrationEnabled = false, currentPage = "ho
             ))}
           </nav>
           {registrationEnabled && (
-            <a className={styles.mobileMenuRegistration} href={registrationHref} data-menu-reveal>
+            <a className={styles.mobileMenuRegistration} href={REGISTRATION_FORM_URL} target="_blank" rel="noopener noreferrer" onClick={() => closeMenu()} data-menu-reveal>
               <span>填寫報名資料</span>
               <ArrowUpRight aria-hidden="true" />
             </a>

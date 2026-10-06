@@ -23,7 +23,8 @@ import { EventNavigation, ShareEvent } from "./event-actions";
 import { InteractiveAssembly } from "./interactive-assembly";
 import { EventMotion } from "./event-motion";
 import { YouthDiscussion } from "./youth-discussion";
-import { RegistrationForm } from "./registration-form";
+import { EventTicket } from "./event-ticket";
+import { REGISTRATION_FORM_URL } from "@/lib/event-registration";
 import { isEventRegistrationEnabled } from "@/lib/event-features";
 import { SOURCE_REPOSITORY_URL } from "@/lib/seo";
 import styles from "./event.module.css";
@@ -120,7 +121,7 @@ export default function Event2027Page() {
             </h1>
             <p className={styles.heroDescription}><time dateTime="2027-01-25">2027 年 1 月 25 日</time>至<time dateTime="2027-01-27">27 日</time><br />三天模擬立法院，讓青年觀點走進議場。</p>
             <div className={styles.heroActions}>
-              <a href={registrationEnabled ? "#event-registration" : "/2027/program"} className={styles.primaryButton}>
+              <a href={registrationEnabled ? REGISTRATION_FORM_URL : "/2027/program"} className={styles.primaryButton} target={registrationEnabled ? "_blank" : undefined} rel={registrationEnabled ? "noopener noreferrer" : undefined}>
                 {registrationEnabled ? "立即報名" : "查看活動資訊"} <ArrowUpRight aria-hidden="true" />
               </a>
               <a className={styles.textLink} href="#event-about">
@@ -185,6 +186,7 @@ export default function Event2027Page() {
               <p className={styles.sectionLabel}><span>02 /</span> 活動資訊 <span className={styles.englishLabel}>THE DETAILS</span></p>
               <h2 id="info-heading">下一個現場，<br />期待有你<span className={styles.orangeDot}>。</span></h2>
               <p className={styles.infoLead}>三天模擬議事、協商與採訪報導。</p>
+              <EventTicket />
               <dl className={styles.eventDetails}>
                 {eventDetails.map((detail) => (
                   <div key={detail.label} className={styles.detailRow}>
@@ -195,7 +197,7 @@ export default function Event2027Page() {
               </dl>
               <Link href="/2027/program" className={`${styles.textLink} ${styles.programLink}`}>查看活動資訊 <ArrowUpRight size={18} aria-hidden="true" /></Link>
               {registrationEnabled ? (
-                <a href="#event-registration" className={styles.textLink}>填寫報名資料 <ArrowUpRight size={18} aria-hidden="true" /></a>
+                <a href={REGISTRATION_FORM_URL} className={styles.textLink} target="_blank" rel="noopener noreferrer">填寫報名資料 <ArrowUpRight size={18} aria-hidden="true" /></a>
               ) : (
                 <p className={styles.announcement}><span aria-hidden="true" /> 報名期間為 2026/09/23–12/15，採先報名先書審，額滿提前截止；網站入口尚未開放。</p>
               )}
@@ -217,7 +219,6 @@ export default function Event2027Page() {
               </figcaption>
             </figure>
           </div>
-          {registrationEnabled && <RegistrationForm />}
         </section>
 
         <YouthDiscussion />

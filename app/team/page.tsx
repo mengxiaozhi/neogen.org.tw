@@ -254,6 +254,7 @@ export default function TeamPage() {
                 const rosterMembers = featuredMember
                   ? members.filter(({ name }) => name !== featuredMember.name)
                   : members;
+                const activeMemberCount = members.filter(({ vacant }) => !vacant).length;
 
                 return (
                   <article
@@ -276,7 +277,7 @@ export default function TeamPage() {
                         {title}
                       </h3>
                       <span className="ml-auto text-[9px] font-black tracking-[0.2em] text-[var(--muted)]">
-                        {String(members.length).padStart(2, "0")} {label}
+                        {String(activeMemberCount).padStart(2, "0")} {label}
                       </span>
                     </header>
 
@@ -312,14 +313,16 @@ export default function TeamPage() {
                     ) : null}
 
                     <ul data-gsap-stagger className={featuredMember ? "mt-3" : "mt-2"}>
-                      {rosterMembers.map(({ role, name }, index) => (
+                      {rosterMembers.map(({ role, name, vacant }, index) => (
                         <li
                           data-gsap-stagger-item
-                          data-roster-member={name}
+                          data-roster-member={vacant ? undefined : name}
+                          data-roster-vacancy={vacant ? role : undefined}
+                          aria-label={vacant ? `${role}目前空缺` : undefined}
                           className="group flex items-center justify-between gap-5 border-b border-[var(--line)] py-4"
                           key={`${role}-${name}`}
                         >
-                          <span className="display-font text-2xl font-black tracking-[-0.04em] transition-transform duration-300 group-hover:translate-x-2 group-hover:text-[var(--orange)] motion-reduce:transition-none sm:text-3xl">
+                          <span className={`display-font text-2xl font-black tracking-[-0.04em] transition-transform duration-300 group-hover:translate-x-2 motion-reduce:transition-none sm:text-3xl ${vacant ? "text-[var(--orange)]" : "group-hover:text-[var(--orange)]"}`}>
                             {name}
                           </span>
                           <span className="text-[10px] font-black tracking-[0.12em] text-[var(--muted)]">

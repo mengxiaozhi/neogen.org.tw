@@ -24,14 +24,17 @@ test('team page has distinct metadata, canonical URL and one primary heading', (
   assert.equal((html.match(/<h1\b/g) ?? []).length, 1);
 });
 
-test('all supplied members and organizational groups are visible without JavaScript', () => {
+test('all current members, the secretary-general vacancy and organizational groups are visible without JavaScript', () => {
   const memberNames = [
     '陳庭楚', '吳憶祖', '江珮綺', '莊智程', '呂佳倪', '廖冠霆',
     '尤偉哲', '許程富', '林妤蕎', '鄧述維', '陳柏睿', '吳梓瑜',
-    '李家緯', '劉訊志', '陳冠聿', '劉曉陽',
+    '劉訊志', '陳冠聿', '劉曉陽',
   ];
 
   for (const name of memberNames) assert.ok(visibleHtml.includes(name), `${name} should be rendered`);
+  assert.match(visibleHtml, /data-roster-vacancy="秘書長"/);
+  assert.match(visibleHtml, /秘書長目前空缺/);
+  assert.doesNotMatch(visibleHtml, /李家緯/);
   for (const heading of ['理事長與副理事長', '理事成員', '監事成員', '秘書處']) {
     assert.ok(visibleHtml.includes(heading), `${heading} should be rendered`);
   }
@@ -51,7 +54,8 @@ test('team page uses the approved editorial leadership and three-column roster s
   assert.equal((html.match(/data-leadership-card="primary"/g) ?? []).length, 1);
   assert.equal((html.match(/data-leadership-card="vice"/g) ?? []).length, 2);
   assert.equal((html.match(/data-team-roster-group=/g) ?? []).length, 3);
-  assert.equal((html.match(/data-roster-member=/g) ?? []).length, 12);
+  assert.equal((html.match(/data-roster-member=/g) ?? []).length, 11);
+  assert.equal((html.match(/data-roster-vacancy="秘書長"/g) ?? []).length, 1);
   assert.equal((html.match(/data-featured-member="劉訊志"/g) ?? []).length, 1);
   assert.equal((html.match(/data-member-backdrop=/g) ?? []).length, 4);
   assert.doesNotMatch(source, /(?:linear|radial|conic)-gradient|bg-gradient/);
@@ -60,15 +64,16 @@ test('team page uses the approved editorial leadership and three-column roster s
   assert.match(source, /object-cover object-\[center_12%\]/);
 });
 
-test('team JSON-LD exposes the page relationship and a 16-person roster', () => {
+test('team JSON-LD exposes the page relationship and only the 15 current members', () => {
   const page = graph.find(node => node['@type'] === 'CollectionPage');
   const roster = graph.find(node => node['@type'] === 'ItemList');
   assert.equal(page.url, `${origin}/team`);
-  assert.equal(page.dateModified, '2026-09-23');
+  assert.equal(page.dateModified, '2026-10-06');
   assert.equal(page.primaryImageOfPage.url, `${origin}/team/opengraph-image`);
   assert.equal(page.mainEntity['@id'], roster['@id']);
-  assert.equal(roster.numberOfItems, 16);
-  assert.equal(roster.itemListElement.length, 16);
+  assert.equal(roster.numberOfItems, 15);
+  assert.equal(roster.itemListElement.length, 15);
+  assert.ok(roster.itemListElement.every(entry => !['李家緯', '空缺'].includes(entry.item.name)));
   assert.ok(roster.itemListElement.every(entry =>
     entry.item['@type'] === 'Person' &&
     entry.item.jobTitle &&

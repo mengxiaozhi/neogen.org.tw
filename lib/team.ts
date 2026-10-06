@@ -1,10 +1,23 @@
-export const leadershipMembers = [
+export type TeamMember = {
+  readonly role: string;
+  readonly name: string;
+  readonly vacant?: boolean;
+};
+
+type TeamGroup = {
+  readonly id: string;
+  readonly title: string;
+  readonly label: string;
+  readonly members: readonly TeamMember[];
+};
+
+export const leadershipMembers: readonly TeamMember[] = [
   { role: "理事長", name: "陳庭楚" },
   { role: "副理事長", name: "吳憶祖" },
   { role: "副理事長", name: "江珮綺" },
 ] as const;
 
-export const teamGroups = [
+export const teamGroups: readonly TeamGroup[] = [
   {
     id: "directors",
     title: "理事成員",
@@ -33,7 +46,7 @@ export const teamGroups = [
     title: "秘書處",
     label: "SECRETARIAT",
     members: [
-      { role: "秘書長", name: "李家緯" },
+      { role: "秘書長", name: "空缺", vacant: true },
       { role: "副秘書長", name: "劉訊志" },
       { role: "副秘書長", name: "陳冠聿" },
       { role: "副秘書長", name: "劉曉陽" },
@@ -41,14 +54,7 @@ export const teamGroups = [
   },
 ] as const;
 
-export type TeamMember = {
-  readonly role: string;
-  readonly name: string;
-};
-
 export const allTeamMembers: readonly TeamMember[] = [
   ...leadershipMembers,
-  ...teamGroups[0].members,
-  ...teamGroups[1].members,
-  ...teamGroups[2].members,
+  ...teamGroups.flatMap(({ members }) => members.filter(({ vacant }) => !vacant)),
 ];

@@ -16,7 +16,7 @@ export const TEAM_URL = `${SITE_URL}/team`;
 export const TEAM_TITLE = `協會團隊｜${SITE_NAME}`;
 export const TEAM_DESCRIPTION =
   "認識臺灣新文化青年協會理事長、副理事長、理事、監事與秘書處成員，了解推動青年公共參與的協會團隊與組織分工。";
-export const TEAM_CONTENT_UPDATED = "2026-09-23";
+export const TEAM_CONTENT_UPDATED = "2026-10-06";
 export const TEAM_OG_IMAGE = `${TEAM_URL}/opengraph-image`;
 export const PRIVACY_URL = `${SITE_URL}/privacy`;
 export const PRIVACY_TITLE = `Cookie 與隱私說明｜${SITE_NAME}`;

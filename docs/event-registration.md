@@ -1,8 +1,12 @@
 # 2027 活動報名
 
-最後更新：2026-09-21。依使用者「開放報名」指示，正式網站已啟用報名區塊、桌面導覽按鈕與手機全螢幕選單入口。元件維持一句說明、單一外連按鈕與 Google 登入提示，填答由使用者提供的 Google 表單處理。
+最後更新：2026-10-05。所有網站報名入口改為直接另開 Google 表單，已移除原本的頁內報名區塊；黃色日期票券移至首頁活動資訊摘要。以下 9 月部署與區塊紀錄保留作歷史參考。
 
-- [正式報名入口](https://www.neogen.org.tw/2027#event-registration)
+目前部署：`dpl_5SdTENmHR6cvDJiBVivkXLfN5P5V`（2026-10-05），已 promote 至正式網域。首頁與活動資訊頁 HTTP 200；報名按鈕直連指定 Google 表單，無原報名區塊或失效錨點。ESLint、4 項報名測試與本機／Vercel 正式建置通過；390px 手機選單按鈕可收合選單，頁面無橫向溢出。
+
+先前紀錄：2026-09-21。依使用者「開放報名」指示，正式網站已啟用報名區塊、桌面導覽按鈕與手機全螢幕選單入口。元件維持一句說明、單一外連按鈕與 Google 登入提示，填答由使用者提供的 Google 表單處理。
+
+- [正式報名表單](https://docs.google.com/forms/d/e/1FAIpQLSe-Rg7S0rSBlEUfXWQH12bRS86au6uT-kU2L6lhFkhfUKZ0ng/viewform)
 - 正式部署：`dpl_5dfoLDDkgUbcVipBV39mFyDm9SPZ`，`https://neogen-org-jhmjlk9vv-mengxiaozhi.vercel.app`，已 promote 至正式網域。
 - 本次使用獨立發布目錄，包含活動資訊、住宿／場地地圖與報名入口更新，未帶入工作區其他首頁／團隊頁的未完成修改。
 - 原公告報名時程仍為 2026/09/23–2026/12/15（額滿提早截止）；依本次指示提前開放網站入口。
@@ -21,9 +25,9 @@ Google 的登入、同意程序、欄位檢查、分流和送出確認由原表�
 ## 網站實作
 
 - `lib/event-registration.ts`：公開表單網址。
-- `app/2027/registration-form.tsx`：品牌外框、單一報名入口與新分頁／Google 登入提示，使用伺服器元件，沒有 iframe 或前端狀態。
-- `app/2027/registration.module.css`：響應式排版與既有活動視覺。
-- `lib/event-features.ts`：server-only `EVENT_REGISTRATION_ENABLED`，只有明確為 `true` 才顯示報名區塊及入口。
+- `app/2027/page.tsx` 與 `app/2027/event-actions.tsx`：首頁、桌面及手機導覽直接連到 `REGISTRATION_FORM_URL`，使用新分頁。
+- `app/2027/event-ticket.tsx` 與對應 CSS：保留黃色日期票券，顯示於首頁活動資訊摘要。原報名區塊元件與樣式已移除。
+- `lib/event-features.ts`：server-only `EVENT_REGISTRATION_ENABLED`，只有明確為 `true` 才顯示 Google 表單報名入口。
 - `app/api/2027/registration/route.ts`：已退役的網站收件 API。功能關閉時回傳 404；功能開啟時回傳 410 與新版表單網址，不讀取送入資料、不聯絡 Google、不回傳報名成功。
 
 Production 與本機設定已設為 `EVENT_REGISTRATION_ENABLED=true`，`.env.example` 同步更新；Preview 設定未更動。只有明確為 `true` 才開放，缺少設定時仍關閉。更改開關後需重新建置／部署，保持靜態頁面、導覽、FAQ、SEO 與 API 一致。
