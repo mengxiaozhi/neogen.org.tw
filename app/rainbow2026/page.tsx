@@ -34,8 +34,10 @@ export default function Rainbow2026Page() {
       <main id="rainbow-main" tabIndex={-1}>
         <section className={styles.hero} aria-labelledby="rainbow-title">
           <div className={styles.heroCopy}>
-            <p className={styles.eventName} data-rainbow-intro>{RAINBOW_NAME}</p>
-            <h1 className={styles.heroTitle} id="rainbow-title" data-rainbow-intro><span>一起參加</span><span>同志遊行</span></h1>
+            <h1 id="rainbow-title">
+              <span className={styles.eventName} data-rainbow-intro>{RAINBOW_NAME}</span>
+              <span className={styles.heroTitle} data-rainbow-intro><span>一起參加</span><span>同志遊行</span></span>
+            </h1>
             <p className={styles.heroTagline} data-rainbow-intro>讓每一種愛，自由綻放。</p>
             <div className={styles.heroActions} data-rainbow-intro>
               <a href="#rainbow-about" className={styles.primaryButton}>聽見彼此，一起前行 <ArrowDown size={18} aria-hidden="true" /></a>
