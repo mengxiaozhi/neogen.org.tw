@@ -45,6 +45,7 @@ export function SiteFooter() {
             <li><Link className="nav-link" href="/team">協會團隊</Link></li>
             <li><Link className="nav-link" href="/#actions">行動議題</Link></li>
             <li><Link className="nav-link" href="/2027">2027 青年參議院</Link></li>
+            <li><Link className="nav-link" href="/rainbow2026">2026 同志遊行</Link></li>
             <li><a className="nav-link" href="mailto:neogentaiwan2026@gmail.com?subject=青年投稿">青年投稿</a></li>
           </ul>
         </nav>

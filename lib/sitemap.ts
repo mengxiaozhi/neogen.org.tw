@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 
 import { EVENT_CONTENT_UPDATED, eventPages } from "@/lib/event-seo";
+import { RAINBOW_CONTENT_UPDATED, RAINBOW_PATH, RAINBOW_POSTER } from "@/lib/rainbow-event";
 import {
   PRIVACY_CONTENT_UPDATED,
   SITE_CONTENT_UPDATED,
@@ -33,6 +34,13 @@ const publicSitemapEntries: MetadataRoute.Sitemap = [
     lastModified: PRIVACY_CONTENT_UPDATED,
     changeFrequency: "yearly",
     priority: 0.2,
+  },
+  {
+    url: absoluteUrl(RAINBOW_PATH),
+    lastModified: RAINBOW_CONTENT_UPDATED,
+    changeFrequency: "weekly",
+    priority: 0.9,
+    images: [absoluteUrl(RAINBOW_POSTER)],
   },
   {
     url: absoluteUrl(eventPages.home.path),
