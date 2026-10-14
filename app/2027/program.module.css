@@ -167,12 +167,6 @@
   gap: 24px;
 }
 
-.days {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px;
-}
-
 .topic {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
@@ -216,64 +210,13 @@
   line-height: 1.65;
 }
 
-.day {
-  min-width: 0;
-  border: 1px solid #195b32;
-  background: #f7f5e9;
-}
-
-.day > header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 18px 22px;
-  background: #195b32;
-  color: #f7f5e9;
-  font-size: 13px;
-  font-weight: 750;
-}
-
-.day > header > span {
-  color: #ffe02c;
-  font: 800 14px Arial, sans-serif;
-}
-
-.day h3 {
-  margin: 24px 22px 10px;
-  font-size: 21px;
-  font-weight: 850;
-  line-height: 1.5;
-}
-
-.day > p {
-  padding: 0 22px 24px;
-  color: #456148;
-  font-size: 14px;
-  line-height: 1.8;
-}
-
 @media (max-width: 1100px) {
   .program {
     width: calc(100% - 84px);
   }
 
-  .topics,
-  .days {
+  .topics {
     gap: 16px;
-  }
-
-  .day > header,
-  .day > p {
-    padding-inline: 16px;
-  }
-
-  .day h3 {
-    margin-inline: 16px;
-  }
-
-  .day > header {
-    flex-wrap: wrap;
   }
 
   .topic {
@@ -313,8 +256,7 @@
 
   .fees,
   .roles,
-  .topics,
-  .days {
+  .topics {
     grid-template-columns: 1fr;
     gap: 18px;
   }
@@ -338,17 +280,6 @@
     padding: 26px 24px;
   }
 
-  .day > header {
-    padding: 18px 22px;
-  }
-
-  .day h3 {
-    margin-inline: 22px;
-  }
-
-  .day > p {
-    padding-inline: 22px;
-  }
 }
 
 @media (max-width: 380px) {

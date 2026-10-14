@@ -1,0 +1,41 @@
+.schedule { color: #195b32; }
+.notice { margin-bottom: 24px; padding-left: 16px; border-left: 3px solid #c24706; color: #456148; font-size: 14px; line-height: 1.85; }
+.table { width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 0; border: 1px solid #195b3250; background: #f7f5e9; }
+.caption { padding-bottom: 16px; color: #456148; font-size: 13px; text-align: left; }
+.table th, .table td { padding: 19px 16px; border-right: 1px solid #195b3230; border-bottom: 1px solid #195b3230; text-align: center; vertical-align: middle; }
+.table tr > :last-child { border-right: 0; }
+.table tbody tr:last-child > * { border-bottom: 0; }
+.timeHeading { width: 150px; background: #dce5d8; font-size: 16px; }
+.table .timeCell { font: 700 13px/1.7 Arial, sans-serif; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.orangeHeading { background: #b94308; color: #fffaf0; }
+.greenHeading { background: #195b32; color: #fffaf0; }
+.dayLabel { display: block; margin-bottom: 6px; font-size: 25px; font-weight: 850; }
+.table thead time { font-size: 14px; font-weight: 650; }
+.creamCell { background: #fbefdc; }
+.greenCell { background: #e2ecdf; }
+.sharedCell { background: #f3e7c9; }
+.sessionTitle { display: block; font-size: 17px; font-weight: 800; line-height: 1.8; text-wrap: balance; }
+.sessionNote { display: block; margin-top: 6px; color: #456148; font-size: 13px; line-height: 1.8; }
+.mobile { display: none; }
+
+@media (max-width: 900px) {
+  .desktop { display: none; }
+  .mobile { display: grid; gap: 24px; }
+  .dayCard { min-width: 0; border: 1px solid #195b3250; background: #f7f5e9; }
+  .dayCard > header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 19px 22px; }
+  .dayCard h3 { font-size: 22px; font-weight: 850; }
+  .dayCard header time { font-size: 14px; font-weight: 650; }
+  .sessions { margin: 0; padding: 0; list-style: none; }
+  .sessions li { display: grid; grid-template-columns: 62px minmax(0, 1fr); align-items: center; gap: 20px; padding: 18px 22px; border-bottom: 1px solid #195b3230; }
+  .sessions li:last-child { border-bottom: 0; }
+  .sessionTime { display: grid; justify-items: center; font: 700 13px/1.4 Arial, sans-serif; font-variant-numeric: tabular-nums; }
+  .sessionTime > span { color: #8f3608; line-height: 1.1; }
+  .sharedSession { background: #f3e7c9; }
+  .sessionTitle { font-size: 16px; text-wrap: initial; }
+}
+
+@media (max-width: 380px) {
+  .dayCard > header { padding-inline: 16px; gap: 10px; }
+  .dayCard header time { font-size: 13px; }
+  .sessions li { padding-inline: 16px; gap: 14px; }
+}

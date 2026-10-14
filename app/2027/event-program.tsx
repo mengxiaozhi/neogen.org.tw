@@ -1,5 +1,6 @@
 import styles from "./program.module.css";
 import { LocationMap } from "./location-map";
+import { EventSchedule } from "./event-schedule";
 
 const roles = [
   {
@@ -43,21 +44,6 @@ const topics = [
   },
 ] as const;
 
-const days = [
-  {
-    number: "01", date: "2027-01-25", label: "01.25（一）", title: "走進議場，理解規則",
-    summary: "導覽議場、認識規則、組成黨團。",
-  },
-  {
-    number: "02", date: "2027-01-26", label: "01.26（二）", title: "審查法案，展開協商",
-    summary: "各委員會分流討論、逐條審查及模擬官員詢答。",
-  },
-  {
-    number: "03", date: "2027-01-27", label: "01.27（三）", title: "完成議案，帶走觀點",
-    summary: "完成議案、院會表決、分享反思。",
-  },
-] as const;
-
 export function EventProgram() {
   return (
     <div className={styles.program}>
@@ -66,7 +52,7 @@ export function EventProgram() {
         <dl className={styles.timeline}>
           <div><dt>報名開始</dt><dd><time dateTime="2026-09-23">2026.09.23</time></dd></div>
           <div><dt>報名截止</dt><dd><time dateTime="2026-12-15">2026.12.15</time></dd></div>
-          <div><dt>錄取名單公布</dt><dd><time dateTime="2026-12-25">2026.12.25</time></dd></div>
+          <div><dt>分三批錄取通知</dt><dd>10 月底、11 月底、12 月底</dd></div>
         </dl>
         <p className={styles.applicationNote}>採先報名先書審，名額有限；如額滿，將提前截止報名。</p>
         <div className={styles.fees}>
@@ -79,7 +65,7 @@ export function EventProgram() {
           <p>住宿僅提供代訂，不負管理責任。房型原則上為四人一間，以同委員會優先分配。</p>
           <LocationMap name="美亞商旅" address="臺北市中正區忠孝西路一段50號" embedUrl="https://www.google.com/maps/embed?origin=mfe&pb=!1m3!2m1!1z576O5Lqe5ZWG5peFIOiHuuWMl-W4guS4reato-WNgOW_oOWtneilv-i3r-S4gOautTUw6Jmf!6i16!3m1!1szh-TW!5m1!1szh-TW" />
         </div>
-        <p className={styles.note}>錄取及繳費方式以電子郵件通知。</p>
+        <p className={styles.note}>錄取及繳費方式以電子郵件通知，請於收到錄取通知後五天內繳費；收到錄取通知並完成繳費才算完成報名程序。對帳確認後將寄送「繳款成功通知書」。</p>
       </section>
 
       <section id="event-roles" tabIndex={-1} className={styles.block} aria-labelledby="roles-heading">
@@ -115,11 +101,8 @@ export function EventProgram() {
       </section>
 
       <section id="event-schedule" tabIndex={-1} className={styles.block} aria-labelledby="schedule-heading">
-        <header className={styles.heading}><span>THREE DAYS IN ACTION</span><h2 id="schedule-heading">三天，把想法帶進議場。</h2></header>
-        <div className={styles.days}>
-          {days.map((day) => <article key={day.number} className={styles.day}><header><span>DAY {day.number}</span><time dateTime={day.date}>{day.label}</time></header><h3>{day.title}</h3><p>{day.summary}</p></article>)}
-        </div>
-        <p className={styles.note}>完整流程以錄取通知為準。</p>
+        <header className={styles.heading}><span>THREE DAYS IN ACTION</span><h2 id="schedule-heading">活動議程</h2></header>
+        <EventSchedule />
       </section>
     </div>
   );

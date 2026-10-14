@@ -3,7 +3,7 @@ import { ORGANIZATION_ID, SITE_NAME, SITE_URL, WEBSITE_ID, organizationJsonLd, s
 
 export const EVENT_NAME = "2027 青年參議院—立法院會議";
 // Update only when the public activity content changes, not on every build.
-export const EVENT_CONTENT_UPDATED = "2026-09-21";
+export const EVENT_CONTENT_UPDATED = "2026-10-14";
 
 export const eventPages = {
   home: {

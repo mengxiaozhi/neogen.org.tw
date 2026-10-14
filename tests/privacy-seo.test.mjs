@@ -34,3 +34,19 @@ test('privacy JSON-LD identifies the page, publisher and breadcrumb', () => {
   assert.match(page.dateModified, /^\d{4}-\d{2}-\d{2}$/);
   assert.equal(breadcrumb.itemListElement.at(-1).item, url);
 });
+
+test('privacy page uses the main-site shell and exposes every policy section without JavaScript', () => {
+  assert.match(html, /aria-label="主要導覽"/);
+  assert.match(html, /aria-label="社群媒體"/);
+  assert.match(html, /aria-label="頁尾導覽"/);
+  assert.equal((html.match(/<h2\b/g) ?? []).length, 5);
+
+  for (const id of ['choice', 'storage', 'processing', 'rights', 'contact']) {
+    assert.match(html, new RegExp(`id="${id}"`));
+    assert.match(html, new RegExp(`href="#${id}"`));
+  }
+
+  for (const content of ['Google Analytics', 'neogen:cookie-consent:v1', 'Google 地圖', '資料權利']) {
+    assert.ok(html.includes(content), `${content} should remain readable in the initial HTML`);
+  }
+});
